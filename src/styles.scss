@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use "@angular/material" as mat;
+@use "./app/layout/layout-component.theme";
+
+
+
+@include mat.core();
+
+$site_theme: mat.define-theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      density: (
+        scale: 0,
+      ),
+    )
+);
+
+:root {
+  @include mat.core-theme($site_theme);
+  // Components themes
+  @include layout-component.theme($site_theme);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
