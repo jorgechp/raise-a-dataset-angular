@@ -1,0 +1,91 @@
+<div>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Sign up</mat-card-title>
+    </mat-card-header>
+    <div *ngIf="!this.isUsedCreated">
+      <form [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit()">
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Username" formControlName="username">
+                @if (signupForm.controls['username'].hasError('required')) {
+                  <mat-error>Username is <strong>required</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="e-mail" formControlName="email">
+                @if (signupForm.controls['email'].hasError('required')) {
+                  <mat-error>E-mail is <strong>required</strong></mat-error>
+                } @else if (signupForm.controls['email'].hasError('email')) {
+                  <mat-error>Wrong <strong>e-mail format</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="password" placeholder="Password" formControlName="password1">
+                @if (signupForm.controls['password1'].hasError('required')) {
+                  <mat-error>Password <strong>required</strong></mat-error>
+                } @else if (signupForm.controls['password1'].hasError('pattern')) {
+                  <ng-container>
+                    <mat-error>Password <strong>wrong format</strong></mat-error>
+                    <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.LOWERCASE)">
+                      At least one lowercase
+                    </div>
+                    <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.UPPERCASE)">
+                      At least one uppercase
+                    </div>
+                    <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.DIGIT)">
+                      At least one digit
+                    </div>
+                    <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.SPECIAL_CHARACTER)">
+                      At least one special character
+                    </div>
+                  </ng-container>
+                }
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput type="password" placeholder="Retype your password" formControlName="password2">
+                @if (signupForm.controls['password2'].hasError('required')) {
+                  <mat-error>Password <strong>required</strong></mat-error>
+                }
+                @if (signupForm.controls['password2']!.value! !== signupForm.controls['password1']!.value!) {
+                  <mat-error>Password <strong>does not match.</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-checkbox formControlName="ageConditions">I'm over 13 years old.</mat-checkbox>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-checkbox formControlName="acceptedConditions">I accept the Terms and conditions.</mat-checkbox>
+            </div>
+          </div>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button *ngIf="this.signupForm.valid" mat-raised-button color="primary" type="submit">Sign up</button>
+        </mat-card-actions>
+      </form>
+
+    </div>
+    <div *ngIf="isUsedCreated">
+      <mat-card-content>
+        <mat-label>Your user have been created. Welcome!</mat-label>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>
+

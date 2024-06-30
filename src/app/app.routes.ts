@@ -9,23 +9,23 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
+      import('./components/dashboard/dashboard.component').then(
         (c) => c.DashboardComponent
       ),
     title: 'Dashboard'
   },
   {
-    path: 'address',
+    path: 'signup',
     loadComponent: () =>
-      import('./address-form/address-form.component').then(
-        (c) => c.AddressFormComponent
+      import('./components/register-form/register-form.component').then(
+        (c) => c.RegisterFormComponent
       ),
-    title: 'Address'
+    title: 'Sign up'
   },
   {
     path: 'table',
     loadComponent: () =>
-      import('./table/table.component').then(
+      import('./components/table/table.component').then(
         (c) => c.TableComponent
       ),
     title: 'Table'
@@ -33,7 +33,7 @@ export const routes: Routes = [
   {
     path: 'tree',
     loadComponent: () =>
-      import('./tree/tree.component').then(
+      import('./components/tree/tree.component').then(
         (c) => c.TreeComponent
       ),
     title: 'Tree'
@@ -41,7 +41,7 @@ export const routes: Routes = [
   {
     path: 'drag-drop',
     loadComponent: () =>
-      import('./drag-drop/drag-drop.component').then(
+      import('./components/drag-drop/drag-drop.component').then(
         (c) => c.DragDropComponent
       ),
     title: 'Drag-Drop'
