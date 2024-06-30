@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 @use "@angular/material" as mat;
-@use "./app/layout/layout-component.theme";
+@use "./app/components/layout/layout-component.theme";
+@use "./app/components/dashboard/dashboard-component.theme";
 
 
 
@@ -21,9 +22,13 @@ $site_theme: mat.define-theme(
 );
 
 :root {
-  @include mat.core-theme($site_theme);
+  //@include mat.core-theme($site_theme);
+  @include mat.all-component-bases($site_theme); // TODO REMOVE THIS AND REPLACE BY CORE-THEME
   // Components themes
   @include layout-component.theme($site_theme);
+  @include dashboard-component.theme($site_theme);
+
+
 }
 
 html,

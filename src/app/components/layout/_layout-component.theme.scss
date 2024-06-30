@@ -1,0 +1,23 @@
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+  .sidenav-scroll-wrapper {
+  }
+  .sidenav-content {
+    @media (pointer: fine) {
+      &::-webkit-scrollbar-thumb {
+        background-color: mat.get-theme-color($theme, primary);
+      }
+    }
+  }
+
+  .sidenav{
+    background-color: rgba(mat.get-theme-color($theme, primary-container), 0.55);
+  }
+
+  .toolbar{
+    background-color: transparent;
+  }
+
+
+}
