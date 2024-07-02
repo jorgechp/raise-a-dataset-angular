@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Welcome!</h2>
+<mat-dialog-content>
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input [(ngModel)]="this.formData.username" matInput/>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input [(ngModel)]="this.formData.password" matInput type="password"/>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="onLoginClick()" mat-button>Login</button>
+  <button [mat-dialog-close]="onCancelClick" mat-button>Cancel</button>
+</mat-dialog-actions>
