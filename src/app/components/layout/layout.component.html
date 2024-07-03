@@ -8,7 +8,7 @@
       @for (item of rootRoutes; track $index) {
         <a class="nav-list-element"
           mat-list-item
-          [routerLink]="item.path"
+           [routerLink]="item.routeLink"
           #link="routerLinkActive"
           routerLinkActive
           [activated]="link.isActive"
@@ -17,7 +17,11 @@
         </a>
       }
     </mat-nav-list>
+    <div class="sidenav__user-section">
+      <user-section class="sidenav__user-section-inner"></user-section>
+    </div>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar>
       @if (isHandset$ | async) {
