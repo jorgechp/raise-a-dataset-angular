@@ -8,7 +8,7 @@
       @for (item of rootRoutes; track $index) {
         <a class="nav-list-element"
           mat-list-item
-          [routerLink]="item.path"
+           [routerLink]="item.routeLink"
           #link="routerLinkActive"
           routerLinkActive
           [activated]="link.isActive"

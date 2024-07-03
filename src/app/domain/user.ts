@@ -1,5 +1,6 @@
 import {HateoasResource, Resource} from "@lagoshny/ngx-hateoas-client";
 import {Authority} from "./authority";
+import {UserRole} from "./user-role";
 
 @HateoasResource('users')
 export class User extends Resource {
@@ -16,11 +17,12 @@ export class User extends Resource {
     Object.assign(this as any, values);
   }
 
-  getRoles(): string[] {
-    return this.authorities.map(a => a.authority.split('_')[1].toLowerCase());
+  getRoles(): UserRole[] {
+    return this.authorities.map(a => UserRole[a.authority as keyof typeof UserRole]);
+
   }
 
-  setRoles(roles: string) {
-    this.authorities = roles.split(',').map(role => new Authority({authority: 'ROLE_' + role.toUpperCase().trim()}));
+  setRoles(roles: UserRole[]) {
+    this.authorities = roles.map(role => new Authority({authority: UserRole[role].toUpperCase()}));
   }
 }
