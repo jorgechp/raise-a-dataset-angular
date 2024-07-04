@@ -1,20 +1,17 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject} from '@angular/core';
 
-import {
-  ReactiveFormsModule,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { StrongPasswordRegx} from "../utils/regexp/regexps";
+import {FormBuilder, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {StrongPasswordRegx} from "../utils/regexp/regexps";
 import {CommonModule} from "@angular/common";
 import PasswordMatchValidator from "../utils/validators/password-match-validator";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
 import {User} from "../../domain/user";
 import {UserService} from "../../services/user/user.service";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 
 export enum PASSWORD_ERROR_TYPE {
@@ -32,7 +29,8 @@ export enum PASSWORD_ERROR_TYPE {
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoDirective
   ]
 })
 export class RegisterFormComponent {

@@ -8,6 +8,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {UserSectionLoginComponent} from "./user-section-login/user-section-login.component";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
+import {ChangeLanguageComponent} from "./change-language/change-language.component";
 
 
 @Component({
@@ -18,22 +20,26 @@ import {AuthenticationService} from "../../services/authentication/authenticatio
   imports: [
     CommonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoDirective
   ]
 })
 export class UserSectionComponent {
-  private readonly dialogConfig = new MatDialogConfig();
+  private readonly signUpDialogConfig = new MatDialogConfig();
+  private readonly languageDialogConfig = new MatDialogConfig();
 
   constructor(private dialog: MatDialog,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private translocoService: TranslocoService) {
   }
 
   displaySignUpModal(): void {
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
-    this.dialogConfig.data = {};
+    this.signUpDialogConfig.disableClose = true;
+    this.signUpDialogConfig.autoFocus = true;
+    this.signUpDialogConfig.data = {};
 
-    const dialogRef = this.dialog.open(UserSectionLoginComponent, this.dialogConfig);
+    const dialogRef = this.dialog.open(UserSectionLoginComponent,
+      this.signUpDialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       const username = result.username;
@@ -48,6 +54,15 @@ export class UserSectionComponent {
   }
 
   displayChangeLanguageModal() {
+    this.languageDialogConfig.disableClose = true;
+    this.languageDialogConfig.autoFocus = true;
+    this.languageDialogConfig.data = {};
 
+    const dialogRef = this.dialog.open(ChangeLanguageComponent,
+      this.languageDialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.translocoService.setActiveLang(result.language);
+    });
   }
 }
