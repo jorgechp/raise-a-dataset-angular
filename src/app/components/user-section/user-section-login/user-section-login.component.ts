@@ -11,9 +11,10 @@ import {
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {UserSectionComponent} from "../user-section.component";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 
-export interface DialogData {
+interface DialogData {
   username: string;
   password: string;
 }
@@ -30,6 +31,7 @@ export interface DialogData {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    TranslocoDirective,
   ],
   templateUrl: './user-section-login.component.html',
   styleUrl: './user-section-login.component.scss'

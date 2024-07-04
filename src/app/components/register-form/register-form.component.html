@@ -1,7 +1,7 @@
-<div>
+<div *transloco="let t; prefix: 'register'">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Sign up</mat-card-title>
+      <mat-card-title>{{ t('signUp') }}</mat-card-title>
     </mat-card-header>
     <div *ngIf="!this.isUsedCreated">
       <form [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit()">
@@ -9,19 +9,19 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput placeholder="Username" formControlName="username">
+                <input formControlName="username" matInput placeholder="{{ t('username') }}">
                 @if (signupForm.controls['username'].hasError('required')) {
-                  <mat-error>Username is <strong>required</strong></mat-error>
+                  <mat-error>{{ t('usernameRequired') }} <strong>{{ t('required') }}</strong></mat-error>
                 }
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput placeholder="e-mail" formControlName="email">
+                <input formControlName="email" matInput placeholder="{{ t('email') }}">
                 @if (signupForm.controls['email'].hasError('required')) {
-                  <mat-error>E-mail is <strong>required</strong></mat-error>
+                  <mat-error>{{ t('emailRequired') }} <strong>{{ t('required') }}</strong></mat-error>
                 } @else if (signupForm.controls['email'].hasError('email')) {
-                  <mat-error>Wrong <strong>e-mail format</strong></mat-error>
+                  <mat-error>{{ t('wrong') }} <strong>{{ t('eMailFormat') }}</strong></mat-error>
                 }
               </mat-form-field>
             </div>
@@ -29,23 +29,23 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput type="password" placeholder="Password" formControlName="password1">
+                <input formControlName="password1" matInput placeholder="{{ t('password') }}" type="password">
                 @if (signupForm.controls['password1'].hasError('required')) {
-                  <mat-error>Password <strong>required</strong></mat-error>
+                  <mat-error>{{ t('password') }} <strong>{{ t('required') }}</strong></mat-error>
                 } @else if (signupForm.controls['password1'].hasError('pattern')) {
                   <ng-container>
-                    <mat-error>Password <strong>wrong format</strong></mat-error>
+                    <mat-error>{{ t('password') }} <strong>{{ t('wrongFormat') }}</strong></mat-error>
                     <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.LOWERCASE)">
-                      At least one lowercase
+                      {{ t('atLeastOneLowercase') }}
                     </div>
                     <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.UPPERCASE)">
-                      At least one uppercase
+                      {{ t('atLeastOneUppercase') }}
                     </div>
                     <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.DIGIT)">
-                      At least one digit
+                      {{ t('atLeastOneDigit') }}
                     </div>
                     <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.SPECIAL_CHARACTER)">
-                      At least one special character
+                      {{ t('atLeastOneSpecialCharacter') }}
                     </div>
                   </ng-container>
                 }
@@ -53,37 +53,38 @@
             </div>
             <div class="col">
               <mat-form-field class="full-width">
-                <input matInput type="password" placeholder="Retype your password" formControlName="password2">
+                <input formControlName="password2" matInput placeholder="{{ t('retypePassword') }}" type="password">
                 @if (signupForm.controls['password2'].hasError('required')) {
-                  <mat-error>Password <strong>required</strong></mat-error>
+                  <mat-error>{{ t('password') }} <strong>{{ t('required') }}</strong></mat-error>
                 }
                 @if (signupForm.controls['password2']!.value! !== signupForm.controls['password1']!.value!) {
-                  <mat-error>Password <strong>does not match.</strong></mat-error>
+                  <mat-error>{{ t('password') }} <strong>{{ t('doNotMatch') }}.</strong></mat-error>
                 }
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <mat-checkbox formControlName="ageConditions">I'm over 13 years old.</mat-checkbox>
+              <mat-checkbox formControlName="ageConditions">{{ t('imOver13YearsOld') }}.</mat-checkbox>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <mat-checkbox formControlName="acceptedConditions">I accept the Terms and conditions.</mat-checkbox>
+              <mat-checkbox formControlName="acceptedConditions">{{ t('iAcceptTermsConditions') }}.</mat-checkbox>
             </div>
           </div>
 
         </mat-card-content>
         <mat-card-actions>
-          <button *ngIf="this.signupForm.valid" mat-raised-button color="primary" type="submit">Sign up</button>
+          <button *ngIf="this.signupForm.valid" color="primary" mat-raised-button type="submit">{{ t('signUp') }}
+          </button>
         </mat-card-actions>
       </form>
 
     </div>
     <div *ngIf="isUsedCreated">
       <mat-card-content>
-        <mat-label>Your user have been created. Welcome!</mat-label>
+        <mat-label>{{ t('yourUserHaveBeenCreated') }}</mat-label>
       </mat-card-content>
     </div>
   </mat-card>
