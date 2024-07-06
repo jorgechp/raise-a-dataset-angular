@@ -25,9 +25,13 @@
   },
   "login": {
     "welcome": "Welcome!",
+    "welcomeAfterLogin": "Welcome back",
     "password": "Password",
     "login": "Login",
     "cancel": "Cancel"
+  },
+  "logout": {
+    "messageAfterLogout": "Session closed"
   },
   "userSection": {
     "signUp": "Sign up",

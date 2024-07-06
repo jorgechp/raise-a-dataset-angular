@@ -83,4 +83,10 @@ export class AuthenticationService {
   loadCurrentUser() {
     this._userSubject.next(this.getCurrentUser());
   }
+
+  generateAndStoreGuestUser(): void {
+    const guestUser = new User();
+    guestUser.setRoles([UserRole.ROLE_GUEST]);
+    this.storeCurrentUser(guestUser);
+  }
 }
