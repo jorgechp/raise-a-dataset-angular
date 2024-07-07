@@ -3,7 +3,6 @@ import {Component, OnInit} from '@angular/core';
 import {ReactiveFormsModule,} from '@angular/forms';
 import {CommonModule} from "@angular/common";
 
-import {User} from "../../domain/user";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {UserSectionLoginComponent} from "./user-section-login/user-section-login.component";
@@ -12,8 +11,8 @@ import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
 import {ChangeLanguageComponent} from "./change-language/change-language.component";
 import {UserRole} from "../../domain/user-role";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {AbstractComponent} from "../abstract/abstract-component";
 import {takeWhile} from "rxjs";
+import {AbstractTranslationsComponent} from "../abstract/abstract-translations-component";
 
 
 @Component({
@@ -28,26 +27,25 @@ import {takeWhile} from "rxjs";
     TranslocoDirective
   ]
 })
-export class UserSectionComponent extends AbstractComponent implements OnInit {
+export class UserSectionComponent extends AbstractTranslationsComponent implements OnInit {
   private readonly signUpDialogConfig = new MatDialogConfig();
   private readonly languageDialogConfig = new MatDialogConfig();
   public userRoles: UserRole[] = [];
   protected readonly UserRole = UserRole;
-  private loginWelcomeMessage: string = '';
   private logoutMessage: string = '';
 
-  constructor(private dialog: MatDialog,
+  constructor(protected override translocoService: TranslocoService,
+              private dialog: MatDialog,
               private authenticationService: AuthenticationService,
-              private translocoService: TranslocoService,
               private snackBar: MatSnackBar) {
-    super();
+    super(translocoService);
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    super.ngOnInit();
     this.authenticationService.currentUserSubscription.subscribe((user) => {
       this.userRoles = user.getRoles();
     });
-    this.loadTranslations();
   }
 
   displaySignUpModal(): void {
@@ -57,20 +55,6 @@ export class UserSectionComponent extends AbstractComponent implements OnInit {
 
     const dialogRef = this.dialog.open(UserSectionLoginComponent,
       this.signUpDialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      const username = result.username;
-      const password = result.password;
-
-      this.authenticationService.login(username, password).subscribe(
-        (user: User) => {
-          this.snackBar.open(`${this.loginWelcomeMessage}, ${username}!`, undefined,
-            {
-              duration: 4000
-            });
-        }
-      );
-    });
   }
 
   doLogout() {
@@ -94,9 +78,7 @@ export class UserSectionComponent extends AbstractComponent implements OnInit {
     });
   }
 
-  private loadTranslations() {
-    this.translocoService.selectTranslate('login.welcomeAfterLogin').pipe(takeWhile(() => this.isAlive))
-      .subscribe(value => this.loginWelcomeMessage = value);
+  protected loadTranslations() {
     this.translocoService.selectTranslate('logout.messageAfterLogout').pipe(takeWhile(() => this.isAlive))
       .subscribe(value => this.logoutMessage = value);
   }

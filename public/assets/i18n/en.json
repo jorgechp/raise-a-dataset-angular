@@ -28,7 +28,8 @@
     "welcomeAfterLogin": "Welcome back",
     "password": "Password",
     "login": "Login",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "error": "Login error. Check your username and password."
   },
   "logout": {
     "messageAfterLogout": "Session closed"

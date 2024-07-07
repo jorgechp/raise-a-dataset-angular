@@ -13,6 +13,9 @@
         <input [(ngModel)]="this.formData.password" matInput type="password"/>
       </mat-form-field>
     </div>
+    <div *ngIf="this.isLoginError" class="row">
+      <mat-error>{{ t('error') }}</mat-error>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button (click)="onLoginClick()" mat-button>{{ t('login') }}</button>
