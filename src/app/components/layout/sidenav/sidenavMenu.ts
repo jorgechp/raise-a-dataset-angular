@@ -13,5 +13,11 @@ export const SIDENAV_MENU: ISidenavMenuItem[] = [
     isActive: true,
     role: UserRole.ROLE_GUEST,
     routeLink: 'signup'
+  },
+  {
+    title: 'Raise',
+    isActive: true,
+    role: UserRole.ROLE_USER,
+    routeLink: 'raise'
   }
 ]

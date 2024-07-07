@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
 export const routes: Routes = [
   {
@@ -45,5 +45,13 @@ export const routes: Routes = [
         (c) => c.DragDropComponent
       ),
     title: 'Drag-Drop'
+  },
+  {
+    path: 'raise',
+    loadComponent: () =>
+      import('./components/raise-dataset/raise-dataset.component').then(
+        (c) => c.RaiseDatasetComponent
+      ),
+    title: 'Raise'
   },
 ];
