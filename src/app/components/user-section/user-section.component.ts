@@ -1,13 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {ReactiveFormsModule,} from '@angular/forms';
 import {CommonModule} from "@angular/common";
 
-import {User} from "../../domain/user";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {UserSectionLoginComponent} from "./user-section-login/user-section-login.component";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
+import {ChangeLanguageComponent} from "./change-language/change-language.component";
+import {UserRole} from "../../domain/user-role";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {takeWhile} from "rxjs";
+import {AbstractTranslationsComponent} from "../abstract/abstract-translations-component";
 
 
 @Component({
@@ -18,36 +23,63 @@ import {AuthenticationService} from "../../services/authentication/authenticatio
   imports: [
     CommonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoDirective
   ]
 })
-export class UserSectionComponent {
-  private readonly dialogConfig = new MatDialogConfig();
+export class UserSectionComponent extends AbstractTranslationsComponent implements OnInit {
+  private readonly signUpDialogConfig = new MatDialogConfig();
+  private readonly languageDialogConfig = new MatDialogConfig();
+  public userRoles: UserRole[] = [];
+  protected readonly UserRole = UserRole;
+  private logoutMessage: string = '';
 
-  constructor(private dialog: MatDialog,
-              private authenticationService: AuthenticationService) {
+  constructor(protected override translocoService: TranslocoService,
+              private dialog: MatDialog,
+              private authenticationService: AuthenticationService,
+              private snackBar: MatSnackBar) {
+    super(translocoService);
   }
 
-  displaySignUpModal(): void {
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
-    this.dialogConfig.data = {};
-
-    const dialogRef = this.dialog.open(UserSectionLoginComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      const username = result.username;
-      const password = result.password;
-
-      this.authenticationService.login(username, password).subscribe(
-        (user: User) => {
-
-        }
-      );
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.authenticationService.currentUserSubscription.subscribe((user) => {
+      this.userRoles = user.getRoles();
     });
   }
 
-  displayChangeLanguageModal() {
+  displaySignUpModal(): void {
+    this.signUpDialogConfig.disableClose = true;
+    this.signUpDialogConfig.autoFocus = true;
+    this.signUpDialogConfig.data = {};
 
+    const dialogRef = this.dialog.open(UserSectionLoginComponent,
+      this.signUpDialogConfig);
+  }
+
+  doLogout() {
+    this.authenticationService.generateAndStoreGuestUser();
+    this.snackBar.open(`${this.logoutMessage}`, undefined,
+      {
+        duration: 4000
+      });
+  }
+
+  displayChangeLanguageModal() {
+    this.languageDialogConfig.disableClose = true;
+    this.languageDialogConfig.autoFocus = true;
+    this.languageDialogConfig.data = {};
+
+    const dialogRef = this.dialog.open(ChangeLanguageComponent,
+      this.languageDialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.translocoService.setActiveLang(result.language);
+    });
+  }
+
+  protected loadTranslations() {
+    this.translocoService.selectTranslate('logout.messageAfterLogout').pipe(takeWhile(() => this.isAlive))
+      .subscribe(value => this.logoutMessage = value);
   }
 }

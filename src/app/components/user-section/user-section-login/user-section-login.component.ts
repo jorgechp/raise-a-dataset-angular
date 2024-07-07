@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {
@@ -11,9 +11,16 @@ import {
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {UserSectionComponent} from "../user-section.component";
+import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
+import {catchError, of, takeWhile, tap} from "rxjs";
+import {User} from "../../../domain/user";
+import {AuthenticationService} from "../../../services/authentication/authentication.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {CommonModule} from "@angular/common";
+import {AbstractTranslationsComponent} from "../../abstract/abstract-translations-component";
 
 
-export interface DialogData {
+interface DialogData {
   username: string;
   password: string;
 }
@@ -22,6 +29,7 @@ export interface DialogData {
   selector: 'app-user-section-login',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
@@ -30,21 +38,56 @@ export interface DialogData {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    TranslocoDirective,
   ],
   templateUrl: './user-section-login.component.html',
   styleUrl: './user-section-login.component.scss'
 })
-export class UserSectionLoginComponent {
+export class UserSectionLoginComponent extends AbstractTranslationsComponent {
   public formData: DialogData = {username: '', password: ''}
+  @Input() isLoginError: boolean = false;
+  private loginWelcomeMessage: string = '';
 
-  constructor(private dialogRef: MatDialogRef<UserSectionComponent>) {
+  constructor(protected override translocoService: TranslocoService,
+              private dialogRef: MatDialogRef<UserSectionComponent>,
+              private authenticationService: AuthenticationService,
+              private snackBar: MatSnackBar) {
+    super(translocoService);
+  }
+
+  public login() {
+    if (this.formData.username.length === 0 || this.formData.password.length === 0) {
+      this.isLoginError = true;
+      return;
+    }
+    this.authenticationService.login(this.formData.username, this.formData.password).pipe(
+      tap((user: User) => {
+        this.snackBar.open(`${this.loginWelcomeMessage}, ${this.formData.username}!`, undefined,
+          {
+            duration: 4000
+          });
+        this.dialogRef.close();
+      }),
+      catchError(error => {
+        if (error.status === 401) {
+          this.isLoginError = true;
+          return of(null);
+        }
+        return error;
+      })
+    ).subscribe();
   }
 
   onLoginClick(): void {
-    this.dialogRef.close(this.formData);
+    this.login();
   }
 
   onCancelClick() {
     this.dialogRef.close();
+  }
+
+  protected loadTranslations() {
+    this.translocoService.selectTranslate('login.welcomeAfterLogin').pipe(takeWhile(() => this.isAlive))
+      .subscribe(value => this.loginWelcomeMessage = value);
   }
 }

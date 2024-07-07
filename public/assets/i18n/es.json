@@ -1,0 +1,40 @@
+{
+  "common": {
+    "username": "Nombre de usuario"
+  },
+  "register": {
+    "signUp": "Registro",
+    "required": "obligatorio",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "usernameRequired": "El nombre de usuario es",
+    "emailRequired": "El correo electrónico es",
+    "wrong": "incorrecto",
+    "eMailFormat": "formato de correo electrónico",
+    "password": "Contraseña",
+    "wrongFormat": "formato incorrecto",
+    "atLeastOneLowercase": "Al menos una minúscula",
+    "atLeastOneUppercase": "Al menos una mayúscula",
+    "atLeastOneDigit": "Al menos un dígito",
+    "atLeastOneSpecialCharacter": "Al menos un carácter especial",
+    "doNotMatch": "no coinciden",
+    "retypePassword": "Vuelva a escribir su contraseña",
+    "yourUserHaveBeenCreated": "Su usuario ha sido creado",
+    "imOver13YearsOld": "Soy mayor de 13 años",
+    "iAcceptTermsConditions": "Acepto los términos y condiciones"
+  },
+  "login": {
+    "welcome": "¡Bienvenido!",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "cancel": "Cancelar"
+  },
+  "userSection": {
+    "signUp": "Registrarse",
+    "changeLanguage": "Cambiar de idioma",
+    "selectLanguage": "Selecciona el idioma",
+    "change": "Cambiar",
+    "languages": "Idiomas",
+    "cancel": "Cancelar"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "common": {
+    "username": "Username"
+  },
+  "register": {
+    "signUp": "Sign up",
+    "required": "required",
+    "username": "Username",
+    "email": "E-Mail",
+    "usernameRequired": "Username is",
+    "emailRequired": "E-mail is",
+    "wrong": "wrong",
+    "eMailFormat": "E-mail format",
+    "password": "Password",
+    "wrongFormat": "wrong format",
+    "atLeastOneLowercase": "At least one lowercase",
+    "atLeastOneUppercase": "At least one uppercase",
+    "atLeastOneDigit": "At least one digit",
+    "atLeastOneSpecialCharacter": "At least one special character",
+    "doNotMatch": "do not match",
+    "retypePassword": "Retype your password",
+    "yourUserHaveBeenCreated": "Your user have been created",
+    "imOver13YearsOld": "I'm over 13 years old",
+    "iAcceptTermsConditions": "I accept terms and conditions"
+  },
+  "login": {
+    "welcome": "Welcome!",
+    "welcomeAfterLogin": "Welcome back",
+    "password": "Password",
+    "login": "Login",
+    "cancel": "Cancel",
+    "error": "Login error. Check your username and password."
+  },
+  "logout": {
+    "messageAfterLogout": "Session closed"
+  },
+  "userSection": {
+    "signUp": "Sign up",
+    "changeLanguage": "Change Language",
+    "selectLanguage": "Select the language",
+    "change": "Change",
+    "languages": "Languages",
+    "cancel": "Cancel"
+  }
+}

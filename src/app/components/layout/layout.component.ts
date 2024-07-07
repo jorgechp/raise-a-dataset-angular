@@ -48,10 +48,10 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.currentUserSubscription.subscribe((user) => {
       const userRoles = user.getRoles();
+      this.rootRoutes = SIDENAV_MENU;
       this.rootRoutes = this.rootRoutes.filter(route => {
         return userRoles.includes(route.role);
       });
-      console.log(this.rootRoutes);
     });
   }
 

@@ -1,0 +1,19 @@
+<div *transloco="let t; prefix: 'userSection'">
+  <h2 mat-dialog-title>{{ t('selectLanguage') }}</h2>
+  <mat-dialog-content>
+    <div class="row">
+      <mat-form-field>
+        <mat-label>{{ t('languages') }}</mat-label>
+        <mat-select [(value)]="this.formData.language">
+          @for (language of this.languageList; track language) {
+            <mat-option [value]="language.id">{{ language.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button (click)="onChangeClick()" mat-button>{{ t('change') }}</button>
+    <button [mat-dialog-close]="onCancelClick" mat-button>{{ t('cancel') }}</button>
+  </mat-dialog-actions>
+</div>
