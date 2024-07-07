@@ -12,6 +12,8 @@ import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
 import {ChangeLanguageComponent} from "./change-language/change-language.component";
 import {UserRole} from "../../domain/user-role";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {AbstractComponent} from "../abstract/abstract-component";
+import {takeWhile} from "rxjs";
 
 
 @Component({
@@ -26,7 +28,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     TranslocoDirective
   ]
 })
-export class UserSectionComponent implements OnInit {
+export class UserSectionComponent extends AbstractComponent implements OnInit {
   private readonly signUpDialogConfig = new MatDialogConfig();
   private readonly languageDialogConfig = new MatDialogConfig();
   public userRoles: UserRole[] = [];
@@ -38,6 +40,7 @@ export class UserSectionComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private translocoService: TranslocoService,
               private snackBar: MatSnackBar) {
+    super();
   }
 
   ngOnInit(): void {
@@ -92,9 +95,9 @@ export class UserSectionComponent implements OnInit {
   }
 
   private loadTranslations() {
-    this.translocoService.selectTranslate('login.welcomeAfterLogin')
+    this.translocoService.selectTranslate('login.welcomeAfterLogin').pipe(takeWhile(() => this.isAlive))
       .subscribe(value => this.loginWelcomeMessage = value);
-    this.translocoService.selectTranslate('logout.messageAfterLogout')
+    this.translocoService.selectTranslate('logout.messageAfterLogout').pipe(takeWhile(() => this.isAlive))
       .subscribe(value => this.logoutMessage = value);
   }
 }
