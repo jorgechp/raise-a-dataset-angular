@@ -1,19 +1,19 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="addressForm" novalidate>
-  <mat-stepper linear>
+  <mat-stepper linear="true">
     <mat-step label="Step 1" state="number">
       <app-raise-dataset-intro></app-raise-dataset-intro>
       <div>
         <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
-    <mat-step label="Step 2" state="edit">
+    <mat-step [stepControl]="addressForm" label="Step 2" state="edit">
       <app-raise-dataset-form-1 [parentGroup]="addressForm"></app-raise-dataset-form-1>
       <div>
         <button mat-button matStepperPrevious type="button">Back</button>
         <button mat-button matStepperNext type="button">Next</button>
       </div>
     </mat-step>
-    <mat-step label="Step 3">
+    <mat-step [stepControl]="addressForm" label="Step 3">
       <p>You're welcome.</p>
     </mat-step>
   </mat-stepper>

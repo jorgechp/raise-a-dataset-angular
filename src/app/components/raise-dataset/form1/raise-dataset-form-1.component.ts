@@ -1,11 +1,12 @@
 import {Component, inject, Input} from '@angular/core';
 
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
+import {MatFormField, MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
+import {MatDatepicker, MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
 
 
 @Component({
@@ -18,6 +19,10 @@ import {MatCardModule} from '@angular/material/card';
     MatButtonModule,
     MatSelectModule,
     MatRadioModule,
+    MatDatepickerModule,
+    MatFormField,
+    MatDatepicker,
+    MatDatepickerToggle,
     MatCardModule,
     ReactiveFormsModule
   ]

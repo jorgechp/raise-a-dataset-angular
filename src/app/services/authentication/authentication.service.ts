@@ -49,6 +49,7 @@ export class AuthenticationService {
         const user: User = new User();
         user.authorization = authorization;
         user.authorities = loginData.authorities;
+        user.username = loginData.username;
         this.storeCurrentUser(user);
         return user;
       })
