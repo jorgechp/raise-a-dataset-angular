@@ -1,25 +1,23 @@
 <div [formGroup]="parentGroup!">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Dataset information</mat-card-title>
+      <mat-card-title>Repository information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Dataset name</mat-label>
-            <input formControlName="name" matInput placeholder="Dataset name">
-            @if (this.parentGroup!.controls['name'].hasError('required')) {
-            <mat-error>Name is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
+          <mat-checkbox [checked]="isAlreadyInRepository" aria-label="Is already in a repository"></mat-checkbox>
+          <mat-label>I have uploaded my dataset to a repository</mat-label>
+          @if (this.parentGroup!.controls['name'].hasError('required')) {
+          <mat-error>Name is <strong>required</strong></mat-error>
+          }
         </div>
       </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Author name</mat-label>
-            <input formControlName="author" matInput placeholder="Author name">
+            <input formControlName="doi" matInput placeholder="doi">
             <mat-hint>How do you want to appear as author of this dataset?</mat-hint>
             @if (this.parentGroup!.controls['author'].hasError('required')) {
             <mat-error>Author is <strong>required</strong></mat-error>
