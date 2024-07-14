@@ -1,10 +1,10 @@
 {
   "common": {
-    "username": "Username"
+    "username": "Username",
+    "required": "required"
   },
   "register": {
     "signUp": "Sign up",
-    "required": "required",
     "username": "Username",
     "email": "E-Mail",
     "usernameRequired": "Username is",
@@ -41,5 +41,14 @@
     "change": "Change",
     "languages": "Languages",
     "cancel": "Cancel"
+  },
+  "repository": {
+    "repositoryName": "Repository name",
+    "name": "Name",
+    "description": "Description",
+    "createButton": "Create and select repository",
+    "addRepositoryButton": "Click here to add a new repository",
+    "selectCurrentRepositoryButton": "Click here to select an existent repository",
+    "repositoryCreated": "The repository has been created. It should be approved before appearing for other users"
   }
 }

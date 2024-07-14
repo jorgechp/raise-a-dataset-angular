@@ -13,6 +13,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {UserSectionComponent} from "../user-section/user-section.component";
 import {ISidenavMenuItem, SIDENAV_MENU} from "./sidenav/sidenavMenu";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {RepositoryComponent} from "../repository/repository/repository.component";
 
 @Component({
   selector: 'app-layout',
@@ -29,7 +30,8 @@ import {AuthenticationService} from "../../services/authentication/authenticatio
     AsyncPipe,
     RouterLink,
     RouterLinkActive,
-    UserSectionComponent
+    UserSectionComponent,
+    RepositoryComponent
   ]
 })
 export class LayoutComponent implements OnInit {
