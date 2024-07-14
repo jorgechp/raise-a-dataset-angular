@@ -13,7 +13,6 @@ import {MatButtonModule} from "@angular/material/button";
 import {UserSectionComponent} from "../user-section.component";
 import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
 import {catchError, of, takeWhile, tap} from "rxjs";
-import {User} from "../../../domain/user";
 import {AuthenticationService} from "../../../services/authentication/authentication.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CommonModule} from "@angular/common";
@@ -61,7 +60,7 @@ export class UserSectionLoginComponent extends AbstractTranslationsComponent {
       return;
     }
     this.authenticationService.login(this.formData.username, this.formData.password).pipe(
-      tap((user: User) => {
+      tap(() => {
         this.snackBar.open(`${this.loginWelcomeMessage}, ${this.formData.username}!`, undefined,
           {
             duration: 4000

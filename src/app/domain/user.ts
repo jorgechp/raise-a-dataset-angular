@@ -4,7 +4,8 @@ import {UserRole} from "./user-role";
 
 @HateoasResource('users')
 export class User extends Resource {
-  public id: number | undefined;
+  public id: string | undefined;
+  public uri: string | undefined;
   public username: string | undefined;
   public email: string | undefined;
   public password: string | undefined;
