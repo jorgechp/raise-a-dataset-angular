@@ -21,6 +21,7 @@
           <mat-form-field class="full-width">
             <mat-label>{{ t('doi') }}</mat-label>
             <input formControlName="doi" matInput placeholder="DOI">
+            <mat-hint>{{ t('format') }}: <strong>10.1080/02626667.2018.1560449</strong></mat-hint>
             @if (this.parentGroup!.controls['doi'].hasError('required')) {
               <mat-error>{{ t('doi_required_error') }}<strong *transloco="let t; prefix: 'common'">
                 {{ t('required') }}</strong></mat-error>

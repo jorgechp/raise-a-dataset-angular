@@ -47,6 +47,8 @@ import {TranslocoDirective} from "@jsverse/transloco";
   ]
 })
 export class RaiseDatasetComponent {
+  private fb = inject(FormBuilder);
+
   public datasetForm = this.fb.group({
     name: [null, Validators.required],
     author: [this.authenticationService.getCurrentUser().username, Validators.required],
@@ -54,7 +56,6 @@ export class RaiseDatasetComponent {
     creationDate: [new Date().toISOString().slice(0, 10), Validators.required],
   });
 
-  private fb = inject(FormBuilder);
   public repositoryForm = this.fb.group({
     repository: [null, Validators.required],
     doi: [null, Validators.compose([Validators.required, Validators.pattern(DOIRexp)])],
