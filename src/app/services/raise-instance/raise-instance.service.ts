@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Repository} from "../../domain/repository";
 import {AbstractHateoasService} from "../abstract/abstractHateoas.service";
+import {RaiseInstance} from "../../domain/raise-instance";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RepositoryService extends AbstractHateoasService<Repository> {
+export class RaiseInstanceService extends AbstractHateoasService<RaiseInstance> {
 
   constructor() {
-    super(Repository);
+    super(RaiseInstance);
   }
-
 }

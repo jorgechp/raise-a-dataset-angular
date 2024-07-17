@@ -1,47 +1,35 @@
-<div [formGroup]="parentGroup!">
+<div *transloco="let t; prefix: 'raiseDataset'" [formGroup]="parentGroup!">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Repository information</mat-card-title>
+      <mat-card-title>{{ t('repository') }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <mat-checkbox [checked]="isAlreadyInRepository" aria-label="Is already in a repository"></mat-checkbox>
-          <mat-label>I have uploaded my dataset to a repository</mat-label>
-          @if (this.parentGroup!.controls['name'].hasError('required')) {
-          <mat-error>Name is <strong>required</strong></mat-error>
-          }
+          <app-repository (selectedValue)="this.handleSelectValue($event)"></app-repository>
         </div>
       </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="this.selectedRepository" class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ t('repository_details') }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Author name</mat-label>
-            <input formControlName="doi" matInput placeholder="doi">
-            <mat-hint>How do you want to appear as author of this dataset?</mat-hint>
-            @if (this.parentGroup!.controls['author'].hasError('required')) {
-            <mat-error>Author is <strong>required</strong></mat-error>
+            <mat-label>{{ t('doi') }}</mat-label>
+            <input formControlName="doi" matInput placeholder="DOI">
+            @if (this.parentGroup!.controls['doi'].hasError('required')) {
+              <mat-error>{{ t('doi_required_error') }}<strong *transloco="let t; prefix: 'common'">
+                {{ t('required') }}</strong></mat-error>
+            } @else if (this.parentGroup!.controls['doi'].hasError('pattern')) {
+              <mat-error>{{ t('doi_pattern_error') }}</mat-error>
             }
           </mat-form-field>
         </div>
       </div>
-      <div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-form-field>
-              <mat-label>Creation date</mat-label>
-              <input [matDatepicker]="picker" class="date_input" formControlName="creationDate" matInput readonly>
-              <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-hint>Specify the creation date of this dataset</mat-hint>
-            @if (this.parentGroup!.controls['creationDate'].hasError('required')) {
-            <mat-error>Creation date is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-
     </mat-card-content>
   </mat-card>
 </div>

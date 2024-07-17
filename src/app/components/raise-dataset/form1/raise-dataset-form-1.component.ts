@@ -7,6 +7,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {MatDatepicker, MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
+import {TranslocoDirective} from "@jsverse/transloco";
+import {MatStepperPrevious} from "@angular/material/stepper";
 
 
 @Component({
@@ -24,7 +26,9 @@ import {MatDatepicker, MatDatepickerModule, MatDatepickerToggle} from "@angular/
     MatDatepicker,
     MatDatepickerToggle,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoDirective,
+    MatStepperPrevious
   ]
 })
 export class RaiseDatasetForm1Component {

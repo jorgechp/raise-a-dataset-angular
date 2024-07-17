@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {User} from "../../domain/user";
+
+import {Dataset} from "../../domain/dataset";
 import {AbstractHateoasService} from "../abstract/abstractHateoas.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends AbstractHateoasService<User> {
+export class DatasetService extends AbstractHateoasService<Dataset> {
 
-  constructor() { super(User); }
-
+  constructor() {
+    super(Dataset)
+  }
 }
