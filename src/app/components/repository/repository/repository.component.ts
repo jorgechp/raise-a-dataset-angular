@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {Repository} from "../../../domain/repository";
 import {RepositoryService} from "../../../services/repository/repository.service";
@@ -46,7 +46,7 @@ export class RepositoryComponent extends AbstractTranslationsComponent implement
   filteredRepositories: Repository[];
   repositories: Repository[] = [];
   isAddNewRepositoryMode: boolean = false;
-  @Output() selectedValue: Repository | undefined;
+  @Output() selectedValue: EventEmitter<Repository> = new EventEmitter();
   private fb = inject(FormBuilder);
   newRepositoryForm = this.fb.group({
     name: [null, Validators.required],
@@ -60,7 +60,6 @@ export class RepositoryComponent extends AbstractTranslationsComponent implement
               private snackBar: MatSnackBar,
               private transLoco: TranslocoService) {
     super(transLoco);
-    this.selectedValue = undefined;
     this.filteredRepositories = [];
     this.loadTranslations();
   }
@@ -81,10 +80,10 @@ export class RepositoryComponent extends AbstractTranslationsComponent implement
 
   handleOptionSelected() {
     const selectedName = this.input!.nativeElement.value.toLowerCase();
-    this.selectedValue = this.repositories.find(o => o.name?.toLowerCase().includes(selectedName));
+    this.selectedValue.emit(this.repositories.find(o => o.name?.toLowerCase().includes(selectedName)));
   }
 
-  handleaddRepository() {
+  handleAddRepository() {
     this.isAddNewRepositoryMode = !this.isAddNewRepositoryMode;
   }
 
@@ -95,8 +94,9 @@ export class RepositoryComponent extends AbstractTranslationsComponent implement
     repositoryToAdd.address = this.newRepositoryForm.get("url")!.value!;
     repositoryToAdd.addedBy = this.userAuthentication.getCurrentUser().uri;
 
-    this.repositoryService.addRepository(repositoryToAdd).subscribe(
+    this.repositoryService.add(repositoryToAdd).subscribe(
       (newRepository) => {
+        this.selectedValue.emit(newRepository);
         this.snackBar.open(this.repositoryCreatedMessage ? this.repositoryCreatedMessage : '');
       }
     );

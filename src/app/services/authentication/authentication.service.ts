@@ -52,6 +52,7 @@ export class AuthenticationService {
         user.authorities = loginData.authorities;
         user.id = loginData.id;
         user.uri = loginData.uri;
+        user.username = loginData.username;
         this.storeCurrentUser(user);
         return user;
       })

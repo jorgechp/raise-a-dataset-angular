@@ -70,7 +70,7 @@ export class RegisterFormComponent {
       user.username = this.signupForm.get("username")!.value!;
       user.email = this.signupForm.get("email")!.value!;
       user.password = this.signupForm.get("password1")!.value!;
-      this.userService.addUser(user).subscribe(value => {
+      this.userService.add(user).subscribe(value => {
         this.isUsedCreated = true;
       });
     }

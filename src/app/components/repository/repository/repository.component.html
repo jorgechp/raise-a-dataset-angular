@@ -1,8 +1,8 @@
 <div *transloco="let t; prefix: 'repository'">
   <mat-card class="form-card">
     <mat-card-header>
-      <mat-card-title *ngIf="!this.isAddNewRepositoryMode">Repository selection</mat-card-title>
-      <mat-card-title *ngIf="this.isAddNewRepositoryMode">Add a new repository</mat-card-title>
+      <mat-card-title *ngIf="!this.isAddNewRepositoryMode">{{ t('repositorySelection') }}</mat-card-title>
+      <mat-card-title *ngIf="this.isAddNewRepositoryMode">{{ t('addNewRepositoryButton') }}</mat-card-title>
     </mat-card-header>
     <mat-card-content *ngIf="!this.isAddNewRepositoryMode">
       <mat-form-field class="full-width">
@@ -69,10 +69,10 @@
     </mat-dialog-actions>
   </mat-card>
   <div class="toggleFormMode">
-    <mat-label (click)="this.handleaddRepository()"
+    <mat-label (click)="this.handleAddRepository()"
                *ngIf="!this.isAddNewRepositoryMode">{{ t('addRepositoryButton') }}
     </mat-label>
-    <mat-label (click)="this.handleaddRepository()"
+    <mat-label (click)="this.handleAddRepository()"
                *ngIf="this.isAddNewRepositoryMode">{{ t('selectCurrentRepositoryButton') }}
     </mat-label>
   </div>
