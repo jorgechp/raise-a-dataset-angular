@@ -1,0 +1,43 @@
+<div class="mat-elevation-z2">
+  <mat-form-field>
+    <mat-label>Search by name, description, author...</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="Search by name, description, author...">
+  </mat-form-field>
+
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by name">Name</th>
+      <td *matCellDef="let row" mat-cell>{{ row.name }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by Description">Description</th>
+      <td *matCellDef="let row" mat-cell>{{ row.description }}</td>
+    </ng-container>
+
+    <!-- Description Author -->
+    <ng-container matColumnDef="author">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by author">author</th>
+      <td *matCellDef="let row" mat-cell>{{ row.author }}</td>
+    </ng-container>
+
+    <!-- Description Registration Date -->
+    <ng-container matColumnDef="registrationDate">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by author">registrationDate</th>
+      <td *matCellDef="let row" mat-cell>{{ row.registrationDate }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+                 [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page">
+  </mat-paginator>
+</div>

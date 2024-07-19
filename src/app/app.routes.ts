@@ -25,8 +25,8 @@ export const routes: Routes = [
   {
     path: 'table',
     loadComponent: () =>
-      import('./components/table/table.component').then(
-        (c) => c.TableComponent
+      import('./components/pick-dataset/pick-dataset.component').then(
+        (c) => c.PickDatasetComponent
       ),
     title: 'Table'
   },
@@ -53,5 +53,12 @@ export const routes: Routes = [
         (c) => c.RaiseDatasetComponent
       ),
     title: 'Raise'
+  }, {
+    path: 'datasets',
+    loadComponent: () =>
+      import('./components/pick-dataset/pick-dataset.component').then(
+        (c) => c.PickDatasetComponent
+      ),
+    title: 'Datasets'
   },
 ];
