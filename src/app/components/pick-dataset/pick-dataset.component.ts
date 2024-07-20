@@ -6,6 +6,8 @@ import {Dataset} from "../../domain/dataset";
 import {DatasetService} from "../../services/dataset/dataset.service";
 import {MatFormField, MatInputModule} from "@angular/material/input";
 import {MatCommonModule} from "@angular/material/core";
+import {Router} from "@angular/router";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 
 @Component({
@@ -13,7 +15,7 @@ import {MatCommonModule} from "@angular/material/core";
   templateUrl: './pick-dataset.component.html',
   styleUrl: './pick-dataset.component.scss',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormField, MatCommonModule, MatInputModule]
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormField, MatCommonModule, MatInputModule, TranslocoDirective]
 })
 export class PickDatasetComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -21,10 +23,12 @@ export class PickDatasetComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<Dataset>;
   dataSource: MatTableDataSource<Dataset> | undefined;
 
+
   /** Columns displayed in the pick-dataset. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'description', 'author', 'registrationDate'];
 
-  constructor(private datasetService: DatasetService) {
+  constructor(private datasetService: DatasetService,
+              private router: Router) {
   }
 
 
@@ -46,5 +50,10 @@ export class PickDatasetComponent implements AfterViewInit {
     }
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  handleClickOnRow(dataset: Dataset) {
+    this.router.navigate(['/datasetInfo'], {queryParams: dataset}).then(r => {
+    });
   }
 }

@@ -82,5 +82,17 @@
     "format": "For example,",
     "doi_required_error": "DOI is",
     "doi_pattern_error": "This doesn't seem to be a DOI format"
+  },
+  "pickDataset": {
+    "search_placeholder": "Search by name, description, author...",
+    "name_column_header": "Name",
+    "description_column_header": "Description",
+    "author_column_header": "Author",
+    "registration_date_column_header": "Registration date",
+    "name_sort_description": "Sort by name",
+    "description_sort_description": "Sort by Description",
+    "author_sort_description": "Sort by author",
+    "registration_date_sort_description": "Sort by registrationDate",
+    "paginator_aria_label": "Select page"
   }
 }

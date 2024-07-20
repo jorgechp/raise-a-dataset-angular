@@ -1,36 +1,45 @@
-<div class="mat-elevation-z2">
+<div *transloco="let t; prefix: 'pickDataset'" class="mat-elevation-z2">
   <mat-form-field>
-    <mat-label>Search by name, description, author...</mat-label>
-    <input #input (keyup)="applyFilter($event)" matInput placeholder="Search by name, description, author...">
+    <mat-label>{{ t('search_placeholder') }}</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="{{ t('search_placeholder') }}">
   </mat-form-field>
 
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
+  <table aria-label="datasets" class="full-width-table" mat-table matSort>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by name">Name</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header
+          sortActionDescription="{{ t('name_column_header') }}">{{ t('name_column_header') }}
+      </th>
       <td *matCellDef="let row" mat-cell>{{ row.name }}</td>
     </ng-container>
 
     <!-- Description Column -->
     <ng-container matColumnDef="description">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by Description">Description</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header
+          sortActionDescription="{{ t('description_column_header') }}">{{ t('description_column_header') }}
+      </th>
       <td *matCellDef="let row" mat-cell>{{ row.description }}</td>
     </ng-container>
 
     <!-- Description Author -->
     <ng-container matColumnDef="author">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by author">author</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header
+          sortActionDescription="{{ t('author_column_header') }}">{{ t('author_column_header') }}
+      </th>
       <td *matCellDef="let row" mat-cell>{{ row.author }}</td>
     </ng-container>
 
     <!-- Description Registration Date -->
     <ng-container matColumnDef="registrationDate">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header sortActionDescription="Sort by author">registrationDate</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header
+          sortActionDescription="{{ t('registration_date_column_header') }}">{{ t('registration_date_column_header') }}
+      </th>
       <td *matCellDef="let row" mat-cell>{{ row.registrationDate }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr (click)="handleClickOnRow(row)" *matRowDef="let row; columns: displayedColumns;" class="pickDatasetRow"
+        mat-row></tr>
   </table>
 
   <mat-paginator #paginator
