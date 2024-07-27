@@ -51,7 +51,8 @@ export class RaiseDatasetComponent {
 
   public datasetForm = this.fb.group({
     name: [null, Validators.required],
-    author: [this.authenticationService.getCurrentUser().username, Validators.required],
+    createdBy: [this.authenticationService.getCurrentUser().username, Validators.required],
+    registeredBy: [this.authenticationService.getCurrentUser().username, Validators.required],
     description: [null, Validators.required],
     creationDate: [new Date().toISOString().slice(0, 10), Validators.required],
   });
@@ -80,10 +81,11 @@ export class RaiseDatasetComponent {
 
       const newDataset: Dataset = new Dataset();
       newDataset.name = this.datasetForm.get('name')!.value!;
-      newDataset.author = this.datasetForm.get('author')!.value!;
+      newDataset.createdBy = this.datasetForm.get('createdBy')!.value!;
+      newDataset.registeredBy = this.datasetForm.get('registeredBy')!.value!;
       newDataset.creationDate = new Date(this.datasetForm.get('creationDate')!.value!).toISOString();
       newDataset.registrationDate = new Date().toISOString();
-      newDataset.authorInSystem = [currentUser]
+      newDataset.maintainedBy = [currentUser]
       newDataset.description = this.datasetForm.get("description")!.value!;
       newDataset.repositories = [selectedRepository];
 

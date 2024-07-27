@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild} from '@angular/core';
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {Repository} from "../../../domain/repository";
-import {RepositoryService} from "../../../services/repository/repository.service";
+import {Repository} from "../../domain/repository";
+import {RepositoryService} from "../../services/repository/repository.service";
 import {ResourceCollection} from "@lagoshny/ngx-hateoas-client";
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AsyncPipe, CommonModule, NgOptimizedImage} from "@angular/common";
@@ -10,10 +10,10 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {MatDialogActions} from "@angular/material/dialog";
-import {AuthenticationService} from "../../../services/authentication/authentication.service";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
-import {AbstractTranslationsComponent} from "../../abstract/abstract-translations-component";
+import {AbstractTranslationsComponent} from "../abstract/abstract-translations-component";
 import {takeWhile} from "rxjs";
 
 @Component({

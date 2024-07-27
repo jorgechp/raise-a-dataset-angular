@@ -69,8 +69,12 @@
     "dataset_name_required_error": "Name is",
     "author_name": "Author name",
     "author_name_placeholder": "Author name",
-    "author_name_hint": "How do you want to appear as author of this dataset?",
+    "author_name_hint": "Who is the author of this dataset?",
     "author_name_required_error": "Author is",
+    "maintainer_name": "Maintainer name",
+    "maintainer_name_placeholder": "Maintainer name",
+    "maintainer_name_hint": "How do you want to appear as maintainer of this dataset?",
+    "maintainer_name_required_error": "Author is",
     "dataset_description": "Dataset description",
     "dataset_description_hint": "Write a short description to inform other users about this dataset",
     "dataset_description_required_error": "A description is required",
@@ -94,5 +98,17 @@
     "author_sort_description": "Sort by author",
     "registration_date_sort_description": "Sort by registrationDate",
     "paginator_aria_label": "Select page"
+  },
+  "datasetInfo": {
+    "maintained_by_multiple_authors": "Maintained by Multiple authors on",
+    "maintained_by_single_author": "Maintained by",
+    "dataset_information_title": "Dataset Information",
+    "dataset_information_description": "Description",
+    "dataset_information_original_author": "Original author",
+    "dataset_information_creation_date": "Creation date",
+    "repositories_title": "Repositories",
+    "name_column_header": "Name",
+    "maintainer_column_header": "Maintainer",
+    "add_new_dataset_button": "Add a new dataset"
   }
 }

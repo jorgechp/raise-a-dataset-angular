@@ -15,7 +15,14 @@ import {TranslocoDirective} from "@jsverse/transloco";
   templateUrl: './pick-dataset.component.html',
   styleUrl: './pick-dataset.component.scss',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormField, MatCommonModule, MatInputModule, TranslocoDirective]
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormField,
+    MatCommonModule,
+    MatInputModule,
+    TranslocoDirective]
 })
 export class PickDatasetComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -53,7 +60,8 @@ export class PickDatasetComponent implements AfterViewInit {
   }
 
   handleClickOnRow(dataset: Dataset) {
-    this.router.navigate(['/datasetInfo'], {queryParams: dataset}).then(r => {
+    const id = dataset.uri?.at(-1);
+    this.router.navigate(['/datasetInfo'], {queryParams: {id: id}}).then(r => {
     });
   }
 }
