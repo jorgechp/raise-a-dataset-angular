@@ -109,6 +109,6 @@
     "repositories_title": "Repositories",
     "name_column_header": "Name",
     "maintainer_column_header": "Maintainer",
-    "add_new_dataset_button": "Add a new dataset"
+    "add_new_dataset_button": "Add a new repository"
   }
 }
