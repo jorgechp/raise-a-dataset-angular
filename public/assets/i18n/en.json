@@ -98,5 +98,17 @@
     "author_sort_description": "Sort by author",
     "registration_date_sort_description": "Sort by registrationDate",
     "paginator_aria_label": "Select page"
+  },
+  "datasetInfo": {
+    "maintained_by_multiple_authors": "Maintained by Multiple authors on",
+    "maintained_by_single_author": "Maintained by",
+    "dataset_information_title": "Dataset Information",
+    "dataset_information_description": "Description",
+    "dataset_information_original_author": "Original author",
+    "dataset_information_creation_date": "Creation date",
+    "repositories_title": "Repositories",
+    "name_column_header": "Name",
+    "maintainer_column_header": "Maintainer",
+    "add_new_dataset_button": "Add a new dataset"
   }
 }

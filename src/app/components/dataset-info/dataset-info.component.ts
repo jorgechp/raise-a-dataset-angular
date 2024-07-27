@@ -1,5 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Component, OnInit} from '@angular/core';
 import {map, mergeMap} from 'rxjs/operators';
 import {forkJoin, from} from "rxjs";
 import {AsyncPipe, CommonModule, DatePipe} from '@angular/common';
@@ -17,6 +16,7 @@ import {MatTableModule} from "@angular/material/table";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {Repository} from "../../domain/repository";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 interface IRepositoryDataFormat {
   name: string;
@@ -37,7 +37,8 @@ interface IRepositoryDataFormat {
     MatButtonModule,
     MatCardModule,
     MatTableModule,
-    DatePipe
+    DatePipe,
+    TranslocoDirective
   ]
 })
 export class DatasetInfoComponent implements OnInit {
@@ -45,27 +46,6 @@ export class DatasetInfoComponent implements OnInit {
   protected dataset: Dataset | undefined;
   protected maintainers: User[];
   protected repositoryDataArray: IRepositoryDataFormat[];
-  private breakpointObserver = inject(BreakpointObserver);
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({matches}) => {
-      if (matches) {
-        return [
-          {title: 'Card 1', cols: 1, rows: 1},
-          {title: 'Card 2', cols: 1, rows: 1},
-          {title: 'Card 3', cols: 1, rows: 1},
-          {title: 'Card 4', cols: 1, rows: 1}
-        ];
-      }
-
-      return [
-        {title: 'Card 1', cols: 2, rows: 1},
-        {title: 'Card 2', cols: 1, rows: 1},
-        {title: 'Card 3', cols: 1, rows: 2},
-        {title: 'Card 4', cols: 1, rows: 1}
-      ];
-    })
-  );
 
   constructor(private activatedRoute: ActivatedRoute,
               private datasetService: DatasetService,

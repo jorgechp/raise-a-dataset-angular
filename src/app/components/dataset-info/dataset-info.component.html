@@ -1,71 +1,75 @@
-<div *ngIf="this.dataset" class="grid-container">
-  <h1 class="mat-h1">{{ this.dataset.name! }}</h1>
-  <div *ngIf="this.maintainers && this.maintainers.length > 1">
-    Maintained by Multiple authors on {{ this.dataset.registrationDate | date }}.
+<div *transloco="let t; prefix: 'datasetInfo'">
+  <div *ngIf="this.dataset" class="grid-container">
+    <h1 class="mat-h1">{{ this.dataset.name! }}</h1>
+    <div *ngIf="this.maintainers && this.maintainers.length > 1">
+      {{ t('maintained_by_multiple_authors') }} {{ this.dataset.registrationDate | date }}.
+    </div>
+    <div *ngIf="this.maintainers && this.maintainers!.length == 1">
+      {{ t('maintained_by_single_author') }} {{ this.dataset.registeredBy }}
+      on {{ this.dataset.registrationDate | date }}.
+    </div>
+    <mat-grid-list cols="2" rowHeight="350px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{ t('dataset_information_title') }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <div class="dashboard-card-content__section">
+              {{ t('dataset_information_description') }}
+            </div>
+            <div>
+              {{ this.dataset.description }}
+            </div>
+            <div class="dashboard-card-content__section">
+              {{ t('dataset_information_original_author') }}
+            </div>
+            <div>
+              {{ this.dataset.createdBy }}
+            </div>
+            <div class="dashboard-card-content__section">
+              {{ t('dataset_information_creation_date') }}
+            </div>
+            <div>
+              {{ this.dataset.creationDate | date }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{ t('repositories_title') }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <table *ngIf="this.repositoryDataArray.length > 0" [dataSource]="repositoryDataArray" mat-table>
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell>{{ t('name_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.name }}</td>
+              </ng-container>
+
+              <!-- Maintainer Column -->
+              <ng-container matColumnDef="maintainer">
+                <th *matHeaderCellDef mat-header-cell>{{ t('maintainer_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.maintainer }}</td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+            </table>
+          </mat-card-content>
+          <mat-card-actions class="actions">
+            <button color="primary" mat-raised-button type="submit">"{{ t('add_new_dataset_button') }}"</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
-  <div *ngIf="this.maintainers && this.maintainers!.length == 1">
-    Maintained by {{ this.dataset.registeredBy }} on {{ this.dataset.registrationDate | date }}.
-  </div>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            Dataset Information
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div class="dashboard-card-content__section">
-            Description
-          </div>
-          <div>
-            {{ this.dataset.description }}
-          </div>
-          <div class="dashboard-card-content__section">
-            Original author
-          </div>
-          <div>
-            {{ this.dataset.createdBy }}
-          </div>
-          <div class="dashboard-card-content__section">
-            Creation date
-          </div>
-          <div>
-            {{ this.dataset.creationDate | date }}
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            Repositories
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <table *ngIf="this.repositoryDataArray.length > 0" [dataSource]="repositoryDataArray" mat-table>
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th *matHeaderCellDef mat-header-cell> Name</th>
-              <td *matCellDef="let element" mat-cell> {{ element.name }}</td>
-            </ng-container>
-
-            <!-- Maintainer Column -->
-            <ng-container matColumnDef="maintainer">
-              <th *matHeaderCellDef mat-header-cell> Maintainer</th>
-              <td *matCellDef="let element" mat-cell> {{ element.maintainer }}</td>
-            </ng-container>
-
-            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-
-          </table>
-        </mat-card-content>
-        <mat-card-actions class="actions">
-          <button color="primary" mat-raised-button type="submit">Add a new dataset</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
 </div>
+

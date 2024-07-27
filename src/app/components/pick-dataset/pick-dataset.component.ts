@@ -15,7 +15,14 @@ import {TranslocoDirective} from "@jsverse/transloco";
   templateUrl: './pick-dataset.component.html',
   styleUrl: './pick-dataset.component.scss',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormField, MatCommonModule, MatInputModule, TranslocoDirective]
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormField,
+    MatCommonModule,
+    MatInputModule,
+    TranslocoDirective]
 })
 export class PickDatasetComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
