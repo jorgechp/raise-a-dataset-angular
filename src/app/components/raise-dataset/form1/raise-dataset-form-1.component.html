@@ -20,10 +20,23 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>{{ t('author_name') }}</mat-label>
-            <input formControlName="author" matInput placeholder="{{ t('author_name') }}">
+            <input formControlName="createdBy" matInput placeholder="{{ t('author_name') }}">
             <mat-hint>{{ t('author_name_hint') }}</mat-hint>
-            @if (this.parentGroup!.controls['author'].hasError('required')) {
+            @if (this.parentGroup!.controls['createdBy'].hasError('required')) {
               <mat-error>{{ t('author_name_required_error') }} <strong *transloco="let t; prefix: 'common'">
+                {{ t('required') }}</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>{{ t('maintainer_name') }}</mat-label>
+            <input formControlName="registeredBy" matInput placeholder="{{ t('maintainer_name') }}">
+            <mat-hint>{{ t('maintainer_name_hint') }}</mat-hint>
+            @if (this.parentGroup!.controls['registeredBy'].hasError('required')) {
+              <mat-error>{{ t('maintainer_name_required_error') }} <strong *transloco="let t; prefix: 'common'">
                 {{ t('required') }}</strong></mat-error>
             }
           </mat-form-field>

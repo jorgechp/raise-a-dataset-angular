@@ -53,7 +53,8 @@ export class PickDatasetComponent implements AfterViewInit {
   }
 
   handleClickOnRow(dataset: Dataset) {
-    this.router.navigate(['/datasetInfo'], {queryParams: dataset}).then(r => {
+    const id = dataset.uri?.at(-1);
+    this.router.navigate(['/datasetInfo'], {queryParams: {id: id}}).then(r => {
     });
   }
 }

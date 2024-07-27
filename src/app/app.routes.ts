@@ -60,5 +60,12 @@ export const routes: Routes = [
         (c) => c.PickDatasetComponent
       ),
     title: 'Datasets'
+  }, {
+    path: 'datasetInfo',
+    loadComponent: () =>
+      import('./components/dataset-info/dataset-info.component').then(
+        (c) => c.DatasetInfoComponent
+      ),
+    title: 'Dataset Info'
   },
 ];
