@@ -4,7 +4,7 @@
     <input #input (keyup)="applyFilter($event)" matInput placeholder="{{ t('search_placeholder') }}">
   </mat-form-field>
 
-  <table aria-label="datasets" class="full-width-table" mat-table matSort>
+  <table #table aria-label="datasets" class="full-width-table" mat-table matSort>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th *matHeaderCellDef mat-header-cell mat-sort-header

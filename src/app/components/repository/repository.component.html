@@ -63,7 +63,7 @@
       </form>
     </mat-card-content>
     <mat-dialog-actions *ngIf="this.isAddNewRepositoryMode">
-      <button (click)="this.handleRepositoryCreation()"
+      <button (click)="this.handleRepositoryCreation()" type="button"
               *ngIf="this.newRepositoryForm.valid" mat-button>{{ t('createButton') }}
       </button>
     </mat-dialog-actions>
