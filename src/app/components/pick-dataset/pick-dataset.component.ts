@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {MatTable, MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
@@ -24,10 +24,11 @@ import {TranslocoDirective} from "@jsverse/transloco";
     MatInputModule,
     TranslocoDirective]
 })
-export class PickDatasetComponent implements AfterViewInit {
+export class PickDatasetComponent implements OnInit, AfterContentInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<Dataset>;
+  @ViewChildren("table") tables: QueryList<MatTable<Dataset>> | undefined;
+  private table: MatTable<Dataset> | undefined;
   dataSource: MatTableDataSource<Dataset> | undefined;
 
 
@@ -39,16 +40,25 @@ export class PickDatasetComponent implements AfterViewInit {
   }
 
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+  }
 
+  ngAfterViewInit(): void {
+    if (this.tables) {
+      this.table = this.tables.get(0);
+    }
     this.datasetService.getPage().subscribe(
       (elem) => {
         this.dataSource = new MatTableDataSource<Dataset>(elem.resources);
-        this.table.dataSource = this.dataSource;
+        this.table!.dataSource = this.dataSource;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       }
     )
+  }
+
+  ngAfterContentInit() {
+
   }
 
   applyFilter(event: Event) {
@@ -61,7 +71,6 @@ export class PickDatasetComponent implements AfterViewInit {
 
   handleClickOnRow(dataset: Dataset) {
     const id = dataset.uri?.at(-1);
-    this.router.navigate(['/datasetInfo'], {queryParams: {id: id}}).then(r => {
-    });
+    this.router.navigate(['/datasetInfo'], {queryParams: {id: id}}).then();
   }
 }

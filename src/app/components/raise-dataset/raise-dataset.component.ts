@@ -1,4 +1,4 @@
-import {Component, computed, inject, ViewChild} from '@angular/core';
+import {Component, computed, inject, OnInit, ViewChild} from '@angular/core';
 
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -20,6 +20,7 @@ import {Repository} from "../../domain/repository";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
 import {TranslocoDirective} from "@jsverse/transloco";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -46,8 +47,10 @@ import {TranslocoDirective} from "@jsverse/transloco";
     TranslocoDirective
   ]
 })
-export class RaiseDatasetComponent {
+export class RaiseDatasetComponent implements OnInit {
   private fb = inject(FormBuilder);
+  protected isAddRepositoryMode: boolean = false;
+  protected dataset: Dataset | undefined;
 
   public datasetForm = this.fb.group({
     name: [null, Validators.required],
@@ -69,7 +72,17 @@ export class RaiseDatasetComponent {
 
   constructor(private authenticationService: AuthenticationService,
               private datasetService: DatasetService,
-              private raiseInstanceService: RaiseInstanceService) {
+              private raiseInstanceService: RaiseInstanceService,
+              private router: Router) {
+
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state && state['dataset']) {
+      this.isAddRepositoryMode = true;
+      this.dataset = state['dataset'];
+    }
+  }
+
+  ngOnInit(): void {
 
   }
 
@@ -79,35 +92,39 @@ export class RaiseDatasetComponent {
       const currentUser = this.authenticationService.getCurrentUser().uri!;
       const selectedRepository: Repository = this.repositoryForm.get('repository')!.value!;
 
-      const newDataset: Dataset = new Dataset();
-      newDataset.name = this.datasetForm.get('name')!.value!;
-      newDataset.createdBy = this.datasetForm.get('createdBy')!.value!;
-      newDataset.registeredBy = this.datasetForm.get('registeredBy')!.value!;
-      newDataset.creationDate = new Date(this.datasetForm.get('creationDate')!.value!).toISOString();
-      newDataset.registrationDate = new Date().toISOString();
-      newDataset.maintainedBy = [currentUser]
-      newDataset.description = this.datasetForm.get("description")!.value!;
-      newDataset.repositories = [selectedRepository];
+      const datasetToRegister: Dataset = (this.isAddRepositoryMode && this.dataset) ? this.dataset : new Dataset();
 
-      this.datasetService.add(newDataset).subscribe(
-        (newDataset: Dataset) => {
-          const raiseInstance: RaiseInstance = new RaiseInstance();
-          raiseInstance.dataset = newDataset.uri;
-          raiseInstance.repository = selectedRepository.uri;
-          raiseInstance.doi = this.repositoryForm.get('doi')!.value!;
-          raiseInstance.date = new Date().toISOString();
-          raiseInstance.user = currentUser;
+      if (!this.isAddRepositoryMode) {
+        datasetToRegister.name = this.datasetForm.get('name')!.value!;
+        datasetToRegister.createdBy = this.datasetForm.get('createdBy')!.value!;
+        datasetToRegister.registeredBy = this.datasetForm.get('registeredBy')!.value!;
+        datasetToRegister.creationDate = new Date(this.datasetForm.get('creationDate')!.value!).toISOString();
+        datasetToRegister.registrationDate = new Date().toISOString();
+        datasetToRegister.maintainedBy = [currentUser];
+        datasetToRegister.description = this.datasetForm.get("description")!.value!;
+        datasetToRegister.repositories = [selectedRepository];
 
-          this.raiseInstanceService.add(raiseInstance).subscribe((raiseInstance) => {
-            this.stepper?.next();
-          })
-        }
-      )
-
+        this.datasetService.add(datasetToRegister).subscribe(
+          (newDataset: Dataset) => {
+            this.addNewRaiseInstance(newDataset, selectedRepository);
+          }
+        )
+      } else {
+        this.addNewRaiseInstance(datasetToRegister, selectedRepository);
+      }
     }
-
-
   }
 
+  private addNewRaiseInstance(dataset: Dataset, repository: Repository) {
+    const raiseInstance: RaiseInstance = new RaiseInstance();
+    raiseInstance.dataset = dataset.uri;
+    raiseInstance.repository = repository.uri;
+    raiseInstance.doi = this.repositoryForm.get('doi')!.value!;
+    raiseInstance.date = new Date().toISOString();
+    raiseInstance.user = this.authenticationService.getCurrentUser().uri!;
 
+    this.raiseInstanceService.add(raiseInstance).subscribe(() => {
+      this.stepper?.next();
+    })
+  }
 }

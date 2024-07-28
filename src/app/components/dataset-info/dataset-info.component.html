@@ -46,7 +46,8 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <table *ngIf="this.repositoryDataArray.length > 0" [dataSource]="repositoryDataArray" mat-table>
+            <table #table [dataSource]="this.repositoryDataArray" aria-label="repositories" class="full-width-table"
+                   id="repository_table" mat-table matSort>
               <!-- Name Column -->
               <ng-container matColumnDef="name">
                 <th *matHeaderCellDef mat-header-cell>{{ t('name_column_header') }}</th>
@@ -65,7 +66,9 @@
             </table>
           </mat-card-content>
           <mat-card-actions class="actions">
-            <button color="primary" mat-raised-button type="submit">{{ t('add_new_dataset_button') }}</button>
+            <button (click)="this.registerNewRepositoryHandle()" color="primary" mat-raised-button
+                    type="button">{{ t('add_new_dataset_button') }}
+            </button>
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>

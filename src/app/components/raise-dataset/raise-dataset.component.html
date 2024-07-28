@@ -6,7 +6,7 @@
         <button mat-button matStepperNext type="button">{{ t('next_button') }}</button>
       </div>
     </mat-step>
-    <mat-step [stepControl]="datasetForm" label="{{ t('dataset') }}" state="edit">
+    <mat-step *ngIf="!this.isAddRepositoryMode" [stepControl]="datasetForm" label="{{ t('dataset') }}" state="edit">
       <app-raise-dataset-form-1 [parentGroup]="datasetForm"></app-raise-dataset-form-1>
       <div>
         <button mat-button matStepperPrevious type="button">{{ t('back_button') }}</button>
