@@ -44,7 +44,7 @@ interface IRepositoryDataFormat {
   ]
 })
 export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: Iterable<string> = ['name', 'maintainer'];
+  protected displayedColumns: Iterable<string> = ['name', 'maintainer'];
   protected dataset: Dataset | undefined;
   @ViewChild('table', {static: true}) repositoriesTable: MatTable<any> | undefined;
   protected maintainers: User[];
@@ -81,7 +81,6 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private addToDataSource(data: IRepositoryDataFormat[]) {
     this.repositoryDataArray.data = [...data];
-
   }
 
   private loadDatasetInfo(): void {
@@ -117,8 +116,7 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         useCache: false
       }
-    )
-      .pipe(
+    ).pipe(
         mergeMap((collection: ResourceCollection<RaiseInstance>) => {
           const raiseInstances: Array<RaiseInstance> = collection.resources;
           return from(raiseInstances).pipe(
