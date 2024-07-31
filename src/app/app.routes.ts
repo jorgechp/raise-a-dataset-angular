@@ -67,5 +67,12 @@ export const routes: Routes = [
         (c) => c.DatasetInfoComponent
       ),
     title: 'Dataset Info'
+  }, {
+    path: 'instance',
+    loadComponent: () =>
+      import('./components/raise-instance/raise-instance.component').then(
+        (c) => c.RaiseInstanceComponent
+      ),
+    title: 'Raise Instance'
   },
 ];
