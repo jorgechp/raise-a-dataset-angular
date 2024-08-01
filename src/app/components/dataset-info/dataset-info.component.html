@@ -46,7 +46,7 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <table #table [dataSource]="this.repositoryDataArray" aria-label="repositories" class="full-width-table"
+            <table #table [dataSource]="this.repositoryDataArray" aria-label="repositories"
                    id="repository_table" mat-table matSort>
               <!-- Name Column -->
               <ng-container matColumnDef="name">
@@ -61,7 +61,8 @@
               </ng-container>
 
               <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+              <tr class="row-pointer" (click)="handleClickOnRow(row)"
+                  *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
 
             </table>
           </mat-card-content>

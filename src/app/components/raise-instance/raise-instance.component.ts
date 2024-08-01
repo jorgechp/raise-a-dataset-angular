@@ -26,6 +26,7 @@ import {
 } from "@angular/material/table";
 import {MatTreeModule, MatTreeNestedDataSource} from "@angular/material/tree";
 import {NestedTreeControl} from "@angular/cdk/tree";
+import {getIdFromURI} from "../utils/funcions";
 
 
 /**
@@ -85,35 +86,16 @@ export class RaiseInstanceComponent implements OnInit {
   protected repository?: Repository;
   protected treeControl
     = new NestedTreeControl<FoodNode>(node => node.children);
-  private breakpointObserver = inject(BreakpointObserver);
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({matches}) => {
-      if (matches) {
-        return [
-          {title: 'Card 1', cols: 1, rows: 1},
-          {title: 'Card 2', cols: 1, rows: 1},
-          {title: 'Card 3', cols: 1, rows: 1},
-          {title: 'Card 4', cols: 1, rows: 1}
-        ];
-      }
 
-      return [
-        {title: 'Card 1', cols: 2, rows: 1},
-        {title: 'Card 2', cols: 1, rows: 1},
-        {title: 'Card 3', cols: 1, rows: 2},
-        {title: 'Card 4', cols: 1, rows: 1}
-      ];
-    })
-  );
+  protected getIdFromURI = getIdFromURI;
   private idActivatedRoute?: number;
 
   constructor(private raiseInstanceService: RaiseInstanceService,
               private activatedRoute: ActivatedRoute) {
     this.dataSource.data = TREE_DATA;
-    this.activatedRoute.queryParams.subscribe(params => {
-        if (params['id']) {
-          this.idActivatedRoute = params['id'];
+    this.activatedRoute.paramMap.subscribe(params => {
+        if (params.has('id')) {
+          this.idActivatedRoute = Number(params.get('id'));
         }
       }
     );
