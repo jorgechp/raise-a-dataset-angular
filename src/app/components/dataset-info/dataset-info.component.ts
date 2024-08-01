@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {finalize, map, mergeMap} from 'rxjs/operators';
-import {forkJoin, from, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {AsyncPipe, CommonModule, DatePipe} from '@angular/common';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
@@ -14,17 +13,12 @@ import {ResourceCollection} from "@lagoshny/ngx-hateoas-client";
 import {User} from "../../domain/user";
 import {MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
-import {RaiseInstance} from "../../domain/raise-instance";
-import {Repository} from "../../domain/repository";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {MatSort} from "@angular/material/sort";
 import {getIdFromURI} from "../utils/funcions";
+import {IRepositoryDataFormat} from "../common/repository-data-format";
+import {InstancesExtractor} from "../common/instances-extractor";
 
-interface IRepositoryDataFormat {
-    uri: string;
-    name: string;
-    maintainer: string;
-}
 
 @Component({
   selector: 'app-dataset-info',
@@ -80,10 +74,6 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['raise'], {state: {dataset: this.dataset}}).then();
   }
 
-  private addToDataSource(data: IRepositoryDataFormat[]) {
-    this.repositoryDataArray.data = [...data];
-  }
-
   private loadDatasetInfo(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.has('id')) {
@@ -118,28 +108,7 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
         useCache: false
       }
     ).pipe(
-        mergeMap((collection: ResourceCollection<RaiseInstance>) => {
-          const raiseInstances: Array<RaiseInstance> = collection.resources;
-          return from(raiseInstances).pipe(
-            mergeMap(instance =>
-              forkJoin([
-                instance.getRelation<User>('user'),
-                instance.getRelation<Repository>('repository'),
-              ]).pipe(
-                map(([user, repository]) => {
-                    this.repositoryData.push({
-                      uri: instance.uri,
-                      name: repository.name!,
-                      maintainer: user.username!,
-                    } as IRepositoryDataFormat);
-                  }
-                )
-              )
-            ), finalize(() => {
-              this.addToDataSource(this.repositoryData);
-            })
-          );
-        })
+      InstancesExtractor.mergeMapRaiseInstances(this.repositoryData, this.repositoryDataArray)
       ).subscribe(() => {
       });
   }

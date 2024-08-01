@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import {AsyncPipe} from '@angular/common';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RepositoryService} from "../../services/repository/repository.service";
 import {Repository} from "../../domain/repository";
@@ -15,21 +15,20 @@ import {
   MatCellDef,
   MatColumnDef,
   MatHeaderCell,
+  MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
-  MatRow, MatRowDef, MatTable, MatTableDataSource
+  MatRow,
+  MatRowDef,
+  MatTable,
+  MatTableDataSource
 } from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {getIdFromURI} from "../utils/funcions";
-import {finalize, map, mergeMap} from "rxjs/operators";
-import {ResourceCollection} from "@lagoshny/ngx-hateoas-client";
-import {forkJoin, from} from "rxjs";
-import {Dataset} from "../../domain/dataset";
+import {IRepositoryDataFormat} from "../common/repository-data-format";
+import {InstancesExtractor} from "../common/instances-extractor";
 
-interface IInstanceInformation {
-    dataset?: string
-}
 
 @Component({
   selector: 'app-repository-info',
@@ -53,16 +52,17 @@ interface IInstanceInformation {
     MatRowDef,
     MatSort,
     MatTable,
-    TranslocoDirective
+    TranslocoDirective,
+    MatHeaderCellDef
   ]
 })
 export class RepositoryInfoComponent implements OnInit{
-  private idRepository?: number;
+  protected repositoryDataArray = new MatTableDataSource<IRepositoryDataFormat>([]);
   protected repository?: Repository;
-  protected raiseInstanceList = new MatTableDataSource<IInstanceInformation>([]);
-  protected displayedColumns: Iterable<string> = ['dataset'];
+  protected displayedColumns: Iterable<string> = ['name', 'maintainer'];
+  private datasetId?: number;
+  private repositoryData: IRepositoryDataFormat[] = []
 
-  private raiseInstanceInformationList: IInstanceInformation[] = [];
 
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -71,48 +71,32 @@ export class RepositoryInfoComponent implements OnInit{
               private router: Router) {
     this.activatedRoute.paramMap.subscribe(params => {
           if (params.has('id')) {
-            this.idRepository = Number(params.get('id'));
+            this.datasetId = Number(params.get('id'));
           }
         }
     );
   }
 
   ngOnInit(): void {
-    if(this.idRepository){
-      this.repositoryService.getResource(this.idRepository).subscribe(
+    if (this.datasetId) {
+      this.repositoryService.getResource(this.datasetId).subscribe(
           (response) => {
             this.repository = response;
           }
       )
 
       this.raiseInstanceService.searchCollection(
-          'findAllByRepositoryId', {
-            params: {
-              id: this.idRepository
-            },
-            useCache: false
-          }
+        'findAllByRepositoryId', {
+          params: {
+            id: this.datasetId!
+          },
+          sort: {
+            dataset: 'ASC'
+          },
+          useCache: false
+        }
       ).pipe(
-          mergeMap((collection: ResourceCollection<RaiseInstance>) => {
-            const raiseInstances: Array<RaiseInstance> = collection.resources;
-            return from(raiseInstances).pipe(
-                mergeMap(instance =>
-                    forkJoin([
-                      instance.getRelation<Dataset>('dataset')
-                    ]).pipe(
-                        map(([dataset]) => {
-                              this.raiseInstanceInformationList.push({
-                                  dataset: '44534535'
-                              } as IInstanceInformation);
-
-                            }
-                        )
-                    )
-                ), finalize(() => {
-                    this.addToDataSource(this.raiseInstanceInformationList);
-                })
-            );
-          })
+        InstancesExtractor.mergeMapRaiseInstances(this.repositoryData, this.repositoryDataArray)
       ).subscribe(() => {
       });
 
@@ -123,8 +107,4 @@ export class RepositoryInfoComponent implements OnInit{
     const id = getIdFromURI(row.uri!);
     this.router.navigate(['/instance' , id]).then();
   }
-
-    private addToDataSource(raiseInstanceInformationList: IInstanceInformation[]) {
-        this.raiseInstanceList.data = [...raiseInstanceInformationList];
-    }
 }

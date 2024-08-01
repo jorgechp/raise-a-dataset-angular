@@ -26,17 +26,24 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <table #table [dataSource]="this.raiseInstanceList" aria-label="repositories"
+          <table #table [dataSource]="this.repositoryDataArray" aria-label="repositories"
                  id="repository_table" mat-table matSort>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th *matHeaderCellDef mat-header-cell>{{ t('name_column_header') }}</th>
+              <td *matCellDef="let element" mat-cell> {{ element.name }}</td>
+            </ng-container>
 
-            <ng-container matColumnDef="dataset">
-              <th mat-header-cell *matHeaderCellDef> No. </th>
-              <td mat-cell *matCellDef="let element"> {{element.dataset}} </td>
+            <!-- Maintainer Column -->
+            <ng-container matColumnDef="maintainer">
+              <th *matHeaderCellDef mat-header-cell>{{ t('maintainer_column_header') }}</th>
+              <td *matCellDef="let element" mat-cell> {{ element.maintainer }}</td>
             </ng-container>
 
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr class="cursor-pointer" (click)="handleClickOnRow(row)"
                 *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
           </table>
         </mat-card-content>
       </mat-card>
