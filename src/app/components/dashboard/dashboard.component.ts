@@ -14,12 +14,15 @@ import {finalize, map, mergeMap} from "rxjs/operators";
 import {forkJoin, from} from "rxjs";
 import {Repository} from "../../domain/repository";
 import {Dataset} from "../../domain/dataset";
+import {getIdFromURI} from "../utils/funcions";
+import {Router} from "@angular/router";
 
 
 interface IMyRaiseInstance {
   dataset?: string,
   repository?: string,
   status?: any
+    uri?: string
 }
 
 @Component({
@@ -44,7 +47,8 @@ export class DashboardComponent implements OnInit {
   private repositoryData: IMyRaiseInstance[] = []
 
   constructor(private raiseInstanceService: RaiseInstanceService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -71,7 +75,8 @@ export class DashboardComponent implements OnInit {
                   this.repositoryData.push({
                     dataset: dataset.name,
                     repository: repository.name,
-                    status: undefined
+                    status: undefined,
+                      uri: instance.uri
                   } as IMyRaiseInstance);
                 }
               )
@@ -90,5 +95,8 @@ export class DashboardComponent implements OnInit {
   }
 
 
-
+    handleClickOnRow(row : IMyRaiseInstance) {
+        const id = getIdFromURI(row.uri!);
+        this.router.navigate(['/instance' , id]).then();
+    }
 }

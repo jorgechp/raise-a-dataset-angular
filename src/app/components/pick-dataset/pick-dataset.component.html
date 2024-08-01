@@ -38,7 +38,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr (click)="handleClickOnRow(row)" *matRowDef="let row; columns: displayedColumns;" class="pickDatasetRow"
+    <tr (click)="handleClickOnRow(row)" *matRowDef="let row; columns: displayedColumns;" class="cursor-pointer"
         mat-row></tr>
   </table>
 
