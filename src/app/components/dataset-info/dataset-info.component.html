@@ -61,7 +61,7 @@
               </ng-container>
 
               <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-              <tr class="row-pointer" (click)="handleClickOnRow(row)"
+              <tr class="cursor-pointer" (click)="handleClickOnRow(row)"
                   *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
 
             </table>
