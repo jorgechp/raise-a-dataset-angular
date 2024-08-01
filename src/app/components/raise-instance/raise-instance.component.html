@@ -1,9 +1,9 @@
 <div class="grid-container">
   <h1 class="mat-h1">
-    <a [queryParams]="{ id: this.dataset?.uri?.at(-1) }" [routerLink]="['/datasetInfo']">
+    <a [routerLink]="['/dataset', getIdFromURI(this.dataset?.uri!)]">
       {{ this.dataset?.name }}
     </a>:
-    <a [queryParams]="{ id: this.dataset?.uri?.at(-1) }" [routerLink]="['/repository']">
+    <a [routerLink]="['/repository', getIdFromURI(this.repository?.uri!)]">
       {{ this.repository?.name }}
     </a>
   </h1>

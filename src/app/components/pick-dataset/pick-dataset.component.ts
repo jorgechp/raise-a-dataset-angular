@@ -8,6 +8,7 @@ import {MatFormField, MatInputModule} from "@angular/material/input";
 import {MatCommonModule} from "@angular/material/core";
 import {Router} from "@angular/router";
 import {TranslocoDirective} from "@jsverse/transloco";
+import {getIdFromURI} from "../utils/funcions";
 
 
 @Component({
@@ -70,7 +71,7 @@ export class PickDatasetComponent implements OnInit, AfterContentInit, AfterView
   }
 
   handleClickOnRow(dataset: Dataset) {
-    const id = dataset.uri?.at(-1);
-    this.router.navigate(['/datasetInfo'], {queryParams: {id: id}}).then();
+    const id = getIdFromURI(dataset.uri!);
+    this.router.navigate(['/dataset' , id]).then();
   }
 }

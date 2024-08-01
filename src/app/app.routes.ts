@@ -61,14 +61,14 @@ export const routes: Routes = [
       ),
     title: 'Datasets'
   }, {
-    path: 'datasetInfo',
+    path: 'dataset/:id',
     loadComponent: () =>
       import('./components/dataset-info/dataset-info.component').then(
         (c) => c.DatasetInfoComponent
       ),
     title: 'Dataset Info'
   }, {
-    path: 'instance',
+    path: 'instance/:id',
     loadComponent: () =>
       import('./components/raise-instance/raise-instance.component').then(
         (c) => c.RaiseInstanceComponent

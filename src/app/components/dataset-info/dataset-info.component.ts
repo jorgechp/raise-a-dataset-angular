@@ -18,10 +18,12 @@ import {RaiseInstance} from "../../domain/raise-instance";
 import {Repository} from "../../domain/repository";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {MatSort} from "@angular/material/sort";
+import {getIdFromURI} from "../utils/funcions";
 
 interface IRepositoryDataFormat {
-  name: string;
-  maintainer: string;
+    uri: string;
+    name: string;
+    maintainer: string;
 }
 
 @Component({
@@ -84,12 +86,12 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadDatasetInfo(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (params['id']) {
-        this.datasetService.getResource(params['id']).subscribe(
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params.has('id')) {
+        this.datasetService.getResource(Number(params.get('id'))).subscribe(
           (data: Dataset) => {
             this.dataset = data;
-            this.datasetId = Number(this.dataset?.uri?.slice(-1));
+            this.datasetId = Number(getIdFromURI(this.dataset?.uri!));
             this.dataset.maintainedBy = [];
             this.dataset.getRelatedCollection<ResourceCollection<User>>('maintainedBy').subscribe(
               (maintainedBy: ResourceCollection<User>) => {
@@ -127,6 +129,7 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
               ]).pipe(
                 map(([user, repository]) => {
                     this.repositoryData.push({
+                      uri: instance.uri,
                       name: repository.name!,
                       maintainer: user.username!,
                     } as IRepositoryDataFormat);
@@ -142,4 +145,8 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+    handleClickOnRow(row: IRepositoryDataFormat) {
+      const uri = row.uri;
+      this.router.navigate(['/instance',  uri?.at(-1)]).then();
+    }
 }
