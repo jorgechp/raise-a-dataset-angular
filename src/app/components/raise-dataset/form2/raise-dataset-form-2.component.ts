@@ -9,7 +9,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepicker, MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {RepositoryComponent} from "../../repository/repository.component";
+import {RepositorySelectionComponent} from "../../repository-selection/repository-selection.component";
 import {Repository} from "../../../domain/repository";
 import {CommonModule} from "@angular/common";
 import {TranslocoDirective} from "@jsverse/transloco";
@@ -34,7 +34,7 @@ import {TranslocoDirective} from "@jsverse/transloco";
     MatCardModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    RepositoryComponent,
+    RepositorySelectionComponent,
     TranslocoDirective
   ]
 })

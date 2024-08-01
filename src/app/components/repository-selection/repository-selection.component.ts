@@ -36,10 +36,10 @@ import {takeWhile} from "rxjs";
     MatDialogActions,
     TranslocoDirective,
   ],
-  templateUrl: './repository.component.html',
-  styleUrl: './repository.component.scss'
+  templateUrl: './repository-selection.component.html',
+  styleUrl: './repository-selection.component.scss'
 })
-export class RepositoryComponent extends AbstractTranslationsComponent implements OnInit {
+export class RepositorySelectionComponent extends AbstractTranslationsComponent implements OnInit {
   @ViewChild('input') input: ElementRef<HTMLInputElement> | undefined;
 
   repositoryCtrl = new FormControl<string>('');

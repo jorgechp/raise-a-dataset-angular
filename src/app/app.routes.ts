@@ -1,4 +1,6 @@
 import {Routes} from '@angular/router';
+import {RepositoryInfoComponent} from "./components/repository-info/repository-info.component";
+
 
 export const routes: Routes = [
   {
@@ -74,5 +76,12 @@ export const routes: Routes = [
         (c) => c.RaiseInstanceComponent
       ),
     title: 'Raise Instance'
+  }, {
+    path: 'repository/:id',
+    loadComponent: () =>
+        import('./components/repository-info/repository-info.component').then(
+            (c) => c.RepositoryInfoComponent
+        ),
+    title: 'Repository Info'
   },
 ];

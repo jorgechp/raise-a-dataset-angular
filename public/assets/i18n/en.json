@@ -106,7 +106,7 @@
     "dataset_information_description": "Description",
     "dataset_information_original_author": "Original author",
     "dataset_information_creation_date": "Creation date",
-    "repositories_title": "Repositories",
+    "repositories_title": "Instances",
     "name_column_header": "Name",
     "maintainer_column_header": "Maintainer",
     "add_new_dataset_button": "Add a new repository"
