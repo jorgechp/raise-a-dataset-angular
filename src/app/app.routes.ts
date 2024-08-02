@@ -83,5 +83,19 @@ export const routes: Routes = [
             (c) => c.RepositoryInfoComponent
         ),
     title: 'Repository Info'
+  }, {
+    path: 'principles',
+    loadComponent: () =>
+        import('./components/fair-principles/fair-principles.component').then(
+            (c) => c.FairPrinciplesComponent
+        ),
+    title: 'FAIR principles'
+  }, {
+    path: 'feed',
+    loadComponent: () =>
+        import('./components/feed/feed.component').then(
+            (c) => c.FeedComponent
+        ),
+    title: 'Feed dataset'
   },
 ];
