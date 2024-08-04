@@ -1,21 +1,115 @@
-<mat-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
+<mat-stepper #stepper linear=true>
+  <mat-step [stepControl]="firstFormGroup">
 
+    <!--      FINDABILITY-->
+
+    <mat-expansion-panel [expanded]="true" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Findability</mat-panel-title>
+        <mat-panel-description> Metadata and data should be easy to find for both humans and computers
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoFindable; let i = index" cols="3" rowHeight="350px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <app-feed-select-principles
+            (click)="this.handleChangedSelection(fairPrinciple)"
+            [description]="this.fairPrincipleList[fairPrinciple].description"
+            [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
+            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [title]="this.fairPrincipleList[fairPrinciple].name"
+          ></app-feed-select-principles>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-expansion-panel>
+
+    <!--      ACCESSIBILITY-->
+
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Accessibility</mat-panel-title>
+        <mat-panel-description> The user need to know how the data can be accessed</mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoAccessible; let i = index" cols="3" rowHeight="350px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <app-feed-select-principles
+            (click)="this.handleChangedSelection(fairPrinciple)"
+            [description]="this.fairPrincipleList[fairPrinciple].description"
+            [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
+            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [title]="this.fairPrincipleList[fairPrinciple].name"
+          ></app-feed-select-principles>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-expansion-panel>
+
+    <!--      INTEROPERABILITY-->
+
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Interoperability</mat-panel-title>
+        <mat-panel-description> The data usually need to be integrated with other data and interoperate with
+          applications or workflows for analysis, storage, and processing.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoInteroperable; let i = index" cols="3"
+                     rowHeight="350px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <app-feed-select-principles
+            (click)="this.handleChangedSelection(fairPrinciple)"
+            [description]="this.fairPrincipleList[fairPrinciple].description"
+            [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
+            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [title]="this.fairPrincipleList[fairPrinciple].name"
+          ></app-feed-select-principles>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-expansion-panel>
+
+    <!--      REUSABILITY-->
+
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Reusability</mat-panel-title>
+        <mat-panel-description> Metadata and data should be well-described so that they can be replicated and/or
+          combined in different settings.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoReusable; let i = index" cols="3" rowHeight="350px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <app-feed-select-principles
+            (click)="this.handleChangedSelection(fairPrinciple)"
+            [description]="this.fairPrincipleList[fairPrinciple].description"
+            [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
+            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [title]="this.fairPrincipleList[fairPrinciple].name"
+          ></app-feed-select-principles>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-expansion-panel>
+    <div>
+      <button *ngIf="this.firstFormGroup.valid" mat-button matStepperNext type="button">Next</button>
+    </div>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-        <form [formGroup]="secondFormGroup">
-            <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                       required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-            </div>
-        </form>
+
+  <mat-step [stepControl]="firstFormGroup" label="Confirm selected indicators">
+    <div>
+      This is the list of indicators that you want to apply into your repository.
+      Click on one of them to remove from the list.
+    </div>
+    <mat-grid-list *ngFor="let fairPrinciple of this.selectedCards; let i = index" cols="3" rowHeight="350px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <app-feed-select-principles
+          (click)="this.handleChangedSelectionAfterConfirm(fairPrinciple)"
+          [description]="this.fairPrincipleList[fairPrinciple].description"
+          [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
+          [isSelected]="this.selectedCards.includes(fairPrinciple)"
+          [title]="this.fairPrincipleList[fairPrinciple].name"
+        ></app-feed-select-principles>
+      </mat-grid-tile>
+    </mat-grid-list>
     </mat-step>
-    <mat-step>
+
+  <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>

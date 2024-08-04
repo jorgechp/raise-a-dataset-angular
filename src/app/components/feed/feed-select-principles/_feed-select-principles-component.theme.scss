@@ -1,0 +1,9 @@
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+
+  .fair-card--selected {
+    background-color: rgba(mat.get-theme-color($theme, primary-container), 0.55);
+  }
+
+}
