@@ -15,7 +15,7 @@
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
             [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
-            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [isSelected]="this.selectedPrinciples.includes(fairPrinciple)"
             [title]="this.fairPrincipleList[fairPrinciple].name"
           ></app-feed-select-principles>
         </mat-grid-tile>
@@ -35,7 +35,7 @@
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
             [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
-            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [isSelected]="this.selectedPrinciples.includes(fairPrinciple)"
             [title]="this.fairPrincipleList[fairPrinciple].name"
           ></app-feed-select-principles>
         </mat-grid-tile>
@@ -58,7 +58,7 @@
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
             [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
-            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [isSelected]="this.selectedPrinciples.includes(fairPrinciple)"
             [title]="this.fairPrincipleList[fairPrinciple].name"
           ></app-feed-select-principles>
         </mat-grid-tile>
@@ -80,7 +80,7 @@
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
             [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
-            [isSelected]="this.selectedCards.includes(fairPrinciple)"
+            [isSelected]="this.selectedPrinciples.includes(fairPrinciple)"
             [title]="this.fairPrincipleList[fairPrinciple].name"
           ></app-feed-select-principles>
         </mat-grid-tile>
@@ -96,25 +96,28 @@
       This is the list of indicators that you want to apply into your repository.
       Click on one of them to remove from the list.
     </div>
-    <mat-grid-list *ngFor="let fairPrinciple of this.selectedCards; let i = index" cols="3" rowHeight="350px">
+    <mat-grid-list *ngFor="let fairPrinciple of this.selectedPrinciples; let i = index" cols="3" rowHeight="350px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <app-feed-select-principles
           (click)="this.handleChangedSelectionAfterConfirm(fairPrinciple)"
           [description]="this.fairPrincipleList[fairPrinciple].description"
           [difficulty]="this.fairPrincipleList[fairPrinciple].difficulty"
-          [isSelected]="this.selectedCards.includes(fairPrinciple)"
+          [isSelected]="this.selectedPrinciples.includes(fairPrinciple)"
           [title]="this.fairPrincipleList[fairPrinciple].name"
         ></app-feed-select-principles>
       </mat-grid-tile>
     </mat-grid-list>
+    <div>
+      <button mat-button matStepperPrevious type="button">Back</button>
+      <button (click)="this.handleApplyPrinciples()" *ngIf="this.firstFormGroup.valid" mat-button type="button">Next
+      </button>
+    </div>
     </mat-step>
-
   <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
         </div>
     </mat-step>
 </mat-stepper>

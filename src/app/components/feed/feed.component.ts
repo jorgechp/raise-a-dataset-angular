@@ -1,7 +1,7 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
-import {MatStepperModule} from "@angular/material/stepper";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MatStepper, MatStepperModule} from "@angular/material/stepper";
+import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
@@ -13,6 +13,13 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {FairCategoriesEnum} from "../../domain/fair-categories-enum";
 import {minArrayLengthValidator} from "../utils/validators/array-length-validator";
 import {MatDialog} from "@angular/material/dialog";
+import {FairPrincipleVerificationInstance} from "../../domain/fair-principle-verification-instance";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {ActivatedRoute} from "@angular/router";
+import {
+  FairPrincipleVerificationService
+} from "../../services/fair-principle-verification/fair-principle-verification.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-feed',
@@ -37,22 +44,30 @@ export class FeedComponent implements OnInit {
   firstFormGroup = this._formBuilder.group({
     selectedCards: [[], {validators: [minArrayLengthValidator(1)]}],
   });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
+
+  protected selectedPrinciples: number[] = [];
 
   readonly dialog = inject(MatDialog);
-
   protected fairPrincipleList: FairPrinciple[] = [];
   protected cardsInfoFindable: number[] = [];
   protected cardsInfoAccessible: number[] = [];
   protected cardsInfoInteroperable: number[] = [];
   protected cardsInfoReusable: number[] = [];
-  protected selectedCards: number[] = [];
+  @ViewChild('stepper') private stepper: MatStepper | undefined;
+  private datasetId?: number;
 
   constructor(private _formBuilder: FormBuilder,
-              private fairPrincipleService: FairPrincipleService) {
-    this.selectedCards = this.firstFormGroup.get('selectedCards')?.value as unknown as number[];
+              private fairPrincipleService: FairPrincipleService,
+              private fairPrincipleVerificationService: FairPrincipleVerificationService,
+              private authenticationService: AuthenticationService,
+              private activatedRoute: ActivatedRoute) {
+    this.selectedPrinciples = this.firstFormGroup.get('selectedCards')?.value as unknown as number[]
+    this.activatedRoute.paramMap.subscribe(params => {
+        if (params.has('id')) {
+          this.datasetId = Number(params.get('id'));
+        }
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -90,16 +105,16 @@ export class FeedComponent implements OnInit {
   }
 
   handleChangedSelection(index: number) {
-    if (!this.selectedCards)
+    if (!this.selectedPrinciples)
       return false;
 
-    const focusIndex = this.selectedCards.findIndex((element) => {
+    const focusIndex = this.selectedPrinciples.findIndex((element) => {
       return element === index
     });
     if (focusIndex === -1) {
-      this.selectedCards.push(index);
+      this.selectedPrinciples.push(index);
     } else {
-      this.selectedCards.splice(focusIndex, 1);
+      this.selectedPrinciples.splice(focusIndex, 1);
     }
 
     this.firstFormGroup.controls['selectedCards'].updateValueAndValidity();
@@ -110,5 +125,22 @@ export class FeedComponent implements OnInit {
     if (confirm("Do you want to unselect " + this.fairPrincipleList[index].name + "?")) {
       this.handleChangedSelection(index);
     }
+  }
+
+  handleApplyPrinciples() {
+    const promises: any[] = [];
+
+
+    this.selectedPrinciples.forEach((selectedPrinciple) => {
+      const principle = this.fairPrincipleList[selectedPrinciple];
+      const newRaiseFairPrincipleVerification = new FairPrincipleVerificationInstance();
+      newRaiseFairPrincipleVerification.fairPrinciple = principle.uri!;
+      newRaiseFairPrincipleVerification.author = this.authenticationService.getCurrentUser().uri!;
+      newRaiseFairPrincipleVerification.raiseInstance = "/raiseinstances/2";
+
+      promises.push(this.fairPrincipleVerificationService.add(newRaiseFairPrincipleVerification));
+    });
+
+    forkJoin(promises).subscribe();
   }
 }
