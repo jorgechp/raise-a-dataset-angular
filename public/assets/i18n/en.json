@@ -1,7 +1,9 @@
 {
   "common": {
     "username": "Username",
-    "required": "required"
+    "required": "required",
+    "next": "Next",
+    "back": "Back"
   },
   "register": {
     "signUp": "Sign up",
@@ -56,8 +58,6 @@
   "raiseDataset": {
     "intro_header": "Raise a dataset!",
     "introduction": "Introduction",
-    "next_button": "Next",
-    "back_button": "Back",
     "dataset": "Dataset",
     "repository": "Repository",
     "create_button": "Create dataset",
@@ -122,5 +122,20 @@
     "dataset_information_description": "Description",
     "dataset_information_original_author": "Original author",
     "dataset_information_creation_date": "Creation date"
+  },
+  "feed": {
+    "findability_title": "Findability",
+    "findability_description": "Metadata and data should be easy to find for both humans and computers",
+    "accessibility_title": "Accessibility",
+    "accessibility_description": "The user needs to know how the data can be accessed",
+    "interoperability_title": "Interoperability",
+    "interoperability_description": "The data usually need to be integrated with other data and interoperate with applications or workflows for analysis, storage, and processing.",
+    "reusability_title": "Reusability",
+    "reusability_description": "Metadata and data should be well-described so that they can be replicated and/or combined in different settings.",
+    "confirm_selected_indicators_label": "Confirm selected indicators",
+    "confirm_selected_indicators_description": "This is the list of indicators that you want to apply into your repository. Click on one of them to remove from the list.",
+    "done_step_label": "Done",
+    "done_message": "Your dataset thank you!",
+    "go_to_instance_page_button": "Go to the instance page"
   }
 }

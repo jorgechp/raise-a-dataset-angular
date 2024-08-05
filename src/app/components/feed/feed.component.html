@@ -1,12 +1,13 @@
-<mat-stepper #stepper linear=true>
+<mat-stepper #stepper *transloco="let t; prefix: 'feed'" linear=true>
   <mat-step [stepControl]="firstFormGroup">
 
     <!--      FINDABILITY-->
 
     <mat-expansion-panel [expanded]="true" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> Findability</mat-panel-title>
-        <mat-panel-description> Metadata and data should be easy to find for both humans and computers
+        <mat-panel-title> {{ t('findability_title') }}</mat-panel-title>
+        <mat-panel-description>
+          {{ t('findability_description') }}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoFindable; let i = index" cols="3" rowHeight="350px">
@@ -26,8 +27,8 @@
 
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> Accessibility</mat-panel-title>
-        <mat-panel-description> The user need to know how the data can be accessed</mat-panel-description>
+        <mat-panel-title> {{ t('accessibility_title') }}</mat-panel-title>
+        <mat-panel-description> {{ t('accessibility_description') }}</mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoAccessible; let i = index" cols="3" rowHeight="350px">
         <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -46,9 +47,9 @@
 
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> Interoperability</mat-panel-title>
-        <mat-panel-description> The data usually need to be integrated with other data and interoperate with
-          applications or workflows for analysis, storage, and processing.
+        <mat-panel-title> {{ t('interoperability_title') }}</mat-panel-title>
+        <mat-panel-description>
+          {{ t('interoperability_description') }}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoInteroperable; let i = index" cols="3"
@@ -69,9 +70,9 @@
 
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> Reusability</mat-panel-title>
-        <mat-panel-description> Metadata and data should be well-described so that they can be replicated and/or
-          combined in different settings.
+        <mat-panel-title> {{ t('reusability_title') }}</mat-panel-title>
+        <mat-panel-description>
+          {{ t('reusability_description') }}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoReusable; let i = index" cols="3" rowHeight="350px">
@@ -86,15 +87,18 @@
         </mat-grid-tile>
       </mat-grid-list>
     </mat-expansion-panel>
-    <div>
-      <button *ngIf="this.firstFormGroup.valid" mat-button matStepperNext type="button">Next</button>
+    <div *transloco="let t; prefix: 'common'">
+      <button *ngIf="this.firstFormGroup.valid"
+              mat-button
+              matStepperNext
+              type="button">{{ t('next') }}
+      </button>
     </div>
     </mat-step>
 
-  <mat-step [stepControl]="firstFormGroup" label="Confirm selected indicators">
+  <mat-step [stepControl]="firstFormGroup" label="{{ t('confirm_selected_indicators_label') }}">
     <div>
-      This is the list of indicators that you want to apply into your repository.
-      Click on one of them to remove from the list.
+      {{ t('confirm_selected_indicators_description') }}
     </div>
     <mat-grid-list *ngFor="let fairPrinciple of this.selectedPrinciples; let i = index" cols="3" rowHeight="350px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -107,17 +111,24 @@
         ></app-feed-select-principles>
       </mat-grid-tile>
     </mat-grid-list>
-    <div>
-      <button mat-button matStepperPrevious type="button">Back</button>
-      <button (click)="this.handleApplyPrinciples()" *ngIf="this.firstFormGroup.valid" mat-button type="button">Next
+    <div *transloco="let t; prefix: 'common'">
+      <button
+        mat-button
+        matStepperPrevious
+        type="button">{{ t('back') }}
+      </button>
+      <button (click)="this.handleApplyPrinciples()"
+              *ngIf="this.firstFormGroup.valid"
+              mat-button type="button">{{ t('next') }}
       </button>
     </div>
     </mat-step>
   <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
+    <ng-template matStepLabel>{{ t('common.done') }}</ng-template>
+    <p>{{ t('done_message') }}</p>
+
+    <div>
+      <button (click)="this.handleGoToInstancePage()" mat-button>{{ t('go_to_instance_page_button') }}</button>
         </div>
     </mat-step>
 </mat-stepper>

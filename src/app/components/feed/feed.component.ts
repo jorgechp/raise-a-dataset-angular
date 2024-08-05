@@ -22,6 +22,7 @@ import {
 import {forkJoin} from "rxjs";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {getIdFromURI} from "../utils/funcions";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-feed',
@@ -37,7 +38,8 @@ import {getIdFromURI} from "../utils/funcions";
     FeedSelectPrinciplesComponent,
     MatGridList,
     MatGridTile,
-    MatExpansionModule
+    MatExpansionModule,
+    TranslocoDirective
   ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss'
@@ -147,5 +149,9 @@ export class FeedComponent implements OnInit {
           this.stepper?.next();
         }
     );
+  }
+
+  handleGoToInstancePage() {
+    this.router.navigate(['instance/' + getIdFromURI(this.raiseInstance?.uri!)], {}).then();
   }
 }
