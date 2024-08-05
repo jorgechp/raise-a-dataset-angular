@@ -7,5 +7,5 @@ export class FairPrincipleVerificationInstance extends GenericResource {
     verifiers?: User[]
     fairPrinciple?: string
     author?: string
-    raiseInstance?: string
+    instance?: string
 }

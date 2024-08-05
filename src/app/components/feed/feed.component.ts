@@ -15,11 +15,13 @@ import {minArrayLengthValidator} from "../utils/validators/array-length-validato
 import {MatDialog} from "@angular/material/dialog";
 import {FairPrincipleVerificationInstance} from "../../domain/fair-principle-verification-instance";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {
   FairPrincipleVerificationService
 } from "../../services/fair-principle-verification/fair-principle-verification.service";
 import {forkJoin} from "rxjs";
+import {RaiseInstance} from "../../domain/raise-instance";
+import {getIdFromURI} from "../utils/funcions";
 
 @Component({
   selector: 'app-feed',
@@ -54,27 +56,26 @@ export class FeedComponent implements OnInit {
   protected cardsInfoInteroperable: number[] = [];
   protected cardsInfoReusable: number[] = [];
   @ViewChild('stepper') private stepper: MatStepper | undefined;
-  private datasetId?: number;
+  private raiseInstance?: RaiseInstance;
 
   constructor(private _formBuilder: FormBuilder,
               private fairPrincipleService: FairPrincipleService,
               private fairPrincipleVerificationService: FairPrincipleVerificationService,
               private authenticationService: AuthenticationService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
     this.selectedPrinciples = this.firstFormGroup.get('selectedCards')?.value as unknown as number[]
-    this.activatedRoute.paramMap.subscribe(params => {
-        if (params.has('id')) {
-          this.datasetId = Number(params.get('id'));
-        }
-      }
-    );
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state && state['raiseInstance']) {
+      this.raiseInstance = state['raiseInstance'];
+    }
   }
 
   ngOnInit(): void {
     this.fairPrincipleService.searchCollection(
       'findUnverifiedPrinciplesByRaiseInstanceId', {
         params: {
-          id: 1
+          raiseInstanceId: Number(getIdFromURI(this.raiseInstance?.uri!))
         },
         sort: {
           dataset: 'ASC'
@@ -136,11 +137,15 @@ export class FeedComponent implements OnInit {
       const newRaiseFairPrincipleVerification = new FairPrincipleVerificationInstance();
       newRaiseFairPrincipleVerification.fairPrinciple = principle.uri!;
       newRaiseFairPrincipleVerification.author = this.authenticationService.getCurrentUser().uri!;
-      newRaiseFairPrincipleVerification.raiseInstance = "/raiseinstances/2";
+      newRaiseFairPrincipleVerification.instance = this.raiseInstance?.uri;
 
       promises.push(this.fairPrincipleVerificationService.add(newRaiseFairPrincipleVerification));
     });
 
-    forkJoin(promises).subscribe();
+    forkJoin(promises).subscribe(
+        () => {
+          this.stepper?.next();
+        }
+    );
   }
 }

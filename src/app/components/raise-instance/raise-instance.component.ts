@@ -9,7 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {RaiseInstance} from "../../domain/raise-instance";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Dataset} from "../../domain/dataset";
 import {Repository} from "../../domain/repository";
 import {forkJoin} from "rxjs";
@@ -91,7 +91,8 @@ export class RaiseInstanceComponent implements OnInit {
   private idActivatedRoute?: number;
 
   constructor(private raiseInstanceService: RaiseInstanceService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
     this.dataSource.data = TREE_DATA;
     this.activatedRoute.paramMap.subscribe(params => {
         if (params.has('id')) {
@@ -121,5 +122,9 @@ export class RaiseInstanceComponent implements OnInit {
         }
       )
     }
+  }
+
+  handleApplyIndicators() {
+    this.router.navigate(['feed'], {state: {raiseInstance: this.raiseInstanceModel}}).then();
   }
 }
