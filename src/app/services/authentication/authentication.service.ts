@@ -8,6 +8,7 @@ import {BehaviorSubject, Subject} from "rxjs";
 
 export interface ILoginData {
   uri: "/users/demo",
+  id: "demo",
   username: "demo",
   email: "demo@sample.app",
   authorities: [],
@@ -49,6 +50,9 @@ export class AuthenticationService {
         const user: User = new User();
         user.authorization = authorization;
         user.authorities = loginData.authorities;
+        user.id = loginData.id;
+        user.uri = loginData.uri;
+        user.username = loginData.username;
         this.storeCurrentUser(user);
         return user;
       })

@@ -1,10 +1,10 @@
-import {HateoasResource, Resource} from "@lagoshny/ngx-hateoas-client";
+import {HateoasResource} from "@lagoshny/ngx-hateoas-client";
 import {Authority} from "./authority";
 import {UserRole} from "./user-role";
+import {GenericResource} from "./generic-resource";
 
 @HateoasResource('users')
-export class User extends Resource {
-  public id: number | undefined;
+export class User extends GenericResource {
   public username: string | undefined;
   public email: string | undefined;
   public password: string | undefined;

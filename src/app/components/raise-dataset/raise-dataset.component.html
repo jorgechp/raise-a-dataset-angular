@@ -1,0 +1,34 @@
+<form (ngSubmit)="onSubmit()" *transloco="let t; prefix: 'raiseDataset'" [formGroup]="datasetForm" novalidate>
+  <mat-stepper #stepper linear="true">
+    <mat-step label="{{ t('introduction') }}" state="number">
+      <app-raise-dataset-intro></app-raise-dataset-intro>
+      <div *transloco="let t; prefix: 'common'">
+        <button mat-button matStepperNext type="button">{{ t('next') }}</button>
+      </div>
+    </mat-step>
+    <mat-step *ngIf="!this.isAddRepositoryMode" [stepControl]="datasetForm" label="{{ t('dataset') }}" state="edit">
+      <app-raise-dataset-form-1 [parentGroup]="datasetForm"></app-raise-dataset-form-1>
+      <div *transloco="let t; prefix: 'common'">
+        <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
+        <button mat-button matStepperNext type="button">{{ t('next') }}</button>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="repositoryForm" label="{{ t('repository') }}">
+      <app-raise-dataset-form-2 [parentGroup]="repositoryForm"></app-raise-dataset-form-2>
+      <div>
+        <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
+        <button (click)="this.onSubmit()" *ngIf="repositoryForm.valid" mat-button
+                type="button">{{ t('create_button') }}
+        </button>
+      </div>
+    </mat-step>
+    <mat-step label="{{ t('result') }}">
+      <div>
+        {{ t('congratulations_message') }}
+      </div>
+      <div>
+        <button (click)="this.onSubmit()" mat-button type="button">{{ t('dashboard_button') }}</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form>

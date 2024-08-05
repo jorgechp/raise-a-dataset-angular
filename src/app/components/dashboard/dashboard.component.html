@@ -1,26 +1,50 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    @for (card of cards | async; track card) {
-      <mat-grid-tile [colspan]="card.cols" [rowspan]="card.rows">
+<div>
+  <div class="grid-container">
+    <h1 class="mat-h1">My dashboard</h1>
+    <mat-grid-list cols="2" rowHeight="350px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              {{card.title}}
-              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Expand</button>
-                <button mat-menu-item>Remove</button>
-              </mat-menu>
+              My instances
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <div>Card Content Here</div>
+            <table [dataSource]="this.myRaiseInstanceDataSource" mat-table>
+              <ng-container matColumnDef="dataset">
+                <th *matHeaderCellDef mat-header-cell> Dataset</th>
+                <td *matCellDef="let element" mat-cell> {{ element.dataset }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="repository">
+                <th *matHeaderCellDef mat-header-cell> Repository</th>
+                <td *matCellDef="let element" mat-cell> {{ element.repository }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th *matHeaderCellDef mat-header-cell> Status</th>
+                <td *matCellDef="let element" mat-cell> {{ element.status }}</td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr (click)="handleClickOnRow(row)" class="cursor-pointer"
+                  *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
-    }
-  </mat-grid-list>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>

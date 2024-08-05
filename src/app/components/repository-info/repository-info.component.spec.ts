@@ -1,11 +1,11 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { TableComponent } from './table.component';
+import { RepositoryInfoComponent } from './repository-info.component';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('RepositoryInfoComponent', () => {
+  let component: RepositoryInfoComponent;
+  let fixture: ComponentFixture<RepositoryInfoComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('TableComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(RepositoryInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

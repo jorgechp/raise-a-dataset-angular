@@ -1,0 +1,52 @@
+<div class="grid-container" *transloco="let t; prefix: 'repositoryInfo'">
+  <h1 class="mat-h1">
+    {{this.repository?.name}}
+  </h1>
+  <div>
+    <a href="{{this.repository?.address}}" title="{{this.repository?.name}}">{{this.repository?.address}}</a>
+  </div>
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ t('description') }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          {{this.repository?.description}}
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1" *transloco="let t; prefix: 'instancesTable'">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ t('repositories_title') }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <table #table [dataSource]="this.repositoryDataArray" aria-label="repositories"
+                 id="repository_table" mat-table matSort>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th *matHeaderCellDef mat-header-cell>{{ t('name_column_header') }}</th>
+              <td *matCellDef="let element" mat-cell> {{ element.name }}</td>
+            </ng-container>
+
+            <!-- Maintainer Column -->
+            <ng-container matColumnDef="maintainer">
+              <th *matHeaderCellDef mat-header-cell>{{ t('maintainer_column_header') }}</th>
+              <td *matCellDef="let element" mat-cell> {{ element.maintainer }}</td>
+            </ng-container>
+
+            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+            <tr class="cursor-pointer" (click)="handleClickOnRow(row)"
+                *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

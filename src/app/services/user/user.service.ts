@@ -1,17 +1,12 @@
 import {Injectable} from '@angular/core';
 import {User} from "../../domain/user";
-import {Observable} from "rxjs";
-import {HateoasResourceOperation} from "@lagoshny/ngx-hateoas-client";
+import {AbstractHateoasService} from "../abstract/abstractHateoas.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends HateoasResourceOperation<User>  {
+export class UserService extends AbstractHateoasService<User> {
 
   constructor() { super(User); }
-
-  public addUser(userToAdd: User): Observable<User> {
-    return this.createResource({body: userToAdd } );
-  }
 
 }

@@ -3,6 +3,8 @@
 @use "@angular/material" as mat;
 @use "./app/components/layout/layout-component.theme";
 @use "./app/components/dashboard/dashboard-component.theme";
+@use "./app/components/feed/feed-component.theme";
+@use "./app/components/feed/feed-select-principles/feed-select-principles-component.theme";
 
 
 
@@ -27,6 +29,8 @@ $site_theme: mat.define-theme(
   // Components themes
   @include layout-component.theme($site_theme);
   @include dashboard-component.theme($site_theme);
+  @include feed-component.theme($site_theme);
+  @include feed-select-principles-component.theme($site_theme);
 
 
 }
@@ -38,4 +42,8 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
