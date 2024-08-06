@@ -140,6 +140,7 @@ export class FeedComponent implements OnInit {
       newRaiseFairPrincipleVerification.fairPrinciple = principle.uri!;
       newRaiseFairPrincipleVerification.author = this.authenticationService.getCurrentUser().uri!;
       newRaiseFairPrincipleVerification.instance = this.raiseInstance?.uri;
+      newRaiseFairPrincipleVerification.verificationDate = new Date().toISOString();
 
       promises.push(this.fairPrincipleVerificationService.add(newRaiseFairPrincipleVerification));
     });

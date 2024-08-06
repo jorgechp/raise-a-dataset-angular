@@ -1,0 +1,11 @@
+<div>
+  <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+    <ng-container matColumnDef="position">
+      <th *matHeaderCellDef mat-header-cell> No.</th>
+      <td *matCellDef="let element" mat-cell> {{ element.position }}</td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  </table>
+</div>

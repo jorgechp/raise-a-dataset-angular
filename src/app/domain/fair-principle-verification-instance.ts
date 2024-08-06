@@ -8,4 +8,5 @@ export class FairPrincipleVerificationInstance extends GenericResource {
     fairPrinciple?: string
     author?: string
     instance?: string
+  verificationDate?: string
 }

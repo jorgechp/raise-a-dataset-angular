@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {RepositoryInfoComponent} from "./components/repository-info/repository-info.component";
 
 
 export const routes: Routes = [
@@ -97,5 +96,12 @@ export const routes: Routes = [
             (c) => c.FeedComponent
         ),
     title: 'Feed dataset'
+  }, {
+    path: 'verifications',
+    loadComponent: () =>
+      import('./components/verifications/verifications.component').then(
+        (c) => c.VerificationsComponent
+      ),
+    title: 'Verifications'
   },
 ];
