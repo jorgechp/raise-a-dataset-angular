@@ -93,7 +93,7 @@ export class FeedComponent implements OnInit {
           case FairCategoriesEnum.FINDABILITY:
             this.cardsInfoFindable.push(index);
             break;
-          case FairCategoriesEnum.ACCESIBILITY:
+          case FairCategoriesEnum.ACCESSIBILITY:
             this.cardsInfoAccessible.push(index);
             break;
           case FairCategoriesEnum.INTEROPERABILITY:
