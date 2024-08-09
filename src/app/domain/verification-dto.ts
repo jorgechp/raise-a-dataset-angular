@@ -6,6 +6,8 @@ export interface IVerificationDto {
     authorId: number;
     authorName: string;
     instanceId: number;
+    repositoryId: string;
+    repositoryName: string;
     datasetId: number;
     datasetName: string;
     fairPrinciplePrefix: string;

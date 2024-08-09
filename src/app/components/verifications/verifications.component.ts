@@ -13,7 +13,7 @@ import {CommonModule} from "@angular/common";
   styleUrl: './verifications.component.scss'
 })
 export class VerificationsComponent implements OnInit {
-  displayedColumns: Iterable<string> = ['datasetId'];
+  displayedColumns: Iterable<string> = ['datasetName', 'repositoryName', 'fairPrincipleName', 'fairCategory', 'authorName', 'verificationDate'];
   dataSource: MatTableDataSource<IVerificationDto>;
 
 
@@ -24,8 +24,7 @@ export class VerificationsComponent implements OnInit {
   ngOnInit(): void {
       this.VerificationDtoService.retrieveAllVerificationInstanceDTO().subscribe(
           (verificationResponse) => {
-            const verifications: IVerificationDto[] = verificationResponse;
-            this.dataSource.data = [...verifications];
+            this.dataSource = new MatTableDataSource<IVerificationDto>(verificationResponse);
           }
       )
   }
