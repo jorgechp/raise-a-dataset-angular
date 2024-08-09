@@ -13,12 +13,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {FairCategoriesEnum} from "../../domain/fair-categories-enum";
 import {minArrayLengthValidator} from "../utils/validators/array-length-validator";
 import {MatDialog} from "@angular/material/dialog";
-import {FairPrincipleVerificationInstance} from "../../domain/fair-principle-verification-instance";
+import {Verification} from "../../domain/verification";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {
-  FairPrincipleVerificationService
-} from "../../services/fair-principle-verification/fair-principle-verification.service";
+  VerificationService
+} from "../../services/fair-principle-verification/verification.service";
 import {forkJoin} from "rxjs";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {getIdFromURI} from "../utils/funcions";
@@ -62,7 +62,7 @@ export class FeedComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private fairPrincipleService: FairPrincipleService,
-              private fairPrincipleVerificationService: FairPrincipleVerificationService,
+              private fairPrincipleVerificationService: VerificationService,
               private authenticationService: AuthenticationService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
@@ -136,7 +136,7 @@ export class FeedComponent implements OnInit {
 
     this.selectedPrinciples.forEach((selectedPrinciple) => {
       const principle = this.fairPrincipleList[selectedPrinciple];
-      const newRaiseFairPrincipleVerification = new FairPrincipleVerificationInstance();
+      const newRaiseFairPrincipleVerification = new Verification();
       newRaiseFairPrincipleVerification.fairPrinciple = principle.uri!;
       newRaiseFairPrincipleVerification.author = this.authenticationService.getCurrentUser().uri!;
       newRaiseFairPrincipleVerification.instance = this.raiseInstance?.uri;
