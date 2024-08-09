@@ -18,7 +18,7 @@ import {AuthenticationService} from "../../services/authentication/authenticatio
 import {ActivatedRoute, Router} from "@angular/router";
 import {
   VerificationService
-} from "../../services/fair-principle-verification/verification.service";
+} from "../../services/verification/verification.service";
 import {forkJoin} from "rxjs";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {getIdFromURI} from "../utils/funcions";

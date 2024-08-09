@@ -1,18 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
-import {
-  VerificationService
-} from "../../services/fair-principle-verification/verification.service";
-import {forkJoin} from "rxjs";
-import {Dataset} from "../../domain/dataset";
-import {Repository} from "../../domain/repository";
-import {map} from "rxjs/operators";
+import {IVerificationDto} from "../../domain/verification-dto";
+import {VerificationDtoService} from "../../services/verification/verification-dto.service";
 
-interface ITableStructure {
-  instanceUri: string,
-  datasetName: string,
-  repositoryName: string
-}
 
 @Component({
   selector: 'app-verifications',
@@ -22,44 +12,38 @@ interface ITableStructure {
   styleUrl: './verifications.component.scss'
 })
 export class VerificationsComponent implements OnInit {
-  displayedColumns: Iterable<string> = [];
-  dataSource: MatTableDataSource<ITableStructure> | undefined;
+  displayedColumns: Iterable<string> = ['datasetId'];
+  dataSource: MatTableDataSource<IVerificationDto>;
 
 
-  constructor(private fairPrincipleVerificationService: VerificationService) {
-    this.dataSource = new MatTableDataSource<ITableStructure>([]);
+  constructor(private VerificationDtoService: VerificationDtoService) {
+    this.dataSource = new MatTableDataSource<IVerificationDto>([]);
   }
 
   ngOnInit(): void {
-      this.fairPrincipleVerificationService.getCollection().subscribe(
-          (raiseInstance) => {
-            this.raiseInstanceModel = raiseInstance;
+      this.VerificationDtoService.retrieveAllVerificationInstanceDTO().subscribe(
+          (verificationResponse) => {
+            const verifications: IVerificationDto[] = verificationResponse;
+            const verificationsDataSource: IVerificationDto[] = [];
 
-            forkJoin([
-              raiseInstance.getRelation<Dataset>('dataset'),
-              raiseInstance.getRelation<Repository>('repository'),
-            ]).pipe(
-                map(([dataset, repository]) => {
-                  this.dataset = dataset
-                  this.repository = repository
-                })
-            ).subscribe()
+            verifications.forEach((verification: IVerificationDto) => {
+                verificationsDataSource.push({
+                    datasetId: verification.datasetId,
+                    datasetName: verification.datasetName,
+                    authorId: verification.authorId,
+                    authorName: verification.authorName,
+                    fairPrincipleId: verification.fairPrincipleId,
+                    fairPrinciplePrefix: verification.fairPrinciplePrefix,
+                    fairPrincipleName: verification.fairPrincipleName,
+                    fairCategory: verification.fairCategory,
+                    instanceId: verification.instanceId,
+                    verificationDate: verification.verificationDate,
+                } as IVerificationDto);
+            });
+
+            this.dataSource.data = [...verificationsDataSource];
           }
       )
-
-    this.fairPrincipleVerificationService.getCollection({
-      sort: {
-        verificationDate: 'DESC'
-      },
-    }).subscribe((response) => {
-      const dataList: ITableStructure[] = [];
-      response.resources.forEach((resource) => {
-        dataList.push({
-          datasetName: resource.getRelation()
-        })
-      });
-      this.dataSource.data = [...response.resources];
-    });
   }
 
 }

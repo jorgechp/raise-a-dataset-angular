@@ -2,7 +2,7 @@
   <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
     <ng-container matColumnDef="position">
       <th *matHeaderCellDef mat-header-cell> No.</th>
-      <td *matCellDef="let element" mat-cell> {{ element.position }}</td>
+      <td *matCellDef="let element" mat-cell> {{ element.datasetId }}</td>
     </ng-container>
 
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
