@@ -30,5 +30,10 @@ export const SIDENAV_MENU: ISidenavMenuItem[] = [
     isActive: true,
     role: UserRole.ROLE_USER,
     routeLink: 'principles'
+  }, {
+    title: 'Verify',
+    isActive: true,
+    role: UserRole.ROLE_USER,
+    routeLink: 'verifications'
   }
 ]

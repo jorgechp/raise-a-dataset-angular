@@ -103,5 +103,12 @@ export const routes: Routes = [
         (c) => c.VerificationsComponent
       ),
     title: 'Verifications'
+  }, {
+    path: 'verify',
+    loadComponent: () =>
+      import('./components/verify/verify.component').then(
+        (c) => c.VerifyComponent
+      ),
+    title: 'Verify'
   },
 ];

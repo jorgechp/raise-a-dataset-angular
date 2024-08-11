@@ -137,5 +137,13 @@
     "done_step_label": "Done",
     "done_message": "Your dataset thank you!",
     "go_to_instance_page_button": "Go to the instance page"
+  },
+  "verifications": {
+    "dataset_column_header": "Dataset",
+    "repository_column_header": "Repository",
+    "indicator_column_header": "Indicator",
+    "fair_principle_column_header": "FAIR Principle",
+    "author_column_header": "Author",
+    "date_column_header": "Date"
   }
 }
