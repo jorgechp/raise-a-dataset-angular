@@ -2,23 +2,26 @@
 <form (ngSubmit)="handleDoVerification()" [formGroup]="this.firstFormGroup" novalidate>
 <mat-stepper #stepper *transloco="let t; prefix: 'feed'" linear=true>
     <mat-step label="Validation details" state="number">
-        <mat-card class="shipping-card">
-            <mat-card-header>
+      <mat-card class="validation-card">
+        <mat-card-header class="validation-card-header">
                 <mat-card-title>{{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <p>
-                    You're going to validate that the following dataset instance has applied the indicator
-                    "{{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}".
+                  You're going to validate that the dataset
                 </p>
-                <div class="indicator_info">
-                    <p>
-                        {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}
-                    </p>
-                    <p>
-                        {{this.fairPrincipleIndicator?.description}}
-                    </p>
-                    <p>
+              <p class="data-info">
+                {{ this.dataset?.name }} (Repository: {{ this.repository?.name }})
+              </p>
+              <p>
+                Has applied the indicator:
+              </p>
+              <p class="data-info">
+                {{ this.fairPrincipleIndicator?.namePrefix }}: {{ this.fairPrincipleIndicator?.name }}
+              </p>
+              <div class="indicator_info">
+
+                <p>
                         To perform the validation, do the following steps:
                     </p>
                     <div>
@@ -28,17 +31,17 @@
                                                              target="_blank">
                                 {{this.raiseInstance?.doi}}
                             </a>
-                                (will be open in a new tab)
+                              (will be open in a new tab).
                             </li>
                             <li>Check that the dataset has applied the indicator
                                 "{{this.fairPrincipleIndicator?.namePrefix}}:
-                                {{this.fairPrincipleIndicator?.name}}"
+                              {{ this.fairPrincipleIndicator?.name }}".
                             </li>
                         </ol>
                     </div>
                 </div>
             </mat-card-content>
-            <mat-card-actions>
+        <mat-card-actions class="validation-card-actions">
                 <div *transloco="let t; prefix: 'common'">
                     <button
                             mat-button
@@ -55,36 +58,35 @@
         </mat-card>
     </mat-step>
     <mat-step label="Indicator details" state="number" optional>
-        <mat-card-header>
+      <mat-card-header class="validation-card-header">
             <mat-card-title>Indicator information -
                 {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="indicator_info">
-                <p>
-                    {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}
+              <p class="title">
+                Description
                 </p>
                 <p>
-                    {{this.fairPrincipleIndicator?.description}}
+                  {{ this.fairPrincipleIndicator?.description }}.
                 </p>
             </div>
             <div>
-                <p>
-                    Visit this page to find more resources about  "{{this.fairPrincipleIndicator?.namePrefix}}:
-                    {{this.fairPrincipleIndicator?.name}}"
+              <p class="title">
+                Need more information?
                 </p>
                 <p>
-                    <a      class="cursor-pointer"
+                  <a class="cursor-pointer"
                             [href]="this.fairPrincipleIndicator?.url"
                             [title]="this.fairPrincipleIndicator?.url"
                             target="_blank">
-                                {{this.fairPrincipleIndicator?.url}}
-                    </a>
+                    {{ this.fairPrincipleIndicator?.url }}</a>
+                  (Opened in new tab)
                 </p>
 
             </div>
         </mat-card-content>
-        <mat-card-actions>
+      <mat-card-actions class="validation-card-actions">
             <button
                     mat-button
                     matStepperNext
@@ -98,14 +100,16 @@
         </mat-card-actions>
     </mat-step>
     <mat-step label="Validation" state="number">
-        <mat-card-header>
+      <mat-card-header class="validation-card-header">
             <mat-card-title>Validation -
                 {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <p>
-                Does the instance of the dataset {{this.dataset?.name}} published in the Repository {{this.repository?.name}}
-                has applied the indicator {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}?
+              Does the instance of the dataset <span class="entity-name">{{ this.dataset?.name }}</span>
+              published in the Repository <span class="entity-name">{{ this.repository?.name }}</span>
+              has applied the indicator <span class="entity-name">{{ this.fairPrincipleIndicator?.namePrefix }}
+              : {{ this.fairPrincipleIndicator?.name }}</span> ?
             </p>
             <div>
                 <button
@@ -119,12 +123,21 @@
                         type="button">No, the instance is NOT applying the indicator
                 </button>
             </div>
-            <div *ngIf="isNegativeComment">
+          <div *ngIf="isNegativeComment" class="negative-comment">
                 <p>
                     Kindly provide a comment (optional) to explaining your decision. This comment will be public and will help
                     the maintainer of this instance to understand why the indicator is missing.
                 </p>
-                <textarea formControlName="negativeComment" matInput placeholder="Comment"></textarea>
+            <mat-form-field class="full-width textearea-field">
+              <mat-label>Leave a comment</mat-label>
+              <textarea
+                cdkAutosizeMaxRows="5"
+                cdkAutosizeMinRows="1"
+                cdkTextareaAutosize
+                formControlName="negativeComment"
+                matInput
+                placeholder="Comment"></textarea>
+            </mat-form-field>
             </div>
             <mat-card-actions>
                 <button
@@ -142,9 +155,9 @@
             <mat-card-title>Thanks</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            You have submitted your compliances
+          You have submitted your validation.
         </mat-card-content>
-        <mat-card-actions>
+      <mat-card-actions class="validation-card-actions">
             <button
                     (click)="this.handleGoToCompliances()"
                     mat-button

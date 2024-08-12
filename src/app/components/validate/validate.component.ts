@@ -1,22 +1,16 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {TranslocoDirective} from "@jsverse/transloco";
-import {MatStep, MatStepper, MatStepperModule} from "@angular/material/stepper";
-import {minArrayLengthValidator} from "../utils/validators/array-length-validator";
-import {ActivatedRoute, Router} from "@angular/router";
-import {CommonModule, NgIf} from "@angular/common";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {FeedSelectPrinciplesComponent} from "../feed/feed-select-principles/feed-select-principles.component";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {MatExpansionModule} from "@angular/material/expansion";
+import {MatStepper, MatStepperModule} from "@angular/material/stepper";
+import {Router} from "@angular/router";
+import {NgIf} from "@angular/common";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
-import {state} from "@angular/animations";
 import {FairPrinciple} from "../../domain/fair-principle";
 import {DatasetService} from "../../services/dataset/dataset.service";
 import {Dataset} from "../../domain/dataset";
@@ -59,7 +53,7 @@ export class ValidateComponent implements OnInit{
   protected repository?: Repository;
   protected dataset?: Dataset;
 
-  protected isNegativeComment?: boolean;
+  protected isNegativeComment: boolean | undefined;
   protected compliance?: Compliance;
 
 
