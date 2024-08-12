@@ -5,8 +5,10 @@ import {HateoasResource} from "@lagoshny/ngx-hateoas-client";
 @HateoasResource('verifications')
 export class Verification extends GenericResource {
     verifiers?: User[]
-    fairPrinciple?: string
+    principle?: string
     author?: string
     instance?: string
-  verificationDate?: string
+    verificationDate?: string
+    isPositive?: boolean
+    negativeComment?: string
 }

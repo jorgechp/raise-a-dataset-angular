@@ -1,11 +1,33 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
+import {TranslocoDirective} from "@jsverse/transloco";
+import {MatStep, MatStepper, MatStepperModule} from "@angular/material/stepper";
+import {minArrayLengthValidator} from "../utils/validators/array-length-validator";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CommonModule, NgIf} from "@angular/common";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {FeedSelectPrinciplesComponent} from "../feed/feed-select-principles/feed-select-principles.component";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {IVerificationDto} from "../../domain/verification-dto";
+import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
+import {state} from "@angular/animations";
+import {FairPrinciple} from "../../domain/fair-principle";
+import {DatasetService} from "../../services/dataset/dataset.service";
+import {Dataset} from "../../domain/dataset";
+import {RepositoryService} from "../../services/repository/repository.service";
+import {Repository} from "../../domain/repository";
+import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
+import {RaiseInstance} from "../../domain/raise-instance";
+import {Verification} from "../../domain/verification";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {VerificationService} from "../../services/verification/verification.service";
 
 
 @Component({
@@ -15,92 +37,92 @@ import {MatCardModule} from '@angular/material/card';
   standalone: true,
   imports: [
     MatInputModule,
+    MatStepperModule,
     MatButtonModule,
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoDirective,
+    NgIf
   ]
 })
-export class VerifyComponent {
-  hasUnitNumber = false;
-  states = [
-    {name: 'Alabama', abbreviation: 'AL'},
-    {name: 'Alaska', abbreviation: 'AK'},
-    {name: 'American Samoa', abbreviation: 'AS'},
-    {name: 'Arizona', abbreviation: 'AZ'},
-    {name: 'Arkansas', abbreviation: 'AR'},
-    {name: 'California', abbreviation: 'CA'},
-    {name: 'Colorado', abbreviation: 'CO'},
-    {name: 'Connecticut', abbreviation: 'CT'},
-    {name: 'Delaware', abbreviation: 'DE'},
-    {name: 'District Of Columbia', abbreviation: 'DC'},
-    {name: 'Federated States Of Micronesia', abbreviation: 'FM'},
-    {name: 'Florida', abbreviation: 'FL'},
-    {name: 'Georgia', abbreviation: 'GA'},
-    {name: 'Guam', abbreviation: 'GU'},
-    {name: 'Hawaii', abbreviation: 'HI'},
-    {name: 'Idaho', abbreviation: 'ID'},
-    {name: 'Illinois', abbreviation: 'IL'},
-    {name: 'Indiana', abbreviation: 'IN'},
-    {name: 'Iowa', abbreviation: 'IA'},
-    {name: 'Kansas', abbreviation: 'KS'},
-    {name: 'Kentucky', abbreviation: 'KY'},
-    {name: 'Louisiana', abbreviation: 'LA'},
-    {name: 'Maine', abbreviation: 'ME'},
-    {name: 'Marshall Islands', abbreviation: 'MH'},
-    {name: 'Maryland', abbreviation: 'MD'},
-    {name: 'Massachusetts', abbreviation: 'MA'},
-    {name: 'Michigan', abbreviation: 'MI'},
-    {name: 'Minnesota', abbreviation: 'MN'},
-    {name: 'Mississippi', abbreviation: 'MS'},
-    {name: 'Missouri', abbreviation: 'MO'},
-    {name: 'Montana', abbreviation: 'MT'},
-    {name: 'Nebraska', abbreviation: 'NE'},
-    {name: 'Nevada', abbreviation: 'NV'},
-    {name: 'New Hampshire', abbreviation: 'NH'},
-    {name: 'New Jersey', abbreviation: 'NJ'},
-    {name: 'New Mexico', abbreviation: 'NM'},
-    {name: 'New York', abbreviation: 'NY'},
-    {name: 'North Carolina', abbreviation: 'NC'},
-    {name: 'North Dakota', abbreviation: 'ND'},
-    {name: 'Northern Mariana Islands', abbreviation: 'MP'},
-    {name: 'Ohio', abbreviation: 'OH'},
-    {name: 'Oklahoma', abbreviation: 'OK'},
-    {name: 'Oregon', abbreviation: 'OR'},
-    {name: 'Palau', abbreviation: 'PW'},
-    {name: 'Pennsylvania', abbreviation: 'PA'},
-    {name: 'Puerto Rico', abbreviation: 'PR'},
-    {name: 'Rhode Island', abbreviation: 'RI'},
-    {name: 'South Carolina', abbreviation: 'SC'},
-    {name: 'South Dakota', abbreviation: 'SD'},
-    {name: 'Tennessee', abbreviation: 'TN'},
-    {name: 'Texas', abbreviation: 'TX'},
-    {name: 'Utah', abbreviation: 'UT'},
-    {name: 'Vermont', abbreviation: 'VT'},
-    {name: 'Virgin Islands', abbreviation: 'VI'},
-    {name: 'Virginia', abbreviation: 'VA'},
-    {name: 'Washington', abbreviation: 'WA'},
-    {name: 'West Virginia', abbreviation: 'WV'},
-    {name: 'Wisconsin', abbreviation: 'WI'},
-    {name: 'Wyoming', abbreviation: 'WY'}
-  ];
-  private fb = inject(FormBuilder);
-  addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]
+export class VerifyComponent implements OnInit{
+
+  @ViewChild('stepper') private stepper: MatStepper | undefined;
+  protected verificationDto?: IVerificationDto;
+  protected fairPrincipleIndicator?: FairPrinciple;
+  protected raiseInstance?: RaiseInstance;
+  protected repository?: Repository;
+  protected dataset?: Dataset;
+
+  protected isNegativeComment?: boolean;
+
+
+  constructor(private _formBuilder: FormBuilder,
+              private fairPrincipleService: FairPrincipleService,
+              private raiseInstanceService: RaiseInstanceService,
+              private datasetInstanceService: DatasetService,
+              private repositoryService: RepositoryService,
+              private verificationService: VerificationService,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state && state['verificationDto']) {
+      this.verificationDto = state['verificationDto'];
+    }
+  }
+
+  firstFormGroup = this._formBuilder.group({
+    negativeComment: ['', ],
   });
 
-  onSubmit(): void {
-    alert('Thanks!');
+  ngOnInit(): void {
+    if(!this.verificationDto){
+      return;
+    }
+    this.fairPrincipleService.getResource(this.verificationDto?.fairPrincipleId).subscribe(
+        (response) => {
+          this.fairPrincipleIndicator = response;
+        }
+    );
+    this.raiseInstanceService.getResource(this.verificationDto?.instanceId).subscribe(
+        (response) => {
+          this.raiseInstance = response;
+        }
+    );
+    this.datasetInstanceService.getResource(this.verificationDto?.datasetId).subscribe(
+        (response) => {
+          this.dataset = response;
+        }
+    );
+    this.repositoryService.getResource(this.verificationDto?.repositoryId).subscribe(
+        (response) => {
+          this.repository = response;
+        }
+    );
+  }
+
+
+  handleGoToValidation() {
+    if(this.stepper){
+      this.stepper.selectedIndex = 2;
+    }
+  }
+
+  handleDoVerification() {
+    const verificationToAdd = new Verification();
+    verificationToAdd.isPositive = this.isNegativeComment;
+    verificationToAdd.author = this.authenticationService.getCurrentUser().uri!;
+    verificationToAdd.principle = this.fairPrincipleIndicator?.uri;
+    verificationToAdd.instance = this.raiseInstance?.uri;
+    verificationToAdd.negativeComment = this.firstFormGroup.get('negativeComment')?.value  as unknown as string;
+    verificationToAdd.verificationDate = new Date().toISOString();
+
+    this.verificationService.add(verificationToAdd).subscribe();
+  }
+
+  handleGoToVerifications() {
+    this.router.navigate(['verifications'], {}).then();
   }
 }

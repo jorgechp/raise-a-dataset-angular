@@ -1,100 +1,158 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="addressForm" novalidate>
-  <mat-card class="shipping-card">
-    <mat-card-header>
-      <mat-card-title>Shipping Information</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input formControlName="company" matInput placeholder="Company">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input formControlName="firstName" matInput placeholder="First name">
-            @if (addressForm.controls['firstName'].hasError('required')) {
-              <mat-error>First name is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input formControlName="lastName" matInput placeholder="Last name">
-            @if (addressForm.controls['lastName'].hasError('required')) {
-              <mat-error>Last name is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <textarea formControlName="address" matInput placeholder="Address"></textarea>
-            @if (addressForm.controls['address'].hasError('required')) {
-              <mat-error>Address is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          @if (hasUnitNumber) {
-            <mat-form-field class="full-width">
-              <textarea matInput placeholder="Address 2" formControlName="address2"></textarea>
-            </mat-form-field>
-          } @else {
-            <button mat-button type="button" (click)="hasUnitNumber = !hasUnitNumber">
-              + Add C/O, Apt, Suite, Unit
+
+<form (ngSubmit)="handleDoVerification()" [formGroup]="this.firstFormGroup" novalidate>
+<mat-stepper #stepper *transloco="let t; prefix: 'feed'" linear=true>
+    <mat-step label="Validation details" state="number">
+        <mat-card class="shipping-card">
+            <mat-card-header>
+                <mat-card-title>{{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    You're going to validate that the following dataset instance has applied the indicator
+                    "{{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}".
+                </p>
+                <div class="indicator_info">
+                    <p>
+                        {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}
+                    </p>
+                    <p>
+                        {{this.fairPrincipleIndicator?.description}}
+                    </p>
+                    <p>
+                        To perform the validation, do the following steps:
+                    </p>
+                    <div>
+                        <ol>
+                            <li>Access to the dataset, at <a [href]="this.raiseInstance?.doi"
+                                                             [title]="this.raiseInstance?.doi"
+                                                             target="_blank">
+                                {{this.raiseInstance?.doi}}
+                            </a>
+                                (will be open in a new tab)
+                            </li>
+                            <li>Check that the dataset has applied the indicator
+                                "{{this.fairPrincipleIndicator?.namePrefix}}:
+                                {{this.fairPrincipleIndicator?.name}}"
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div *transloco="let t; prefix: 'common'">
+                    <button
+                            mat-button
+                            (click)="this.handleGoToValidation()"
+                            type="button">I have enough information to validate the instance
+                    </button>
+                    <button
+                            mat-button
+                            matStepperNext
+                            type="button">I need more information about this indicator before validating the instance
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </mat-step>
+    <mat-step label="Indicator details" state="number" optional>
+        <mat-card-header>
+            <mat-card-title>Indicator information -
+                {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="indicator_info">
+                <p>
+                    {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}
+                </p>
+                <p>
+                    {{this.fairPrincipleIndicator?.description}}
+                </p>
+            </div>
+            <div>
+                <p>
+                    Visit this page to find more resources about  "{{this.fairPrincipleIndicator?.namePrefix}}:
+                    {{this.fairPrincipleIndicator?.name}}"
+                </p>
+                <p>
+                    <a      class="cursor-pointer"
+                            [href]="this.fairPrincipleIndicator?.url"
+                            [title]="this.fairPrincipleIndicator?.url"
+                            target="_blank">
+                                {{this.fairPrincipleIndicator?.url}}
+                    </a>
+                </p>
+
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button
+                    mat-button
+                    matStepperNext
+                    type="button">I have enough information to validate the instance
             </button>
-          }
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input formControlName="city" matInput placeholder="City">
-            @if (addressForm.controls['city'].hasError('required')) {
-              <mat-error>City is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select formControlName="state" placeholder="State">
-              @for (state of states; track state) {
-                <mat-option [value]="state.abbreviation">{{ state.name }}</mat-option>
-              }
-            </mat-select>
-            @if (addressForm.controls['state'].hasError('required')) {
-              <mat-error>State is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input #postalCode formControlName="postalCode" matInput maxlength="5" placeholder="Postal Code"
-                   type="number">
-            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-radio-group formControlName="shipping">
-            <mat-radio-button value="free">Free Shipping</mat-radio-button>
-            <mat-radio-button value="priority">Priority Shipping</mat-radio-button>
-            <mat-radio-button value="nextday">Next Day Shipping</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button color="primary" mat-raised-button type="submit">Submit</button>
-    </mat-card-actions>
-  </mat-card>
+            <button
+                    mat-button
+                    matStepperPrevious
+                    type="button">Go back
+            </button>
+        </mat-card-actions>
+    </mat-step>
+    <mat-step label="Validation" state="number">
+        <mat-card-header>
+            <mat-card-title>Validation -
+                {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                Does the instance of the dataset {{this.dataset?.name}} published in the Repository {{this.repository?.name}}
+                has applied the indicator {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}?
+            </p>
+            <div>
+                <button
+                        mat-button
+                        (click)="this.isNegativeComment = false"
+                        type="button">Yes, the instance is applying the indicator
+                </button>
+                <button
+                        mat-button
+                        (click)="this.isNegativeComment = true"
+                        type="button">No, the instance is NOT applying the indicator
+                </button>
+            </div>
+            <div *ngIf="isNegativeComment">
+                <p>
+                    Kindly provide a comment (optional) to explaining your decision. This comment will be public and will help
+                    the maintainer of this instance to understand why the indicator is missing.
+                </p>
+                <textarea formControlName="negativeComment" matInput placeholder="Comment"></textarea>
+            </div>
+            <mat-card-actions>
+                <button
+                        *ngIf="this.isNegativeComment !== undefined"
+                        (click)="this.handleDoVerification()"
+                        mat-button
+                        matStepperNext
+                        type="button">Verify
+                </button>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-step>
+    <mat-step label="Results" state="number">
+        <mat-card-header>
+            <mat-card-title>Thanks</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            You have submitted your verifications
+        </mat-card-content>
+        <mat-card-actions>
+            <button
+                    (click)="this.handleGoToVerifications()"
+                    mat-button
+                    matStepperNext
+                    type="button">Verify more indicators
+            </button>
+        </mat-card-actions>
+    </mat-step>
+</mat-stepper>
+
 </form>

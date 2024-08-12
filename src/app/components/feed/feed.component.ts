@@ -15,7 +15,7 @@ import {minArrayLengthValidator} from "../utils/validators/array-length-validato
 import {MatDialog} from "@angular/material/dialog";
 import {Verification} from "../../domain/verification";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Router} from "@angular/router";
 import {
   VerificationService
 } from "../../services/verification/verification.service";
@@ -64,7 +64,6 @@ export class FeedComponent implements OnInit {
               private fairPrincipleService: FairPrincipleService,
               private fairPrincipleVerificationService: VerificationService,
               private authenticationService: AuthenticationService,
-              private activatedRoute: ActivatedRoute,
               private router: Router) {
     this.selectedPrinciples = this.firstFormGroup.get('selectedCards')?.value as unknown as number[]
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -137,7 +136,7 @@ export class FeedComponent implements OnInit {
     this.selectedPrinciples.forEach((selectedPrinciple) => {
       const principle = this.fairPrincipleList[selectedPrinciple];
       const newRaiseFairPrincipleVerification = new Verification();
-      newRaiseFairPrincipleVerification.fairPrinciple = principle.uri!;
+      newRaiseFairPrincipleVerification.principle = principle.uri!;
       newRaiseFairPrincipleVerification.author = this.authenticationService.getCurrentUser().uri!;
       newRaiseFairPrincipleVerification.instance = this.raiseInstance?.uri;
       newRaiseFairPrincipleVerification.verificationDate = new Date().toISOString();
