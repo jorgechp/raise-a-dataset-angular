@@ -13,5 +13,5 @@ export interface IComplianceDTO {
     fairPrinciplePrefix: string;
     fairPrincipleName: string;
     fairCategory: FairCategoriesEnum;
-    verificationDate: Date;
+    complianceDate: Date;
 }

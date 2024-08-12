@@ -29,6 +29,8 @@ import {forkJoin} from "rxjs";
 import {IComplianceDTO} from "../../domain/compliance-dto";
 import {ComplianceService} from "../../services/compliance/compliance.service";
 import {Validation} from "../../domain/validation";
+import {ValidationService} from "../../services/validation/validation.service";
+import {Compliance} from "../../domain/compliance";
 
 
 @Component({
@@ -51,13 +53,14 @@ import {Validation} from "../../domain/validation";
 export class ValidateComponent implements OnInit{
 
   @ViewChild('stepper') private stepper: MatStepper | undefined;
-  protected verificationDto?: IComplianceDTO;
+  protected complianceDTO?: IComplianceDTO;
   protected fairPrincipleIndicator?: FairPrinciple;
   protected raiseInstance?: RaiseInstance;
   protected repository?: Repository;
   protected dataset?: Dataset;
 
   protected isNegativeComment?: boolean;
+  protected compliance?: Compliance;
 
 
   constructor(private _formBuilder: FormBuilder,
@@ -65,12 +68,13 @@ export class ValidateComponent implements OnInit{
               private raiseInstanceService: RaiseInstanceService,
               private datasetInstanceService: DatasetService,
               private repositoryService: RepositoryService,
-              private validationService: ComplianceService,
+              private complianceService: ComplianceService,
+              private validationService: ValidationService,
               private authenticationService: AuthenticationService,
               private router: Router) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state && state['verificationDto']) {
-      this.verificationDto = state['verificationDto'];
+      this.complianceDTO = state['verificationDto'];
     }
   }
 
@@ -79,21 +83,23 @@ export class ValidateComponent implements OnInit{
   });
 
   ngOnInit(): void {
-    if(!this.verificationDto){
+    if(!this.complianceDTO){
       return;
     }
 
     forkJoin([
-      this.fairPrincipleService.getResource(this.verificationDto?.fairPrincipleId),
-      this.datasetInstanceService.getResource(this.verificationDto?.datasetId),
-      this.repositoryService.getResource(this.verificationDto?.datasetId),
-      this.raiseInstanceService.getResource(this.verificationDto?.instanceId)
+      this.fairPrincipleService.getResource(this.complianceDTO?.fairPrincipleId),
+      this.datasetInstanceService.getResource(this.complianceDTO?.datasetId),
+      this.repositoryService.getResource(this.complianceDTO?.datasetId),
+      this.raiseInstanceService.getResource(this.complianceDTO?.instanceId),
+      this.complianceService.getResource(this.complianceDTO?.id),
     ]).subscribe(
-        ([fairPrinciple, dataset, repository, raiseInstance]) => {
+        ([fairPrinciple, dataset, repository, raiseInstance, compliance]) => {
           this.fairPrincipleIndicator = fairPrinciple;
           this.dataset = dataset;
           this.repository = repository;
           this.raiseInstance = raiseInstance;
+          this.compliance = compliance;
         }
     );
   }
@@ -110,7 +116,7 @@ export class ValidateComponent implements OnInit{
     validation.isPositive = this.isNegativeComment;
     validation.validator = this.authenticationService.getCurrentUser().uri!;
     validation.negativeComment = this.firstFormGroup.get('negativeComment')?.value  as unknown as string;
-    validation.compliance = '1';
+    validation.compliance = this.compliance?.uri;
 
     this.validationService.add(validation).subscribe();
   }
