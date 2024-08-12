@@ -28,6 +28,7 @@ import {RaiseInstance} from "../../domain/raise-instance";
 import {Verification} from "../../domain/verification";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {VerificationService} from "../../services/verification/verification.service";
+import {forkJoin} from "rxjs";
 
 
 @Component({
@@ -81,24 +82,18 @@ export class VerifyComponent implements OnInit{
     if(!this.verificationDto){
       return;
     }
-    this.fairPrincipleService.getResource(this.verificationDto?.fairPrincipleId).subscribe(
-        (response) => {
-          this.fairPrincipleIndicator = response;
-        }
-    );
-    this.raiseInstanceService.getResource(this.verificationDto?.instanceId).subscribe(
-        (response) => {
-          this.raiseInstance = response;
-        }
-    );
-    this.datasetInstanceService.getResource(this.verificationDto?.datasetId).subscribe(
-        (response) => {
-          this.dataset = response;
-        }
-    );
-    this.repositoryService.getResource(this.verificationDto?.repositoryId).subscribe(
-        (response) => {
-          this.repository = response;
+
+    forkJoin([
+      this.fairPrincipleService.getResource(this.verificationDto?.fairPrincipleId),
+      this.datasetInstanceService.getResource(this.verificationDto?.datasetId),
+      this.repositoryService.getResource(this.verificationDto?.datasetId),
+      this.raiseInstanceService.getResource(this.verificationDto?.instanceId)
+    ]).subscribe(
+        ([fairPrinciple, dataset, repository, raiseInstance]) => {
+          this.fairPrincipleIndicator = fairPrinciple;
+          this.dataset = dataset;
+          this.repository = repository;
+          this.raiseInstance = raiseInstance;
         }
     );
   }

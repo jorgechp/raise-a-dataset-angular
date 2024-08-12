@@ -8,4 +8,5 @@ export class RaiseInstance extends GenericResource {
   public repository: string | undefined;
   public user: string | undefined;
   public date: string | undefined;
+  public verifications: string[] | undefined;
 }
