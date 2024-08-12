@@ -138,7 +138,7 @@
     "done_message": "Your dataset thank you!",
     "go_to_instance_page_button": "Go to the instance page"
   },
-  "verifications": {
+  "compliance": {
     "dataset_column_header": "Dataset",
     "repository_column_header": "Repository",
     "indicator_column_header": "Indicator",

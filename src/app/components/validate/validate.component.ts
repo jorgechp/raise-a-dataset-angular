@@ -15,7 +15,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {FeedSelectPrinciplesComponent} from "../feed/feed-select-principles/feed-select-principles.component";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {IVerificationDto} from "../../domain/verification-dto";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
 import {state} from "@angular/animations";
 import {FairPrinciple} from "../../domain/fair-principle";
@@ -25,16 +24,17 @@ import {RepositoryService} from "../../services/repository/repository.service";
 import {Repository} from "../../domain/repository";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
 import {RaiseInstance} from "../../domain/raise-instance";
-import {Verification} from "../../domain/verification";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
-import {VerificationService} from "../../services/verification/verification.service";
 import {forkJoin} from "rxjs";
+import {IComplianceDTO} from "../../domain/compliance-dto";
+import {ComplianceService} from "../../services/compliance/compliance.service";
+import {Validation} from "../../domain/validation";
 
 
 @Component({
   selector: 'app-verify',
-  templateUrl: './verify.component.html',
-  styleUrl: './verify.component.scss',
+  templateUrl: './validate.component.html',
+  styleUrl: './validate.component.scss',
   standalone: true,
   imports: [
     MatInputModule,
@@ -48,10 +48,10 @@ import {forkJoin} from "rxjs";
     NgIf
   ]
 })
-export class VerifyComponent implements OnInit{
+export class ValidateComponent implements OnInit{
 
   @ViewChild('stepper') private stepper: MatStepper | undefined;
-  protected verificationDto?: IVerificationDto;
+  protected verificationDto?: IComplianceDTO;
   protected fairPrincipleIndicator?: FairPrinciple;
   protected raiseInstance?: RaiseInstance;
   protected repository?: Repository;
@@ -65,7 +65,7 @@ export class VerifyComponent implements OnInit{
               private raiseInstanceService: RaiseInstanceService,
               private datasetInstanceService: DatasetService,
               private repositoryService: RepositoryService,
-              private verificationService: VerificationService,
+              private validationService: ComplianceService,
               private authenticationService: AuthenticationService,
               private router: Router) {
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -106,18 +106,16 @@ export class VerifyComponent implements OnInit{
   }
 
   handleDoVerification() {
-    const verificationToAdd = new Verification();
-    verificationToAdd.isPositive = this.isNegativeComment;
-    verificationToAdd.author = this.authenticationService.getCurrentUser().uri!;
-    verificationToAdd.principle = this.fairPrincipleIndicator?.uri;
-    verificationToAdd.instance = this.raiseInstance?.uri;
-    verificationToAdd.negativeComment = this.firstFormGroup.get('negativeComment')?.value  as unknown as string;
-    verificationToAdd.verificationDate = new Date().toISOString();
+    const validation = new Validation();
+    validation.isPositive = this.isNegativeComment;
+    validation.validator = this.authenticationService.getCurrentUser().uri!;
+    validation.negativeComment = this.firstFormGroup.get('negativeComment')?.value  as unknown as string;
+    validation.compliance = '1';
 
-    this.verificationService.add(verificationToAdd).subscribe();
+    this.validationService.add(validation).subscribe();
   }
 
-  handleGoToVerifications() {
-    this.router.navigate(['verifications'], {}).then();
+  handleGoToCompliances() {
+    this.router.navigate(['compliances'], {}).then();
   }
 }

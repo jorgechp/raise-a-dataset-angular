@@ -1,6 +1,6 @@
 import {FairCategoriesEnum} from "./fair-categories-enum";
 
-export interface IVerificationDto {
+export interface IComplianceDTO {
     id: string;
     fairPrincipleId: number;
     authorId: number;

@@ -97,18 +97,18 @@ export const routes: Routes = [
         ),
     title: 'Feed dataset'
   }, {
-    path: 'verifications',
+    path: 'compliances',
     loadComponent: () =>
-      import('./components/verifications/verifications.component').then(
-        (c) => c.VerificationsComponent
+      import('./components/compliance/compliances.component').then(
+        (c) => c.CompliancesComponent
       ),
-    title: 'Verifications'
+    title: 'Compliances'
   }, {
-    path: 'verify',
+    path: 'validate',
     loadComponent: () =>
-      import('./components/verify/verify.component').then(
-        (c) => c.VerifyComponent
+      import('./components/validate/validate.component').then(
+        (c) => c.ValidateComponent
       ),
-    title: 'Verify'
+    title: 'Validate'
   },
 ];
