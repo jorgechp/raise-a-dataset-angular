@@ -13,12 +13,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {FairCategoriesEnum} from "../../domain/fair-categories-enum";
 import {minArrayLengthValidator} from "../utils/validators/array-length-validator";
 import {MatDialog} from "@angular/material/dialog";
-import {FairPrincipleVerificationInstance} from "../../domain/fair-principle-verification-instance";
+import {Compliance} from "../../domain/compliance";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Router} from "@angular/router";
 import {
-  FairPrincipleVerificationService
-} from "../../services/fair-principle-verification/fair-principle-verification.service";
+  ComplianceService
+} from "../../services/compliance/compliance.service";
 import {forkJoin} from "rxjs";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {getIdFromURI} from "../utils/funcions";
@@ -62,9 +62,8 @@ export class FeedComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private fairPrincipleService: FairPrincipleService,
-              private fairPrincipleVerificationService: FairPrincipleVerificationService,
+              private complianceService: ComplianceService,
               private authenticationService: AuthenticationService,
-              private activatedRoute: ActivatedRoute,
               private router: Router) {
     this.selectedPrinciples = this.firstFormGroup.get('selectedCards')?.value as unknown as number[]
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -136,12 +135,13 @@ export class FeedComponent implements OnInit {
 
     this.selectedPrinciples.forEach((selectedPrinciple) => {
       const principle = this.fairPrincipleList[selectedPrinciple];
-      const newRaiseFairPrincipleVerification = new FairPrincipleVerificationInstance();
-      newRaiseFairPrincipleVerification.fairPrinciple = principle.uri!;
+      const newRaiseFairPrincipleVerification = new Compliance();
+      newRaiseFairPrincipleVerification.principle = principle.uri!;
       newRaiseFairPrincipleVerification.author = this.authenticationService.getCurrentUser().uri!;
       newRaiseFairPrincipleVerification.instance = this.raiseInstance?.uri;
+      newRaiseFairPrincipleVerification.verificationDate = new Date().toISOString();
 
-      promises.push(this.fairPrincipleVerificationService.add(newRaiseFairPrincipleVerification));
+      promises.push(this.complianceService.add(newRaiseFairPrincipleVerification));
     });
 
     forkJoin(promises).subscribe(

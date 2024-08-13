@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {RepositoryInfoComponent} from "./components/repository-info/repository-info.component";
 
 
 export const routes: Routes = [
@@ -97,5 +96,19 @@ export const routes: Routes = [
             (c) => c.FeedComponent
         ),
     title: 'Feed dataset'
+  }, {
+    path: 'compliances',
+    loadComponent: () =>
+      import('./components/compliance/compliances.component').then(
+        (c) => c.CompliancesComponent
+      ),
+    title: 'Compliances'
+  }, {
+    path: 'validate',
+    loadComponent: () =>
+      import('./components/validate/validate.component').then(
+        (c) => c.ValidateComponent
+      ),
+    title: 'Validate'
   },
 ];

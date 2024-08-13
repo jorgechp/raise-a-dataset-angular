@@ -1,0 +1,38 @@
+<div *transloco="let t; prefix: 'compliance'">
+  <div *ngIf="this.dataSource.data.length > 0">
+    <table [dataSource]="dataSource" class="mat-elevation-z8 cursor-pointer" mat-table>
+      <ng-container matColumnDef="datasetName">
+        <th *matHeaderCellDef mat-header-cell> {{ t('dataset_column_header') }}</th>
+        <td *matCellDef="let element" mat-cell> {{ element.datasetName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="repositoryName">
+        <th *matHeaderCellDef mat-header-cell> {{ t('repository_column_header') }}</th>
+        <td *matCellDef="let element" mat-cell> {{ element.repositoryName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fairPrincipleName">
+        <th *matHeaderCellDef mat-header-cell> {{ t('indicator_column_header') }}</th>
+        <td *matCellDef="let element" mat-cell> {{ element.fairPrinciplePrefix }}: {{ element.fairPrincipleName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fairCategory">
+        <th *matHeaderCellDef mat-header-cell> {{ t('fair_principle_column_header') }}</th>
+        <td *matCellDef="let element" mat-cell> {{ element.fairCategory }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="authorName">
+        <th *matHeaderCellDef mat-header-cell> {{ t('author_column_header') }}</th>
+        <td *matCellDef="let element" mat-cell> {{ element.authorName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="verificationDate">
+        <th *matHeaderCellDef mat-header-cell> {{ t('date_column_header') }}</th>
+        <td *matCellDef="let element" mat-cell> {{ element.verificationDate | date }}</td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr (click)="this.handleClickOnVerification(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+  </div>
+</div>
