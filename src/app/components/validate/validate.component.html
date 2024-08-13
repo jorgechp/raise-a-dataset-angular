@@ -1,20 +1,20 @@
 
 <form (ngSubmit)="handleDoVerification()" [formGroup]="this.firstFormGroup" novalidate>
-<mat-stepper #stepper *transloco="let t; prefix: 'feed'" linear=true>
-    <mat-step label="Validation details" state="number">
+  <mat-stepper #stepper *transloco="let t; prefix: 'validate'" linear=true>
+    <mat-step label="{{ t('validation_details_label') }}" state="number">
       <mat-card class="validation-card">
         <mat-card-header class="validation-card-header">
                 <mat-card-title>{{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <p>
-                  You're going to validate that the dataset
+                  {{ t('going_to_validate_text') }}
                 </p>
               <p class="data-info">
-                {{ this.dataset?.name }} (Repository: {{ this.repository?.name }})
+                {{ this.dataset?.name }} ({{ t('repository') }}: {{ this.repository?.name }})
               </p>
               <p>
-                Has applied the indicator:
+                {{ t('has_applied_indicator_text') }}:
               </p>
               <p class="data-info">
                 {{ this.fairPrincipleIndicator?.namePrefix }}: {{ this.fairPrincipleIndicator?.name }}
@@ -22,18 +22,18 @@
               <div class="indicator_info">
 
                 <p>
-                        To perform the validation, do the following steps:
+                  {{ t('validation_steps_intro') }}:
                     </p>
                     <div>
                         <ol>
-                            <li>Access to the dataset, at <a [href]="this.raiseInstance?.doi"
+                          <li>{{ t('step_1_text') }} <a [href]="this.raiseInstance?.doi"
                                                              [title]="this.raiseInstance?.doi"
                                                              target="_blank">
                                 {{this.raiseInstance?.doi}}
                             </a>
-                              (will be open in a new tab).
+                            ({{ t('step_1_link_note') }}).
                             </li>
-                            <li>Check that the dataset has applied the indicator
+                          <li>{{ t('step_2_text') }}
                                 "{{this.fairPrincipleIndicator?.namePrefix}}:
                               {{ this.fairPrincipleIndicator?.name }}".
                             </li>
@@ -42,30 +42,30 @@
                 </div>
             </mat-card-content>
         <mat-card-actions class="validation-card-actions">
-                <div *transloco="let t; prefix: 'common'">
+          <div>
                     <button
                             mat-button
                             (click)="this.handleGoToValidation()"
-                            type="button">I have enough information to validate the instance
+                            type="button">{{ t('enough_information_button_text') }}
                     </button>
                     <button
                             mat-button
                             matStepperNext
-                            type="button">I need more information about this indicator before validating the instance
+                            type="button">{{ t('need_more_info_button_text') }}
                     </button>
                 </div>
             </mat-card-actions>
         </mat-card>
     </mat-step>
-    <mat-step label="Indicator details" state="number" optional>
+    <mat-step label="{{ t('indicator_details_label') }}" optional state="number">
       <mat-card-header class="validation-card-header">
-            <mat-card-title>Indicator information -
+        <mat-card-title>{{ t('indicator_info_card_title') }} -
                 {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="indicator_info">
               <p class="title">
-                Description
+                {{ t('description_title') }}
                 </p>
                 <p>
                   {{ this.fairPrincipleIndicator?.description }}.
@@ -73,7 +73,7 @@
             </div>
             <div>
               <p class="title">
-                Need more information?
+                {{ t('more_info_title') }}
                 </p>
                 <p>
                   <a class="cursor-pointer"
@@ -81,7 +81,7 @@
                             [title]="this.fairPrincipleIndicator?.url"
                             target="_blank">
                     {{ this.fairPrincipleIndicator?.url }}</a>
-                  (Opened in new tab)
+                  ({{ t('more_info_link_note') }})
                 </p>
 
             </div>
@@ -90,53 +90,52 @@
             <button
                     mat-button
                     matStepperNext
-                    type="button">I have enough information to validate the instance
+                    type="button">{{ t('enough_information') }}
             </button>
             <button
                     mat-button
                     matStepperPrevious
-                    type="button">Go back
+                    type="button">{{ t('go_back_button_text') }}
             </button>
         </mat-card-actions>
     </mat-step>
-    <mat-step label="Validation" state="number">
+    <mat-step label="{{ t('validation_label') }}" state="number">
       <mat-card-header class="validation-card-header">
-            <mat-card-title>Validation -
+        <mat-card-title>{{ t('validation_label') }} -
                 {{this.fairPrincipleIndicator?.namePrefix}}: {{this.fairPrincipleIndicator?.name}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <p>
-              Does the instance of the dataset <span class="entity-name">{{ this.dataset?.name }}</span>
-              published in the Repository <span class="entity-name">{{ this.repository?.name }}</span>
-              has applied the indicator <span class="entity-name">{{ this.fairPrincipleIndicator?.namePrefix }}
+              {{ t('validation_question_1') }} <span class="entity-name">{{ this.dataset?.name }}</span>
+              {{ t('validation_question_2') }} <span class="entity-name">{{ this.repository?.name }}</span>
+              {{ t('validation_question_3') }} <span class="entity-name">{{ this.fairPrincipleIndicator?.namePrefix }}
               : {{ this.fairPrincipleIndicator?.name }}</span> ?
             </p>
             <div>
                 <button
                         mat-button
                         (click)="this.isNegativeComment = false"
-                        type="button">Yes, the instance is applying the indicator
+                        type="button">{{ t('yes_button_text') }}
                 </button>
                 <button
                         mat-button
                         (click)="this.isNegativeComment = true"
-                        type="button">No, the instance is NOT applying the indicator
+                        type="button">{{ t('no_button_text') }}
                 </button>
             </div>
           <div *ngIf="isNegativeComment" class="negative-comment">
                 <p>
-                    Kindly provide a comment (optional) to explaining your decision. This comment will be public and will help
-                    the maintainer of this instance to understand why the indicator is missing.
+                  {{ t('negative_comment_intro') }}
                 </p>
             <mat-form-field class="full-width textearea-field">
-              <mat-label>Leave a comment</mat-label>
+              <mat-label>{{ t('leave_comment_label') }}</mat-label>
               <textarea
                 cdkAutosizeMaxRows="5"
                 cdkAutosizeMinRows="1"
                 cdkTextareaAutosize
                 formControlName="negativeComment"
                 matInput
-                placeholder="Comment"></textarea>
+                placeholder="{{ t('leave_comment_placeholder') }}"></textarea>
             </mat-form-field>
             </div>
             <mat-card-actions>
@@ -145,24 +144,24 @@
                         (click)="this.handleDoVerification()"
                         mat-button
                         matStepperNext
-                        type="button">Validate
+                        type="button">{{ t('validate_button_text') }}
                 </button>
             </mat-card-actions>
         </mat-card-content>
     </mat-step>
-    <mat-step label="Results" state="number">
+    <mat-step label="{{ t('results_label') }}" state="number">
         <mat-card-header>
-            <mat-card-title>Thanks</mat-card-title>
+          <mat-card-title>{{ t('thanks_card_title') }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          You have submitted your validation.
+          {{ t('submitted_validation_text') }}
         </mat-card-content>
       <mat-card-actions class="validation-card-actions">
             <button
                     (click)="this.handleGoToCompliances()"
                     mat-button
                     matStepperNext
-                    type="button">Validate more indicators
+                    type="button">{{ t('validate_more_button_text') }}
             </button>
         </mat-card-actions>
     </mat-step>
