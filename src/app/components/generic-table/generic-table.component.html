@@ -1,0 +1,31 @@
+<div *transloco="let t; prefix: 'generic-table'" class="mat-elevation-z2">
+  <mat-form-field>
+    <mat-label>{{ t('search_placeholder') }}</mat-label>
+    <input #input (keyup)="this.applyFilter($event)" matInput placeholder="{{ t('search_placeholder') }}">
+  </mat-form-field>
+
+  <table #table *ngIf="this.displayedColumns" aria-label="datasets" class="full-width-table" mat-table matSort>
+
+    <ng-container *ngFor="let column of this.columns;">
+      <ng-container [matColumnDef]="column.nameDef">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header
+            sortActionDescription="{{ t(column.i18nKey) }}">{{ t(column.i18nKey) }}
+        </th>
+        <td *matCellDef="let row" mat-cell>{{ row[column.nameDef] }}</td>
+      </ng-container>
+    </ng-container>
+
+    <tr *matHeaderRowDef="this.displayedColumns" mat-header-row></tr>
+    <tr (click)="this.handleClickOnRow(row)" *matRowDef="let row; columns: this.displayedColumns;"
+        class="cursor-pointer"
+        mat-row></tr>
+  </table>
+
+  <mat-paginator #paginator
+                 [length]="this.dataSource?.data?.length"
+                 [pageIndex]="0"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [pageSize]="10"
+                 aria-label="Select page">
+  </mat-paginator>
+</div>

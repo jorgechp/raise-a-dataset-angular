@@ -9,4 +9,5 @@ export class RaiseInstance extends GenericResource {
   public user: string | undefined;
   public date: string | undefined;
   public compliances: string[] | undefined;
+  public isInRisk: boolean | undefined;
 }

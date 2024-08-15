@@ -178,5 +178,8 @@
     "thanks_card_title": "Thanks",
     "submitted_validation_text": "You have submitted your validation.",
     "validate_more_button_text": "Validate more indicators"
+  },
+  "generic-table": {
+    "search_placeholder": "Search by any column value"
   }
 }
