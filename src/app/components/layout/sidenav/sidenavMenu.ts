@@ -35,5 +35,10 @@ export const SIDENAV_MENU: ISidenavMenuItem[] = [
     isActive: true,
     role: UserRole.ROLE_USER,
     routeLink: 'compliances'
+  }, {
+    title: 'Rescue',
+    isActive: true,
+    role: UserRole.ROLE_USER,
+    routeLink: 'rescue'
   }
 ]

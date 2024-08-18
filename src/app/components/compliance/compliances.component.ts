@@ -1,38 +1,62 @@
 import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatTableModule} from "@angular/material/table";
 import {IComplianceDTO} from "../../domain/compliance-dto";
 import {ComplianceDtoService} from "../../services/compliance/compliance-dto.service";
 import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
 import {TranslocoDirective} from "@jsverse/transloco";
+import {GenericTableComponent, IGenericTableColumn} from "../generic-table/generic-table.component";
 
 
 @Component({
   selector: 'app-compliances',
   standalone: true,
-  imports: [CommonModule, MatTableModule, TranslocoDirective],
+  imports: [CommonModule, MatTableModule, TranslocoDirective, GenericTableComponent],
   templateUrl: './compliances.component.html',
   styleUrl: './compliances.component.scss'
 })
 export class CompliancesComponent implements OnInit {
-  displayedColumns: Iterable<string> = ['datasetName', 'repositoryName', 'fairPrincipleName', 'fairCategory', 'authorName', 'verificationDate'];
-  dataSource: MatTableDataSource<IComplianceDTO>;
-
+  rows: IComplianceDTO[] | undefined;
+  columns: IGenericTableColumn[] = [
+    {
+      nameDef: 'datasetName',
+      i18nKey: 'compliance.dataset_column_header'
+    },
+    {
+      nameDef: 'repositoryName',
+      i18nKey: 'compliance.repository_column_header'
+    },
+    {
+      nameDef: 'fairPrincipleName',
+      i18nKey: 'compliance.indicator_column_header'
+    },
+    {
+      nameDef: 'fairCategory',
+      i18nKey: 'compliance.fair_principle_column_header'
+    },
+    {
+      nameDef: 'authorName',
+      i18nKey: 'compliance.author_column_header'
+    },
+    {
+      nameDef: 'complianceDate',
+      i18nKey: 'compliance.date_column_header'
+    }
+  ];
 
   constructor(private complianceDTOService: ComplianceDtoService,
               private router: Router) {
-    this.dataSource = new MatTableDataSource<IComplianceDTO>([]);
   }
 
   ngOnInit(): void {
-      this.complianceDTOService.retrieveAllCompliancesDTO().subscribe(
-          (verificationResponse) => {
-            this.dataSource = new MatTableDataSource<IComplianceDTO>(verificationResponse);
-          }
-      )
+    this.complianceDTOService.retrieveAllCompliancesDTO().subscribe(
+      (verificationResponse) => {
+        this.rows = verificationResponse;
+      }
+    )
   }
 
-  handleClickOnVerification(row: IComplianceDTO) {
+  rowHandlerEvent(row: IComplianceDTO) {
     this.router.navigate(['validate'], {state: {verificationDto: row}}).then();
   }
 }

@@ -110,5 +110,12 @@ export const routes: Routes = [
         (c) => c.ValidateComponent
       ),
     title: 'Validate'
+  }, {
+    path: 'rescue',
+    loadComponent: () =>
+      import('./components/rescue-table/rescue-table.component').then(
+        (c) => c.RescueTableComponent
+      ),
+    title: 'Rescue'
   },
 ];
