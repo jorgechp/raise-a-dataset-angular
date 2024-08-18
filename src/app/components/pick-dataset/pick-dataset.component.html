@@ -1,52 +1,5 @@
-<div *transloco="let t; prefix: 'pickDataset'" class="mat-elevation-z2">
-  <mat-form-field>
-    <mat-label>{{ t('search_placeholder') }}</mat-label>
-    <input #input (keyup)="applyFilter($event)" matInput placeholder="{{ t('search_placeholder') }}">
-  </mat-form-field>
-
-  <table #table aria-label="datasets" class="full-width-table" mat-table matSort>
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header
-          sortActionDescription="{{ t('name_column_header') }}">{{ t('name_column_header') }}
-      </th>
-      <td *matCellDef="let row" mat-cell>{{ row.name }}</td>
-    </ng-container>
-
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header
-          sortActionDescription="{{ t('description_column_header') }}">{{ t('description_column_header') }}
-      </th>
-      <td *matCellDef="let row" mat-cell>{{ row.description }}</td>
-    </ng-container>
-
-    <!-- Description Author -->
-    <ng-container matColumnDef="author">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header
-          sortActionDescription="{{ t('author_column_header') }}">{{ t('author_column_header') }}
-      </th>
-      <td *matCellDef="let row" mat-cell>{{ row.author }}</td>
-    </ng-container>
-
-    <!-- Description Registration Date -->
-    <ng-container matColumnDef="registrationDate">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header
-          sortActionDescription="{{ t('registration_date_column_header') }}">{{ t('registration_date_column_header') }}
-      </th>
-      <td *matCellDef="let row" mat-cell>{{ row.registrationDate }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr (click)="handleClickOnRow(row)" *matRowDef="let row; columns: displayedColumns;" class="cursor-pointer"
-        mat-row></tr>
-  </table>
-
-  <mat-paginator #paginator
-                 [length]="dataSource?.data?.length"
-      [pageIndex]="0"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]"
-      aria-label="Select page">
-  </mat-paginator>
-</div>
+<app-generic-table (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
+                   *ngIf="this.rows"
+                   [columns]="this.columns"
+                   [rows]="this.rows"
+></app-generic-table>

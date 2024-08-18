@@ -18,15 +18,15 @@ export class RescueTableComponent implements OnInit {
   columns: IGenericTableColumn[] = [
     {
       nameDef: 'name',
-      i18nKey: 'name'
+      i18nKey: 'rescue.name'
     },
     {
       nameDef: 'description',
-      i18nKey: 'description'
+      i18nKey: 'rescue.description'
     },
     {
       nameDef: 'registrationDate',
-      i18nKey: 'registrationDate'
+      i18nKey: 'rescue.registrationDate'
     }
   ];
   columnDescription: string[] = [];
@@ -44,7 +44,4 @@ export class RescueTableComponent implements OnInit {
       this.rows = data.resources;
     })
   }
-
-
-
 }
