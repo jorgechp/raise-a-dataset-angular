@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {MatFormField, MatInputModule} from "@angular/material/input";
 import {MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
@@ -30,8 +41,8 @@ export interface IGenericTableColumn {
   templateUrl: './generic-table.component.html',
   styleUrl: './generic-table.component.scss'
 })
-export class GenericTableComponent<T> implements AfterViewInit {
-  dataSource: MatTableDataSource<T> | undefined;
+export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterContentInit {
+  dataSource: MatTableDataSource<T>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,18 +54,35 @@ export class GenericTableComponent<T> implements AfterViewInit {
   private table: MatTable<T> | undefined;
 
   constructor(private router: Router) {
+    this.dataSource = new MatTableDataSource<T>([]);
   }
+
+  ngOnInit(): void {
+
+    if (!this.displayedColumns) {
+      this.displayedColumns = [];
+    }
+    this.dataSource.data = [...(this.rows as T[])];
+  }
+
 
   ngAfterViewInit(): void {
     if (this.tables) {
       this.table = this.tables.get(0);
     }
 
-    this.dataSource = new MatTableDataSource<T>(this.rows);
+
     this.table!.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
+  }
+
+  ngAfterContentInit() {
+    if (this.displayedColumns?.length == 0) {
+      const columnToDisplay = this.columns?.map(column => column.nameDef) || [];
+      this.displayedColumns = [...columnToDisplay];
+    }
   }
 
   handleClickOnRow(row: T) {

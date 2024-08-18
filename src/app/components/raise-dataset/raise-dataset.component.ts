@@ -119,7 +119,7 @@ export class RaiseDatasetComponent implements OnInit {
     const raiseInstance: RaiseInstance = new RaiseInstance();
     raiseInstance.dataset = dataset.uri;
     raiseInstance.repository = repository.uri;
-    raiseInstance.doi = this.repositoryForm.get('doi')!.value!;
+    raiseInstance.uniqueIdentifier = this.repositoryForm.get('doi')!.value!;
     raiseInstance.date = new Date().toISOString();
     raiseInstance.user = this.authenticationService.getCurrentUser().uri!;
 

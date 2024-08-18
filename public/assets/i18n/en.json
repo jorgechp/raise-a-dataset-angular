@@ -180,6 +180,9 @@
     "validate_more_button_text": "Validate more indicators"
   },
   "generic-table": {
-    "search_placeholder": "Search by any column value"
+    "search_placeholder": "Search by any column value",
+    "name": "Name",
+    "description": "Description",
+    "registrationDate": "Registration date"
   }
 }

@@ -26,10 +26,10 @@
                     </p>
                     <div>
                         <ol>
-                          <li>{{ t('step_1_text') }} <a [href]="this.raiseInstance?.doi"
-                                                             [title]="this.raiseInstance?.doi"
+                          <li>{{ t('step_1_text') }} <a [href]="this.raiseInstance?.uniqueIdentifier"
+                                                        [title]="this.raiseInstance?.uniqueIdentifier"
                                                              target="_blank">
-                                {{this.raiseInstance?.doi}}
+                            {{ this.raiseInstance?.uniqueIdentifier }}
                             </a>
                             ({{ t('step_1_link_note') }}).
                             </li>
