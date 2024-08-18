@@ -27,9 +27,12 @@ export class RescueTableComponent implements OnInit {
     {
       nameDef: 'registrationDate',
       i18nKey: 'rescue.registrationDate'
+    },
+    {
+      nameDef: 'category',
+      i18nKey: 'rescue.category'
     }
   ];
-  columnDescription: string[] = [];
   rows: RiskDataset[] | undefined;
 
   constructor(private riskDataset: RiskDatasetService) {
@@ -41,7 +44,12 @@ export class RescueTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.riskDataset.getPage().subscribe((data) => {
-      this.rows = data.resources;
+      this.rows = data.resources.map(resource => {
+        return {
+          ...resource,
+          category: resource.category?.toString()!.replace(/_/g, ' ') || ''
+        };
+      }) as unknown as RiskDataset[];
     })
   }
 }

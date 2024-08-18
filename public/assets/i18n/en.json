@@ -185,6 +185,7 @@
   "rescue": {
     "name": "Name",
     "description": "Description",
-    "registrationDate": "Registration date"
+    "registrationDate": "Registration date",
+    "category": "Category"
   }
 }
