@@ -1,7 +1,7 @@
 <div *transloco="let t;" class="mat-elevation-z2">
   <mat-form-field>
     <mat-label>{{ t('generic-table.search_placeholder') }}</mat-label>
-    <input #input (keyup)="this.applyFilter($event)" matInput placeholder="{{ t('generic-table.search_placeholder') }}">
+    <input (keyup)="this.applyFilter($event)" matInput placeholder="{{ t('generic-table.search_placeholder') }}">
   </mat-form-field>
 
   <table #table *ngIf="this.displayedColumns" aria-label="datasets" class="full-width-table" mat-table matSort>
