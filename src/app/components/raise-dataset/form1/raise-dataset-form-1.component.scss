@@ -29,3 +29,8 @@
 .date_input {
   cursor: not-allowed;
 }
+
+input[readonly]
+{
+  color: var(--mdc-filled-text-field-disabled-label-text-color) !important;
+}

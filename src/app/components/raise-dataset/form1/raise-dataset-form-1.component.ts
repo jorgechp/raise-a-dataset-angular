@@ -9,6 +9,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepicker, MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {MatStepperPrevious} from "@angular/material/stepper";
+import {NgClass} from "@angular/common";
 
 
 @Component({
@@ -28,10 +29,12 @@ import {MatStepperPrevious} from "@angular/material/stepper";
     MatCardModule,
     ReactiveFormsModule,
     TranslocoDirective,
-    MatStepperPrevious
+    MatStepperPrevious,
+    NgClass
   ]
 })
 export class RaiseDatasetForm1Component {
   @Input() parentGroup: FormGroup | undefined;
+  @Input() isRescue?: boolean;
   private fb = inject(FormBuilder);
 }

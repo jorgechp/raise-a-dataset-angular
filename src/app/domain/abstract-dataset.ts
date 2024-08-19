@@ -7,4 +7,5 @@ export abstract class AbstractDataset extends GenericResource {
   public description: string | undefined;
   public creationDate: string | undefined;
   public registrationDate: string | undefined;
+  public isRescued: boolean | undefined;
 }

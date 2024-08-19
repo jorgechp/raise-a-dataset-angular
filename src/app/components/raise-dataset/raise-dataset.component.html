@@ -6,8 +6,8 @@
         <button mat-button matStepperNext type="button">{{ t('next') }}</button>
       </div>
     </mat-step>
-    <mat-step *ngIf="!this.isAddRepositoryMode" [stepControl]="datasetForm" label="{{ t('dataset') }}" state="edit">
-      <app-raise-dataset-form-1 [parentGroup]="datasetForm"></app-raise-dataset-form-1>
+    <mat-step *ngIf="this.mode != RAISE_MODE.ADD_REPOSITORY" [stepControl]="datasetForm" label="{{ t('dataset') }}" state="edit">
+      <app-raise-dataset-form-1 [parentGroup]="datasetForm" [isRescue]="this.mode==RAISE_MODE.RESCUE" ></app-raise-dataset-form-1>
       <div *transloco="let t; prefix: 'common'">
         <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
         <button mat-button matStepperNext type="button">{{ t('next') }}</button>

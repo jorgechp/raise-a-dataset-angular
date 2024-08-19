@@ -3,6 +3,7 @@ import {GenericTableComponent, IGenericTableColumn} from "../generic-table/gener
 import {NgIf} from "@angular/common";
 import {RiskDatasetService} from "../../services/risk-dataset/risk-dataset.service";
 import {RiskDataset} from "../../domain/risk-dataset";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-rescue-table',
@@ -35,15 +36,20 @@ export class RescueTableComponent implements OnInit {
   ];
   rows: RiskDataset[] | undefined;
 
-  constructor(private riskDataset: RiskDatasetService) {
+  constructor(private riskDataset: RiskDatasetService,
+              private router: Router) {
   }
 
   rowHandlerEvent(row: RiskDataset) {
-    console.log(row);
+    this.router.navigate(['raise'], {state: {dataset: row, isRescue: true}}).then();
   }
 
-  ngOnInit(): void {
-    this.riskDataset.getPage().subscribe((data) => {
+  private getDatasetPage(isRescued= false){
+    this.riskDataset.getPage({
+      params: {
+        isRescued: isRescued
+      }
+    }).subscribe((data) => {
       this.rows = data.resources.map(resource => {
         return {
           ...resource,
@@ -52,4 +58,10 @@ export class RescueTableComponent implements OnInit {
       }) as unknown as RiskDataset[];
     })
   }
+
+
+  ngOnInit(): void {
+    this.getDatasetPage(false);
+  }
+
 }

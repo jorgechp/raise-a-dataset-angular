@@ -32,22 +32,6 @@ export const routes: Routes = [
     title: 'Table'
   },
   {
-    path: 'tree',
-    loadComponent: () =>
-      import('./components/tree/tree.component').then(
-        (c) => c.TreeComponent
-      ),
-    title: 'Tree'
-  },
-  {
-    path: 'drag-drop',
-    loadComponent: () =>
-      import('./components/drag-drop/drag-drop.component').then(
-        (c) => c.DragDropComponent
-      ),
-    title: 'Drag-Drop'
-  },
-  {
     path: 'raise',
     loadComponent: () =>
       import('./components/raise-dataset/raise-dataset.component').then(

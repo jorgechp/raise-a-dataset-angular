@@ -7,4 +7,5 @@ import {AbstractDataset} from "./abstract-dataset";
 export class Dataset extends AbstractDataset {
   public maintainedBy: String[] | User[] | undefined;
   public repositories: Repository[] | undefined;
+  public rescuedBy: String | undefined;
 }

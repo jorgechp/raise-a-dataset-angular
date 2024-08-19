@@ -21,7 +21,16 @@ import {RaiseInstance} from "../../domain/raise-instance";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {Router} from "@angular/router";
+import {RiskDataset} from "../../domain/risk-dataset";
+import {AbstractDataset} from "../../domain/abstract-dataset";
+import {RiskDatasetService} from "../../services/risk-dataset/risk-dataset.service";
+import {getIdFromURI} from "../utils/funcions";
 
+enum RAISE_MODE {
+  RAISE,
+  ADD_REPOSITORY,
+  RESCUE
+}
 
 @Component({
   selector: 'app-raise-dataset',
@@ -49,14 +58,14 @@ import {Router} from "@angular/router";
 })
 export class RaiseDatasetComponent implements OnInit {
   private fb = inject(FormBuilder);
-  protected isAddRepositoryMode: boolean = false;
-  protected dataset: Dataset | undefined;
+  protected mode: RAISE_MODE = RAISE_MODE.RAISE;
+  protected dataset: AbstractDataset | undefined;
 
   public datasetForm = this.fb.group({
-    name: [null, Validators.required],
+    name: ['', Validators.required],
     createdBy: [this.authenticationService.getCurrentUser().username, Validators.required],
     registeredBy: [this.authenticationService.getCurrentUser().username, Validators.required],
-    description: [null, Validators.required],
+    description: ['', Validators.required],
     creationDate: [new Date().toISOString().slice(0, 10), Validators.required],
   });
 
@@ -73,17 +82,26 @@ export class RaiseDatasetComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private datasetService: DatasetService,
               private raiseInstanceService: RaiseInstanceService,
+              private riskDatasetService: RiskDatasetService,
               private router: Router) {
 
     const state = this.router.getCurrentNavigation()?.extras.state;
-    if (state && state['dataset']) {
-      this.isAddRepositoryMode = true;
+    if (state && state['isRescue'] && state['dataset']){
+      this.mode = state['isRescue'] ? RAISE_MODE.RESCUE : RAISE_MODE.ADD_REPOSITORY;
       this.dataset = state['dataset'];
     }
   }
 
   ngOnInit(): void {
-
+    if(this.mode == RAISE_MODE.RESCUE){
+      if(this.dataset){
+        this.dataset.name && this.datasetForm.get('name')!.setValue(this.dataset.name);
+        this.dataset.createdBy && this.datasetForm.get('createdBy')!.setValue(this.dataset.createdBy);
+        this.dataset.registeredBy && this.datasetForm.get('registeredBy')!.setValue(this.dataset.registeredBy);
+        this.dataset.description && this.datasetForm.get('description')!.setValue(this.dataset.description);
+        this.dataset.creationDate && this.datasetForm.get('creationDate')!.setValue(this.dataset.creationDate);
+      }
+    }
   }
 
   onSubmit(): void {
@@ -92,9 +110,10 @@ export class RaiseDatasetComponent implements OnInit {
       const currentUser = this.authenticationService.getCurrentUser().uri!;
       const selectedRepository: Repository = this.repositoryForm.get('repository')!.value!;
 
-      const datasetToRegister: Dataset = (this.isAddRepositoryMode && this.dataset) ? this.dataset : new Dataset();
+      const datasetToRegister: Dataset
+          = (this.mode == RAISE_MODE.ADD_REPOSITORY && this.dataset) ? this.dataset as Dataset : new Dataset();
 
-      if (!this.isAddRepositoryMode) {
+      if (this.mode != RAISE_MODE.ADD_REPOSITORY) {
         datasetToRegister.name = this.datasetForm.get('name')!.value!;
         datasetToRegister.createdBy = this.datasetForm.get('createdBy')!.value!;
         datasetToRegister.registeredBy = this.datasetForm.get('registeredBy')!.value!;
@@ -103,10 +122,16 @@ export class RaiseDatasetComponent implements OnInit {
         datasetToRegister.maintainedBy = [currentUser];
         datasetToRegister.description = this.datasetForm.get("description")!.value!;
         datasetToRegister.repositories = [selectedRepository];
+        if(this.mode == RAISE_MODE.RESCUE){
+          datasetToRegister.rescuedBy = currentUser;
+        }
+        datasetToRegister.isRescued = this.mode == RAISE_MODE.RESCUE;
 
         this.datasetService.add(datasetToRegister).subscribe(
           (newDataset: Dataset) => {
-            this.addNewRaiseInstance(newDataset, selectedRepository);
+            this.addNewRaiseInstance(newDataset, selectedRepository).subscribe(() => {
+              this.stepper?.next();
+            })
           }
         )
       } else {
@@ -122,9 +147,8 @@ export class RaiseDatasetComponent implements OnInit {
     raiseInstance.uniqueIdentifier = this.repositoryForm.get('doi')!.value!;
     raiseInstance.date = new Date().toISOString();
     raiseInstance.user = this.authenticationService.getCurrentUser().uri!;
-
-    this.raiseInstanceService.add(raiseInstance).subscribe(() => {
-      this.stepper?.next();
-    })
+    return this.raiseInstanceService.add(raiseInstance);
   }
+
+  protected readonly RAISE_MODE = RAISE_MODE;
 }

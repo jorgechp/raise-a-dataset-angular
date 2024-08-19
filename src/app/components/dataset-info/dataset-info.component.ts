@@ -71,7 +71,7 @@ export class DatasetInfoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   registerNewRepositoryHandle() {
-    this.router.navigate(['raise'], {state: {dataset: this.dataset}}).then();
+    this.router.navigate(['raise'], {state: {dataset: this.dataset , isRescue: false}}).then();
   }
 
   private loadDatasetInfo(): void {

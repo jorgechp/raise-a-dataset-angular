@@ -8,7 +8,8 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>{{ t('dataset_name') }}</mat-label>
-            <input formControlName="name" matInput placeholder="{{ t('dataset_name') }}">
+            <input formControlName="name" matInput placeholder="{{ t('dataset_name') }}"
+                   [readonly]="this.isRescue == true">
             @if (this.parentGroup!.controls['name'].hasError('required')) {
               <mat-error>{{ t('dataset_name_required_error') }} <strong *transloco="let t; prefix: 'common'">
                 {{ t('required') }}</strong></mat-error>
@@ -46,7 +47,9 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>{{ t('dataset_description') }}</mat-label>
-            <textarea formControlName="description" matInput placeholder="{{ t('dataset_description') }}"></textarea>
+            <textarea formControlName="description"
+                      matInput placeholder="{{ t('dataset_description') }}">
+            </textarea>
             <mat-hint>{{ t('dataset_description_hint') }}</mat-hint>
             @if (this.parentGroup!.controls['description'].hasError('required')) {
               <mat-error>{{ t('dataset_description_required_error') }} <strong *transloco="let t; prefix: 'common'">
@@ -60,8 +63,11 @@
           <mat-form-field class="full-width">
             <mat-form-field>
               <mat-label>{{ t('creation_date') }}</mat-label>
-              <input [matDatepicker]="picker" class="date_input" formControlName="creationDate" matInput readonly>
-              <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+              <input [matDatepicker]="picker" class="date_input"
+                     [readonly]="this.isRescue == true"
+                     formControlName="creationDate"
+                     matInput readonly>
+              <mat-datepicker-toggle [disabled]="this.isRescue == true" [for]="picker" matIconSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-hint>{{ t('creation_date_hint') }}</mat-hint>
