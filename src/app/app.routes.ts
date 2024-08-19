@@ -101,5 +101,12 @@ export const routes: Routes = [
         (c) => c.RescueTableComponent
       ),
     title: 'Rescue'
+  }, {
+    path: 'settings',
+    loadComponent: () =>
+        import('./components/register-form/register-form.component').then(
+            (c) => c.RegisterFormComponent
+        ),
+    title: 'User settings'
   },
 ];

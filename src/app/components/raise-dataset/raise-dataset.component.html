@@ -16,7 +16,7 @@
     <mat-step [stepControl]="repositoryForm" label="{{ t('repository') }}">
       <app-raise-dataset-form-2 [parentGroup]="repositoryForm"></app-raise-dataset-form-2>
       <div>
-        <button mat-button matStepperPrevious type="button">{{ t('back') }}</button>
+        <button mat-button matStepperPrevious type="button" *transloco="let t; prefix: 'common'">{{ t('back') }}</button>
         <button (click)="this.onSubmit()" *ngIf="repositoryForm.valid" mat-button
                 type="button">{{ t('create_button') }}
         </button>

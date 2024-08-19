@@ -13,6 +13,7 @@ import {UserRole} from "../../domain/user-role";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {takeWhile} from "rxjs";
 import {AbstractTranslationsComponent} from "../abstract/abstract-translations-component";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -37,7 +38,8 @@ export class UserSectionComponent extends AbstractTranslationsComponent implemen
   constructor(protected override translocoService: TranslocoService,
               private dialog: MatDialog,
               private authenticationService: AuthenticationService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private router: Router) {
     super(translocoService);
   }
 
@@ -81,5 +83,9 @@ export class UserSectionComponent extends AbstractTranslationsComponent implemen
   protected loadTranslations() {
     this.translocoService.selectTranslate('logout.messageAfterLogout').pipe(takeWhile(() => this.isAlive))
       .subscribe(value => this.logoutMessage = value);
+  }
+
+  doUserSettings() {
+    this.router.navigate(['/settings']).then();
   }
 }

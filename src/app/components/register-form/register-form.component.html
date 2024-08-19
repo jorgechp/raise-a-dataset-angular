@@ -3,14 +3,14 @@
     <mat-card-header>
       <mat-card-title>{{ t('signUp') }}</mat-card-title>
     </mat-card-header>
-    <div *ngIf="!this.isUsedCreated">
-      <form [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit()">
+    <div *ngIf="!this.isUserCreated">
+      <form [formGroup]="this.getFormControl()" novalidate (ngSubmit)="onSubmit()">
         <mat-card-content>
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
                 <input formControlName="username" matInput placeholder="{{ t('username') }}">
-                @if (signupForm.controls['username'].hasError('required')) {
+                @if (this.getFormControl().controls['username'].hasError('required')) {
                   <mat-error>{{ t('usernameRequired') }} <strong>{{ t('required') }}</strong></mat-error>
                 }
               </mat-form-field>
@@ -18,21 +18,25 @@
             <div class="col">
               <mat-form-field class="full-width">
                 <input formControlName="email" matInput placeholder="{{ t('email') }}">
-                @if (signupForm.controls['email'].hasError('required')) {
+                @if (this.getFormControl().controls['email'].hasError('required')) {
                   <mat-error>{{ t('emailRequired') }} <strong>{{ t('required') }}</strong></mat-error>
-                } @else if (signupForm.controls['email'].hasError('email')) {
+                } @else if (this.getFormControl().controls['email'].hasError('email')) {
                   <mat-error>{{ t('wrong') }} <strong>{{ t('eMailFormat') }}</strong></mat-error>
                 }
               </mat-form-field>
             </div>
           </div>
-          <div class="row">
+          <div class="row" *ngIf="this.isUserSettings">
+            <p><mat-slide-toggle [(ngModel)]="isChangePassword"
+                                 [ngModelOptions]="{standalone: true}">Change my password</mat-slide-toggle></p>
+          </div>
+          <div class="row" *ngIf="!this.isUserSettings || this.isChangePassword">
             <div class="col">
               <mat-form-field class="full-width">
                 <input formControlName="password1" matInput placeholder="{{ t('password') }}" type="password">
-                @if (signupForm.controls['password1'].hasError('required')) {
+                @if (this.getFormControl().controls['password1'].hasError('required')) {
                   <mat-error>{{ t('password') }} <strong>{{ t('required') }}</strong></mat-error>
-                } @else if (signupForm.controls['password1'].hasError('pattern')) {
+                } @else if (this.getFormControl().controls['password1'].hasError('pattern')) {
                   <ng-container>
                     <mat-error>{{ t('password') }} <strong>{{ t('wrongFormat') }}</strong></mat-error>
                     <div *ngIf="this.getErrorInPassword('password1').includes(PASSWORD_ERROR_TYPE.LOWERCASE)">
@@ -63,14 +67,16 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <mat-checkbox formControlName="ageConditions">{{ t('imOver13YearsOld') }}.</mat-checkbox>
+          <div *ngIf="!this.isUserSettings">
+            <div class="row">
+              <div class="col">
+                <mat-checkbox formControlName="ageConditions">{{ t('imOver13YearsOld') }}.</mat-checkbox>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <mat-checkbox formControlName="acceptedConditions">{{ t('iAcceptTermsConditions') }}.</mat-checkbox>
+            <div class="row">
+              <div class="col">
+                <mat-checkbox formControlName="acceptedConditions">{{ t('iAcceptTermsConditions') }}.</mat-checkbox>
+              </div>
             </div>
           </div>
 
@@ -82,7 +88,7 @@
       </form>
 
     </div>
-    <div *ngIf="isUsedCreated">
+    <div *ngIf="isUserCreated">
       <mat-card-content>
         <mat-label>{{ t('yourUserHaveBeenCreated') }}</mat-label>
       </mat-card-content>
