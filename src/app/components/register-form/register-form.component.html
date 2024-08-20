@@ -31,7 +31,7 @@
                                  (change)="this.doChangePassword($event)"
                                  [ngModelOptions]="{standalone: true}">Change my password</mat-slide-toggle></p>
           </div>
-          <div class="row" *ngIf="!this.isUserSettings || this.isChangePassword">
+          <div *ngIf="this.isUserSettings || this.isChangePassword" class="row">
             <div class="col">
               <mat-form-field class="full-width">
                 <input formControlName="currentPassword" matInput placeholder="{{ t('currentPassword') }}"

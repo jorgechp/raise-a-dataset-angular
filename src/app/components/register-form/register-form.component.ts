@@ -96,13 +96,17 @@ export class RegisterFormComponent implements OnInit{
       const user = this.isUserSettings && this.currentUser ? this.currentUser : new User();
       user.username = this.form.get("username")!.value!;
       user.email = this.form.get("email")!.value!;
+      user.password = this.form.get("password1")!.value!;
       if (this.isUserSettings) {
-        const currentPassword = this.form.get("currentPassword")!.value!;
-        const password = this.form.get("password1")!.value!;
-        this.authenticationService.changePassword(user.username!, currentPassword, password).subscribe(() => {
-          this.userService.updateResource(user).subscribe(value => {
+        this.userService.patchResource(user).subscribe(value => {
+          if (this.form && this.isChangePassword) {
+            const currentPassword = this.form.get("currentPassword")!.value!;
+            this.authenticationService.changePassword(user.username!, currentPassword, user.password!).subscribe(() => {
+              this.isUserCreated = true;
+            });
+          } else {
             this.isUserCreated = true;
-          });
+          }
         });
       } else {
         this.userService.add(user).subscribe(value => {
@@ -110,6 +114,12 @@ export class RegisterFormComponent implements OnInit{
         });
       }
     }
+  }
+
+  private updateUser(user: User, password: string): void {
+    this.userService.updateResource(user).subscribe(value => {
+      this.isUserCreated = true;
+    });
   }
 
   getErrorInPassword(field: string): PASSWORD_ERROR_TYPE[] {
