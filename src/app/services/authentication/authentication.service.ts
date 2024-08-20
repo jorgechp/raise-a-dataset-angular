@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/internal/Observable';
 import {User} from "../../domain/user";
 import {UserRole} from "../../domain/user-role";
 import {BehaviorSubject, Subject} from "rxjs";
+import {ApiConfiguration} from "../../config/api-configuration";
 
 export interface ILoginData {
   uri: "/users/demo",
@@ -24,9 +25,12 @@ export interface ILoginData {
 export class AuthenticationService {
   private readonly CURRENT_USER_KEY = 'currentUser';
   private _userSubject = new BehaviorSubject<User>(new User());
+  private changePasswordUrl: string;
 
 
   constructor(private http: HttpClient) {
+    const baseUrl = `${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}`;
+    this.changePasswordUrl = baseUrl + "password";
   }
 
   get currentUserSubscription(): Subject<User> {
@@ -92,5 +96,18 @@ export class AuthenticationService {
     const guestUser = new User();
     guestUser.setRoles([UserRole.ROLE_GUEST]);
     this.storeCurrentUser(guestUser);
+  }
+
+  public changePassword(username: string, currentPassword: string, newPassword: string) {
+    const authorization = this.generateAuthorization(username, currentPassword);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: authorization
+      })
+    };
+    return this.http.post<User>(this.changePasswordUrl, {
+      password: newPassword,
+      currentpassword: currentPassword
+    },httpOptions);
   }
 }

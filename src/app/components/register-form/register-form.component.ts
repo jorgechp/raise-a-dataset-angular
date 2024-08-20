@@ -96,16 +96,16 @@ export class RegisterFormComponent implements OnInit{
       const user = this.isUserSettings && this.currentUser ? this.currentUser : new User();
       user.username = this.form.get("username")!.value!;
       user.email = this.form.get("email")!.value!;
-      user.password = this.form.get("password1")!.value!;
       if (this.isUserSettings) {
         const currentPassword = this.form.get("currentPassword")!.value!;
-        this.userService.changePassword(currentPassword, user.password!).subscribe(() => {
-          this.userService.add(user).subscribe(value => {
+        const password = this.form.get("password1")!.value!;
+        this.authenticationService.changePassword(user.username!, currentPassword, password).subscribe(() => {
+          this.userService.updateResource(user).subscribe(value => {
             this.isUserCreated = true;
           });
         });
       } else {
-        this.userService.updateResource(user).subscribe(value => {
+        this.userService.add(user).subscribe(value => {
           this.isUserCreated = true;
         });
       }
