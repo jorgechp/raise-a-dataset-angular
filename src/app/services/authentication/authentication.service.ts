@@ -41,7 +41,7 @@ export class AuthenticationService {
     return `Basic ${btoa(`${username}:${password}`)}`;
   }
 
-  login(username: string, password: string): Observable<User> {
+  login(username: string, password: string, isStoreUser = true): Observable<User> {
     const authorization = this.generateAuthorization(username, password);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -57,7 +57,9 @@ export class AuthenticationService {
         user.id = loginData.id;
         user.uri = loginData.uri;
         user.username = loginData.username;
-        this.storeCurrentUser(user);
+        if (isStoreUser) {
+          this.storeCurrentUser(user);
+        }
         return user;
       })
     );
@@ -73,7 +75,11 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem(this.CURRENT_USER_KEY) !== null;
+    if (this.isCurrentUser()) {
+      const currentUser = this.getCurrentUser();
+      return currentUser != null && !currentUser.isAnonymous;
+    }
+    return false;
   }
 
   isCurrentUser(): boolean {
@@ -94,6 +100,7 @@ export class AuthenticationService {
 
   generateAndStoreGuestUser(): void {
     const guestUser = new User();
+    guestUser.isAnonymous = true;
     guestUser.setRoles([UserRole.ROLE_GUEST]);
     this.storeCurrentUser(guestUser);
   }

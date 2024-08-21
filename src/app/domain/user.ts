@@ -8,12 +8,15 @@ export class User extends GenericResource {
   public username: string | undefined;
   public email: string | undefined;
   public password: string | undefined;
-  passwordReset = false;
+  public isAnonymous: boolean;
+  public passwordReset: boolean | undefined;
   authorities: Authority[] = [];
   authorization = '';
 
+
   constructor(values: object = {}) {
     super();
+    this.isAnonymous = false;
     Object.assign(this as any, values);
   }
 
