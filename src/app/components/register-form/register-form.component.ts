@@ -11,13 +11,15 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 
 import {User} from "../../domain/user";
 import {UserService} from "../../services/user/user.service";
-import {TranslocoDirective} from "@jsverse/transloco";
+import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {getIdFromURI} from "../utils/funcions";
 import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatFormFieldModule} from "@angular/material/form-field";
-
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {takeWhile} from "rxjs";
+import {AbstractTranslationsComponent} from "../abstract/abstract-translations-component";
 
 export enum PASSWORD_ERROR_TYPE {
   UPPERCASE, LOWERCASE, DIGIT, SPECIAL_CHARACTER
@@ -41,7 +43,7 @@ export enum PASSWORD_ERROR_TYPE {
     MatSlideToggleModule
   ]
 })
-export class RegisterFormComponent implements OnInit{
+export class RegisterFormComponent extends AbstractTranslationsComponent implements OnInit{
   protected PASSWORD_ERROR_TYPE: any = PASSWORD_ERROR_TYPE;
   protected isUserCreated = false;
   protected isUserSettings = false;
@@ -66,9 +68,14 @@ export class RegisterFormComponent implements OnInit{
     Validators.maxLength(50)
   ]));
 
+  private userSettingChangesMessage: string | undefined;
+
   constructor(private userService: UserService,
               private authenticationService: AuthenticationService,
-              private router: Router) {
+              private snackBar: MatSnackBar,
+              private router: Router,
+              protected override translocoService: TranslocoService) {
+    super(translocoService);
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isUserSettings = event.urlAfterRedirects === '/settings';
@@ -76,7 +83,7 @@ export class RegisterFormComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     if(this.isUserSettings){
       this.form = this.getUpdateSettingsForm();
       this.userService.getResource(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!))).subscribe(
@@ -104,6 +111,10 @@ export class RegisterFormComponent implements OnInit{
           user.passwordReset = this.isChangePassword;
           this.authenticationService.login(user.username!, currentPassword).subscribe(() => {
               this.userService.patchResource(user).subscribe(value => {
+                this.snackBar.open(`${this.userSettingChangesMessage}`, undefined,
+                    {
+                      duration: 4000
+                    });
               });
             }
           )
@@ -177,5 +188,10 @@ export class RegisterFormComponent implements OnInit{
       email: this.emailFormControl,
 
     }, {});
+  }
+
+  protected loadTranslations(): void {
+    this.translocoService.selectTranslate('repository.repositoryCreated').pipe(takeWhile(() => this.isAlive))
+        .subscribe(value => this.userSettingChangesMessage = value);
   }
 }

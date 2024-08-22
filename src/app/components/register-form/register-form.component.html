@@ -29,7 +29,7 @@
           <div class="row" *ngIf="this.isUserSettings">
             <p><mat-slide-toggle [(ngModel)]="isChangePassword"
                                  (change)="this.doChangePassword($event)"
-                                 [ngModelOptions]="{standalone: true}">Change my password</mat-slide-toggle></p>
+                                 [ngModelOptions]="{standalone: true}">{{ t('changeMyPassword') }}</mat-slide-toggle></p>
           </div>
           <div *ngIf="this.isUserSettings && this.isChangePassword" class="row">
             <div class="col">
