@@ -15,6 +15,7 @@ import {ISidenavMenuItem, SIDENAV_MENU} from "./sidenav/sidenavMenu";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {RepositorySelectionComponent} from "../repository-selection/repository-selection.component";
 import {MissionService} from "../../services/mission/mission.service";
+import {UserMissionsComponent} from "../user-missions/user-missions.component";
 
 @Component({
   selector: 'app-layout',
@@ -32,7 +33,8 @@ import {MissionService} from "../../services/mission/mission.service";
     RouterLink,
     RouterLinkActive,
     UserSectionComponent,
-    RepositorySelectionComponent
+    RepositorySelectionComponent,
+    UserMissionsComponent
   ]
 })
 export class LayoutComponent implements OnInit {
@@ -50,7 +52,6 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.missionService.checkMissions();
     this.authenticationService.currentUserSubscription.subscribe((user) => {
       const userRoles = user.getRoles();
       this.rootRoutes = SIDENAV_MENU;
