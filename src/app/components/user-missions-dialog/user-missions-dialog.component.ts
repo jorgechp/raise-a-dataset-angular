@@ -1,14 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle,} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
@@ -16,13 +8,15 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {TranslocoDirective} from "@jsverse/transloco";
 import {MissionService} from "../../services/mission/mission.service";
-import { Mission } from '../../domain/mission';
+import {Mission} from '../../domain/mission';
 import {CommonModule} from "@angular/common";
-import { HttpMethod } from '@lagoshny/ngx-hateoas-client';
-import { forkJoin, tap } from 'rxjs';
-import { UserService } from '../../services/user/user.service';
+import {HttpMethod} from '@lagoshny/ngx-hateoas-client';
+import {forkJoin, tap} from 'rxjs';
+import {UserService} from '../../services/user/user.service';
 import {AuthenticationService} from "../../services/authentication/authentication.service";
-import { User } from '../../domain/user';
+import {User} from '../../domain/user';
+import {getIdFromURI} from "../utils/funcions";
+
 @Component({
   selector: 'app-user-missions-dialog',
   standalone: true,
@@ -69,6 +63,10 @@ export class UserMissionsDialogComponent implements OnInit{
 
   ngOnInit(): void {
     this.username = this.authenticationService.getCurrentUser().username!
+    this.userService.getResource(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!)))
+      .subscribe((user) => {
+        this.user = user;
+      });
     this.loadAllMissions();
 
   }
@@ -89,19 +87,28 @@ export class UserMissionsDialogComponent implements OnInit{
   }
 
   doSelectMission(i: number) {
-    if(!this.user) return;
+    const missionToSelect = this.allMissions?.at(i);
+    if (missionToSelect && this.user) {
+      this.userService.addMission(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!)), missionToSelect).subscribe(
+        (response) => {
+          console.log(response)
+        }
+      );
+
+    }
 
   }
 
   doUnselectMission(i: number) {
-    if(!this.user) return;
     const missionToUnselect = this.userMissions?.at(i);
-    if(missionToUnselect){
-      this.userService.getResource(this.username!).subscribe(
-          (user) => {
-            this.user?.deleteRelation('missionsAccepted', missionToUnselect).subscribe();
-          }
-      )
+    if (missionToUnselect && this.user) {
+      this.userService.deleteMission(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!)),
+        Number(getIdFromURI(missionToUnselect.uri!))).subscribe(
+        (response) => {
+          this.userMissions?.splice(i);
+          this.allMissions?.unshift(missionToUnselect);
+        }
+      );
     }
   }
 }
