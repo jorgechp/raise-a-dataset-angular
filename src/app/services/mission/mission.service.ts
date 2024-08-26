@@ -14,6 +14,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
     super(Mission);
   }
 
+
   public checkMission(missionId: number, username: string) {
     const authorization = this.authService.generateAuthorization("demo", "password");
     const httpOptions = {
@@ -23,7 +24,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
         .set('username', username)
     }
-    return this.http.get<boolean>(`http://localhost:8080/missions/${missionId}/check`, httpOptions).subscribe();
+    return this.http.get<boolean>(`http://localhost:8080/missions/${missionId}/check`, httpOptions);
   };
 
   public checkAllMissions(username: string) {
@@ -35,6 +36,6 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
         .set('username', username)
     }
-    return this.http.get<boolean>(`http://localhost:8080/missions/check`, httpOptions).subscribe();
+    return this.http.get<boolean>(`http://localhost:8080/missions/check`, httpOptions);
   };
 }

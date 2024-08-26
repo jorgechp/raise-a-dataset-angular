@@ -12,6 +12,8 @@ export class User extends GenericResource {
   public passwordReset: boolean | undefined;
   authorities: Authority[] = [];
   authorization = '';
+  private acceptedMissions = [];
+  private acomplishedMissions = [];
 
 
   constructor(values: object = {}) {

@@ -7,4 +7,5 @@ export class Mission extends GenericResource {
   description?: string;
   points?: number;
   ruleName?: string;
+  level?: number;
 }

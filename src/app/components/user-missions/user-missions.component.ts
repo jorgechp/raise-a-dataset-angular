@@ -2,9 +2,8 @@ import {Component} from '@angular/core';
 import {MatIcon, MatIconRegistry} from "@angular/material/icon";
 import {NgIf} from "@angular/common";
 import {TranslocoDirective} from "@jsverse/transloco";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {UserSectionLoginComponent} from "../user-section/user-section-login/user-section-login.component";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-missions',
@@ -18,9 +17,8 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrl: './user-missions.component.scss'
 })
 export class UserMissionsComponent {
-  private readonly signUpDialogConfig = new MatDialogConfig();
 
-  constructor(private dialog: MatDialog,
+  constructor(private router: Router,
               private matIconRegistry: MatIconRegistry,
               private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
@@ -29,17 +27,7 @@ export class UserMissionsComponent {
     );
   }
 
-
-  displaySignUpModal(): void {
-    this.signUpDialogConfig.disableClose = true;
-    this.signUpDialogConfig.autoFocus = true;
-    this.signUpDialogConfig.data = {};
-
-    const dialogRef = this.dialog.open(UserSectionLoginComponent,
-      this.signUpDialogConfig);
-  }
-
   doUserMissions() {
-
+      this.router.navigate(['/missions']).then();
   }
 }

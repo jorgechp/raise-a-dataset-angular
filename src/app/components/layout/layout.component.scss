@@ -49,10 +49,15 @@ mat-sidenav-content {
   height: 35vh;
 }
 
-.sidenav__user-section {
+.sidenav__user {
   position: absolute;
   bottom: 0;
   width: 8vw;
+  text-align: center;
+  margin: 0 auto;
   margin-bottom: 5px;
 }
 
+.sidenav__user-missions{
+  margin-bottom: 30px;
+}

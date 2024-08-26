@@ -108,5 +108,12 @@ export const routes: Routes = [
             (c) => c.RegisterFormComponent
         ),
     title: 'User settings'
+  }, {
+    path: 'missions',
+    loadComponent: () =>
+        import('./components/user-missions-dialog/user-missions-dialog.component').then(
+            (c) => c.UserMissionsDialogComponent
+        ),
+    title: 'User missions'
   },
 ];
