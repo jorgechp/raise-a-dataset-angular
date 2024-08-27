@@ -2,8 +2,8 @@
     <h2 mat-dialog-title>{{ t('select_your_missions') }}</h2>
     <mat-dialog-content>
         <h3 mat-dialog-title>Your missions</h3>
-        <ng-container *ngIf="this.userMissions">
-            <div class="row" *ngFor="let mission of this.userMissions; index as i">
+        <ng-container *ngIf="this.acceptedMissions">
+            <div class="row" *ngFor="let mission of this.acceptedMissions; index as i">
                 <mat-card appearance="outlined" class="user-mission-dialog__card">
                     <mat-card-header>
                         <mat-card-title>{{mission.name}}</mat-card-title>

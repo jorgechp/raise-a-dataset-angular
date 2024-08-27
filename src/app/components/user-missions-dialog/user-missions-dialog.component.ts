@@ -44,7 +44,7 @@ export class UserMissionsDialogComponent implements OnInit{
   private username?: string;
   private user?: User;
 
-  protected userMissions?: Array<Mission>;
+  protected acceptedMissions?: Array<Mission>;
   protected suggestedMissions?: Array<Mission>;
   protected allMissions?: Array<Mission>;
   protected accomplishedMissions?: Array<Mission>;
@@ -62,26 +62,26 @@ export class UserMissionsDialogComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.username = this.authenticationService.getCurrentUser().username!
-    this.userService.getResource(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!)))
+    this.username = this.authenticationService.getCurrentUser().username!;
+    const userId = Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!));
+    this.userService.getResource(userId)
       .subscribe((user) => {
         this.user = user;
+        this.loadAllMissions(userId);
       });
-    this.loadAllMissions();
-
   }
 
-  private loadAllMissions() {
-    if(!this.username) return;
-    const userMissions$ = this.missionsService.customSearchQuery<Mission[]>(HttpMethod.GET, '/getMissionsForUser', undefined, { params: { username: this.username } });
-    const otherMissions$ = this.missionsService.customSearchQuery<Mission[]>(HttpMethod.GET, '/getOtherMissionsForUser', undefined, { params: { username: this.username } });
-    const accomplishedMissions$ = this.missionsService.customSearchQuery<Mission[]>(HttpMethod.GET, '/getMissionsAcomplishedByUser', undefined, { params: { username: this.username } });
+  private loadAllMissions(userId: number) {
+    if(!this.username || !this.user) return;
+    const acceptedMissions$ = this.missionsService.getAcceptedMissionsByUser(userId,this.username);
+    const accomplishedMissions$ = this.missionsService.getAccomplishedMissionsByUser(userId,this.username);
+    const otherMissions$ = this.missionsService.getOtherMissionsForUser(userId,this.username);
 
-    forkJoin([userMissions$, otherMissions$, accomplishedMissions$]).pipe(
+    forkJoin([acceptedMissions$, otherMissions$, accomplishedMissions$]).pipe(
         tap(([userMissions, otherMissions, accomplishedMissions]) => {
-          this.userMissions = userMissions;
-          this.allMissions = otherMissions;
-          this.accomplishedMissions = accomplishedMissions;
+          this.acceptedMissions = userMissions['_embedded']['missions'];
+          this.allMissions = otherMissions['_embedded']['missions'];
+          this.accomplishedMissions = accomplishedMissions['_embedded']['missions'];
         })
     ).subscribe();
   }
@@ -89,26 +89,21 @@ export class UserMissionsDialogComponent implements OnInit{
   doSelectMission(i: number) {
     const missionToSelect = this.allMissions?.at(i);
     if (missionToSelect && this.user) {
-      this.userService.addMission(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!)), missionToSelect).subscribe(
-        (response) => {
-          console.log(response)
-        }
-      );
-
+      this.user.bindRelation('missionsAccepted', missionToSelect).subscribe();
+      this.allMissions?.splice(i);
+      this.acceptedMissions?.push(missionToSelect);
     }
 
   }
 
   doUnselectMission(i: number) {
-    const missionToUnselect = this.userMissions?.at(i);
-    if (missionToUnselect && this.user) {
-      this.userService.deleteMission(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!)),
-        Number(getIdFromURI(missionToUnselect.uri!))).subscribe(
-        (response) => {
-          this.userMissions?.splice(i);
-          this.allMissions?.unshift(missionToUnselect);
-        }
-      );
+    const missionToSelect = this.acceptedMissions?.at(i);
+    if (missionToSelect && this.user) {
+      this.user.deleteRelation('missionsAccepted', missionToSelect).subscribe();
+      this.acceptedMissions?.splice(i);
+      this.allMissions?.push(missionToSelect);
     }
   }
+
+
 }
