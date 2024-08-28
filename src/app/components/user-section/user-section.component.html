@@ -1,17 +1,17 @@
 <div *transloco="let t; prefix: 'userSection'" class="user-section">
   <button (click)="this.doUserSettings()"
           *ngIf="this.userRoles.includes(UserRole.ROLE_USER)"
-          class="user-section__button cursor-pointer">
+          class="user-section__button cursor-pointer background-transparent">
     <mat-icon aria-hidden="false" fontIcon="manage_accounts"></mat-icon>
   </button>
   <button (click)="this.displaySignUpModal()"
           *ngIf="this.userRoles.includes(UserRole.ROLE_GUEST)"
-          class="user-section__button cursor-pointer">
+          class="user-section__button cursor-pointer background-transparent">
     <mat-icon aria-hidden="false" fontIcon="account_circle"></mat-icon>
   </button>
   <button (click)="this.doLogout()"
           *ngIf="!this.userRoles.includes(UserRole.ROLE_GUEST)"
-          class="user-section__button cursor-pointer">
+          class="user-section__button cursor-pointer background-transparent">
     <mat-icon aria-hidden="false" fontIcon="logout"></mat-icon>
   </button>
   <button (click)="this.displayChangeLanguageModal()" class="user-section__button cursor-pointer">
