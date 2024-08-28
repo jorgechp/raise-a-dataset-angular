@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AbstractHateoasService} from "../abstract/abstractHateoas.service";
+import {AbstractHateoasService} from "../abstract/abstract-hateoas.service";
 import {Validation} from "../../domain/validation";
 
 @Injectable({

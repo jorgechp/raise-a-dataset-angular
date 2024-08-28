@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from "../../domain/user";
-import {AbstractHateoasService} from "../abstract/abstractHateoas.service";
+import {AbstractHateoasService} from "../abstract/abstract-hateoas.service";
 import {HttpClient} from "@angular/common/http";
 import {Mission} from "../../domain/mission";
 import {ApiConfiguration} from "../../config/api-configuration";

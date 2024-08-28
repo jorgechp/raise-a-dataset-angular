@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AbstractHateoasService} from "../abstract/abstractHateoas.service";
+import {AbstractHateoasService} from "../abstract/abstract-hateoas.service";
 import {Mission} from "../../domain/mission";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
@@ -23,7 +23,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
 
 
   public checkMission(missionId: number, username: string) {
-    const authorization = this.authService.generateAuthorization("demo", "password");
+    const authorization = this.authService.generateAuthorization(username, "password");
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -34,16 +34,16 @@ export class MissionService extends AbstractHateoasService<Mission> {
     return this.http.get<boolean>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/${missionId}/check`, httpOptions);
   };
 
-  public checkAllMissions(idUser: string, username: string) {
-    const authorization = this.authService.generateAuthorization("demo", "password");
+  public checkAllMissions(username: string) {
+    const authorization = this.authService.generateAuthorization(username, "password");
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
       }),
       params: new HttpParams()
-          .set('idUser', idUser)
+          .set('username', username)
     }
-    return this.http.get<boolean>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/check`, httpOptions);
+    return this.http.get<string>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/check`, httpOptions);
   };
 
   getAcceptedMissionsByUser(idUser: number, username: string) {
