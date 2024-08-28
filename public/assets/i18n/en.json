@@ -192,5 +192,16 @@
     "description": "Description",
     "registrationDate": "Registration date",
     "category": "Category"
+  },
+  "missions": {
+    "select_your_missions": "Choose your missions",
+    "your_missions": "Your missions",
+    "earn_exclamation_begging": "Earn",
+    "earn_exclamation_end": "points!",
+    "select": "Select",
+    "unselect": "Unselect",
+    "other": "Other missions",
+    "completed_missions": "Completed missions",
+    "points_exclamation": "points!"
   }
 }

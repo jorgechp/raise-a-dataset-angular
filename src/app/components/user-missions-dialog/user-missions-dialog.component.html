@@ -1,7 +1,7 @@
 <div *transloco="let t; prefix: 'missions'">
     <h2 mat-dialog-title>{{ t('select_your_missions') }}</h2>
     <mat-dialog-content>
-        <h3 mat-dialog-title>Your missions</h3>
+        <h3 mat-dialog-title>{{ t('your_missions') }}</h3>
         <ng-container *ngIf="this.acceptedMissions">
             <div class="row" *ngFor="let mission of this.acceptedMissions; index as i">
                 <mat-card appearance="outlined" class="user-mission-dialog__card">
@@ -10,15 +10,15 @@
                         <mat-card-subtitle>{{mission.description}}</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        Earn <span>{{mission.points}}</span> points!
+                        {{ t('earn_exclamation_begging') }} <span>{{mission.points}}</span> {{ t('earn_exclamation_end') }}
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-button (click)="this.doUnselectMission(i)">Unselect</button>
+                        <button mat-button (click)="this.doUnselectMission(i)">{{ t('unselect') }}</button>
                     </mat-card-actions>
                 </mat-card>
             </div>
         </ng-container>
-        <h3 mat-dialog-title>Other missions</h3>
+        <h3 mat-dialog-title>{{ t('other') }}</h3>
         <ng-container *ngIf="this.allMissions">
             <div class="row"  *ngFor="let mission of this.allMissions; index as i">
                 <mat-card appearance="outlined" class="user-mission-dialog__card">
@@ -27,16 +27,16 @@
                         <mat-card-subtitle>{{mission.description}}</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        Earn <span>{{mission.points}}</span> points!
+                        {{ t('earn_exclamation_begging') }} <span>{{mission.points}}</span> {{ t('earn_exclamation_end') }}
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-button (click)="this.doSelectMission(i)">Select</button>
+                        <button mat-button (click)="this.doSelectMission(i)">{{ t('select') }}</button>
                     </mat-card-actions>
                 </mat-card>
             </div>
         </ng-container>
         <ng-container *ngIf="this.accomplishedMissions && this.accomplishedMissions.length > 0">
-            <h3 mat-dialog-title>Completed missions</h3>
+            <h3 mat-dialog-title>{{ t('completed_missions') }}</h3>
             <div class="row"  *ngFor="let mission of this.accomplishedMissions; index as i">
                 <mat-card appearance="outlined" class="user-mission-dialog__card">
                     <mat-card-header>
@@ -44,7 +44,7 @@
                         <mat-card-subtitle>{{mission.description}}</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <span>{{mission.points}}</span> points!
+                        <span>{{mission.points}}</span> {{ t('points_exclamation') }}
                     </mat-card-content>
                 </mat-card>
             </div>
