@@ -10,12 +10,13 @@ import {TranslocoDirective} from "@jsverse/transloco";
 import {MissionService} from "../../services/mission/mission.service";
 import {Mission} from '../../domain/mission';
 import {CommonModule} from "@angular/common";
-import {HttpMethod} from '@lagoshny/ngx-hateoas-client';
 import {forkJoin, tap} from 'rxjs';
 import {UserService} from '../../services/user/user.service';
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {User} from '../../domain/user';
 import {getIdFromURI} from "../utils/funcions";
+
+
 
 @Component({
   selector: 'app-user-missions-dialog',
@@ -79,9 +80,9 @@ export class UserMissionsDialogComponent implements OnInit{
 
     forkJoin([acceptedMissions$, otherMissions$, accomplishedMissions$]).pipe(
         tap(([userMissions, otherMissions, accomplishedMissions]) => {
-          this.acceptedMissions = userMissions['_embedded']['missions'];
-          this.allMissions = otherMissions['_embedded']['missions'];
-          this.accomplishedMissions = accomplishedMissions['_embedded']['missions'];
+          this.acceptedMissions = userMissions._embedded?.missions ?? [];
+          this.allMissions = otherMissions._embedded?.missions ?? [];
+          this.accomplishedMissions = accomplishedMissions._embedded?.missions ?? [];
         })
     ).subscribe();
   }
@@ -89,19 +90,24 @@ export class UserMissionsDialogComponent implements OnInit{
   doSelectMission(i: number) {
     const missionToSelect = this.allMissions?.at(i);
     if (missionToSelect && this.user) {
-      this.user.bindRelation('missionsAccepted', missionToSelect).subscribe();
-      this.allMissions?.splice(i);
-      this.acceptedMissions?.push(missionToSelect);
+      this.user.addCollectionRelation('missionsAccepted', [missionToSelect]).subscribe(
+          () => {
+            this.allMissions?.splice(i,1);
+            this.acceptedMissions?.push(missionToSelect);
+          }
+      );
+
     }
 
   }
 
   doUnselectMission(i: number) {
-    const missionToSelect = this.acceptedMissions?.at(i);
-    if (missionToSelect && this.user) {
-      this.user.deleteRelation('missionsAccepted', missionToSelect).subscribe();
-      this.acceptedMissions?.splice(i);
-      this.allMissions?.push(missionToSelect);
+    const missionToUnselect = this.acceptedMissions?.at(i);
+    if (missionToUnselect && this.user) {
+      this.user.deleteRelation('missionsAccepted', missionToUnselect).subscribe(() => {
+        this.acceptedMissions?.splice(i,1);
+        this.allMissions?.unshift(missionToUnselect);
+      });
     }
   }
 

@@ -5,6 +5,12 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {ApiConfiguration} from "../../config/api-configuration";
 
+export interface MissionsResponse {
+  _embedded: {
+    missions: Mission[];
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,7 +55,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
           .set('idUser', idUser)
     }
-    return this.http.get<any>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/acceptedByUser/${idUser}`, httpOptions);
+    return this.http.get<MissionsResponse>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/acceptedByUser/${idUser}`, httpOptions);
   }
 
   getAccomplishedMissionsByUser(idUser: number, username: string) {
@@ -61,7 +67,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
           .set('idUser', idUser)
     }
-    return this.http.get<any>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/accomplishedByUser/${idUser}`, httpOptions);
+    return this.http.get<MissionsResponse>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/accomplishedByUser/${idUser}`, httpOptions);
   }
 
   getOtherMissionsForUser(idUser: number, username: string) {
@@ -73,6 +79,6 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
           .set('idUser', idUser)
     }
-    return this.http.get<any>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/othersForUser/${idUser}`, httpOptions);
+    return this.http.get<MissionsResponse>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/othersForUser/${idUser}`, httpOptions);
   }
 }
