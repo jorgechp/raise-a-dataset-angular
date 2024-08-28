@@ -2,6 +2,13 @@ import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {LayoutComponent} from "./components/layout/layout.component";
 import {AuthenticationService} from "./services/authentication/authentication.service";
+import {MissionListenerService} from "./services/mission-listener/mission-listener.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MissionService} from "./services/mission/mission.service";
+import {Mission} from "./domain/mission";
+import {AbstractTranslationsComponent} from "./components/abstract/abstract-translations-component";
+import {TranslocoService} from "@jsverse/transloco";
+import {takeWhile} from "rxjs";
 
 
 @Component({
@@ -11,15 +18,44 @@ import {AuthenticationService} from "./services/authentication/authentication.se
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent extends AbstractTranslationsComponent {
   title = 'raise-a-dataset-angular';
+  private missionCompletedMessage: any;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private missionListenerService: MissionListenerService,
+              private snackBar: MatSnackBar,
+              private missionService: MissionService,
+              protected override translocoService: TranslocoService) {
+    super(translocoService);
     if (!authenticationService.isCurrentUser()) {
       authenticationService.generateAndStoreGuestUser();
     } else {
       authenticationService.loadCurrentUser();
     }
+
+    missionListenerService.missionAccomplishedSubject.subscribe(
+      (response) => {
+        response.forEach(missionRuleName => {
+
+          missionService.searchResource('findMissionByRuleName', {
+            params: {
+              ruleName: missionRuleName
+            },
+          })
+            .subscribe((mission: Mission) => {
+              this.snackBar.open(this.missionCompletedMessage + ": " + mission.name, undefined,
+                {
+                  duration: 4000
+                });
+            });
+        })
+      }
+    )
   }
 
+  protected loadTranslations(): void {
+    this.translocoService.selectTranslate('missions.mission_completed').pipe(takeWhile(() => this.isAlive))
+      .subscribe(value => this.missionCompletedMessage = value);
+  }
 }

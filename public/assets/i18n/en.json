@@ -202,6 +202,7 @@
     "unselect": "Unselect",
     "other": "Other missions",
     "completed_missions": "Completed missions",
-    "points_exclamation": "points!"
+    "points_exclamation": "points!",
+    "mission_completed": "You have completed the mission"
   }
 }

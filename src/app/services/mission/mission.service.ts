@@ -43,7 +43,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
           .set('username', username)
     }
-    return this.http.get<string>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/check`, httpOptions);
+    return this.http.get<string[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/check`, httpOptions);
   };
 
   getAcceptedMissionsByUser(idUser: number, username: string) {
