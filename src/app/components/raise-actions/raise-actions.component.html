@@ -1,0 +1,57 @@
+<div *transloco="let t; prefix: 'raiseActions'">
+    <h2 mat-dialog-title>{{ t('raiseActions') }}</h2>
+    <mat-dialog-content>
+        <h3 mat-dialog-title>{{ t('your_outdated_actions') }}</h3>
+        <ng-container *ngIf="this.outdatedRaiseInstances">
+            <div class="row" *ngFor="let raiseInstance of this.outdatedRaiseInstances; index as i">
+                <mat-card appearance="outlined" class="raise-instance-dialog__card">
+                    <mat-card-header>
+                        <mat-card-title>{{raiseInstance.datasetName}}</mat-card-title>
+                        <mat-card-subtitle>{{raiseInstance.repositoryName}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        Next action date: <span>{{raiseInstance.nextActionDate | date}}</span>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>{{ t('raise') }}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+    </mat-dialog-content>
+    <mat-dialog-content>
+        <h3 mat-dialog-title>{{ t('your_next_actions') }}</h3>
+        <ng-container *ngIf="this.nextRaiseInstances">
+            <div class="row" *ngFor="let raiseInstance of this.nextRaiseInstances; index as i">
+                <mat-card appearance="outlined" class="raise-instance-dialog__card">
+                    <mat-card-header>
+                        <mat-card-title>{{raiseInstance.datasetName}}</mat-card-title>
+                        <mat-card-subtitle>{{raiseInstance.repositoryName}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        Next action date: <span>{{raiseInstance.nextActionDate | date}}</span>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>{{ t('raise') }}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+    </mat-dialog-content>
+    <mat-dialog-content>
+        <h3 mat-dialog-title>{{ t('your_not_contract_actions') }}</h3>
+        <ng-container *ngIf="this.noContractRaiseInstances">
+            <div class="row" *ngFor="let raiseInstance of this.noContractRaiseInstances; index as i">
+                <mat-card appearance="outlined" class="raise-instance-dialog__card">
+                    <mat-card-header>
+                        <mat-card-title>{{raiseInstance.datasetName}}</mat-card-title>
+                        <mat-card-subtitle>{{raiseInstance.repositoryName}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-actions>
+                        <button mat-button>{{ t('raise') }}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </ng-container>
+    </mat-dialog-content>
+</div>

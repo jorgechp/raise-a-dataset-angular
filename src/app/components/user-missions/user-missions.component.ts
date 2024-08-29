@@ -22,12 +22,21 @@ export class UserMissionsComponent {
               private matIconRegistry: MatIconRegistry,
               private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
+        `volunteer_activism`,
+        this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/volunteer_activism.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
       `social_leaderboard`,
       this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/social_leaderboard.svg")
     );
   }
 
+  doUserRaise() {
+    this.router.navigate(['/raiseActions']).then();
+  }
+
   doUserMissions() {
       this.router.navigate(['/missions']).then();
   }
+
 }

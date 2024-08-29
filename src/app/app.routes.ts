@@ -115,5 +115,12 @@ export const routes: Routes = [
             (c) => c.UserMissionsDialogComponent
         ),
     title: 'User missions'
+  }, {
+    path: 'raiseActions',
+    loadComponent: () =>
+        import('./components/raise-actions/raise-actions.component').then(
+            (c) => c.RaiseActionsComponent
+        ),
+    title: 'Raise actions'
   },
 ];

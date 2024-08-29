@@ -204,5 +204,12 @@
     "completed_missions": "Completed missions",
     "points_exclamation": "points!",
     "mission_completed": "You have completed the mission"
+  },
+  "raiseActions": {
+    "raiseActions": "Actions",
+    "your_outdated_actions": "Your expired actions",
+    "your_next_actions": "Your next actions",
+    "your_not_contract_actions": "Raise instances that don't have an agreement",
+    "raise": "Raise"
   }
 }
