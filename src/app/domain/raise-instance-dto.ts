@@ -1,6 +1,7 @@
 
 export interface RaiseInstanceDTO {
     id: number;
+  uri: string;
     datasetId: number;
     repositoryId: number;
     datasetName: string;

@@ -7,15 +7,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
-import {RaiseInstance} from "../../domain/raise-instance";
 import {getIdFromURI} from "../utils/funcions";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user/user.service";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {User} from "../../domain/user";
-import {forkJoin, Observable, tap} from "rxjs";
+import {forkJoin, tap} from "rxjs";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
-import {HttpMethod} from "@lagoshny/ngx-hateoas-client";
 import {RaiseInstanceDTO} from "../../domain/raise-instance-dto";
 
 @Component({
@@ -80,5 +78,9 @@ export class RaiseActionsComponent {
           this.noContractRaiseInstances = noContractRaiseInstances ?? [];
         })
     ).subscribe();
+  }
+
+  doRaiseAction(instance: RaiseInstanceDTO) {
+    this.router.navigate(['instance/' + getIdFromURI(instance.uri)], {}).then();
   }
 }
