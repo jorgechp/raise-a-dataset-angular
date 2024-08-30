@@ -24,7 +24,7 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
   }
 
   getOutdatedRaiseInstancesByUser(userId: number, username: string) {
-    const authorization = this.authService.generateAuthorization(username, "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -38,7 +38,7 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
 
 
   getNextRaiseInstancesByUser(userId: number, username: string ) {
-    const authorization = this.authService.generateAuthorization(username, "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -50,7 +50,7 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
   }
 
   getNoContractedRaiseInstancesByUser(userId: number, username: string) {
-    const authorization = this.authService.generateAuthorization(username, "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization

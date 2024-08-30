@@ -1,0 +1,50 @@
+<div *transloco="let t; prefix: 'register'">
+    <div>
+        <p>Click on one user to see his profile</p>
+    </div>
+    <app-generic-table (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
+                       *ngIf="this.rows"
+                       [columns]="this.columns"
+                       [rows]="this.rows"
+    ></app-generic-table>
+    <div>
+        <div *ngIf="this.form && this.selectedUser">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        Pepito el de los palotes
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <form (ngSubmit)="onSubmit()" [formGroup]="this.form" novalidate>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input formControlName="username" matInput placeholder="{{ t('username') }}">
+                                    @if (form.controls && this.form.controls['username'].hasError('required')) {
+                                    <mat-error>{{ t('usernameRequired') }} <strong>{{ t('required') }}</strong></mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field class="full-width">
+                                    <input formControlName="email" matInput placeholder="{{ t('email') }}">
+                                    @if (form.controls && this.form.controls['email'].hasError('required')) {
+                                    <mat-error>{{ t('emailRequired') }} <strong>{{ t('required') }}</strong></mat-error>
+                                    } @else if (form.controls && this.form.controls['email'].hasError('email')) {
+                                    <mat-error>{{ t('wrong') }} <strong>{{ t('eMailFormat') }}</strong></mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button  mat-button>{{ t('ban') }}</button>
+                    <button  mat-button>{{ t('make_admin') }}</button>
+                    <button  mat-button>{{ t('delete_account') }}</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

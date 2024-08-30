@@ -26,11 +26,13 @@ export class AuthenticationService {
   private readonly CURRENT_USER_KEY = 'currentUser';
   private _userSubject = new BehaviorSubject<User>(new User());
   private changePasswordUrl: string;
+  private _authorizationChain: string;
 
 
   constructor(private http: HttpClient) {
     const baseUrl = `${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}`;
     this.changePasswordUrl = baseUrl + "password";
+    this._authorizationChain = '';
   }
 
   get currentUserSubscription(): Subject<User> {
@@ -42,17 +44,17 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string, isStoreUser = true): Observable<User> {
-    const authorization = this.generateAuthorization(username, password);
+    this._authorizationChain = this.generateAuthorization(username, password);
     const httpOptions = {
       headers: new HttpHeaders({
-        Authorization: authorization
+        Authorization: this._authorizationChain
       })
     };
     return this.http.get(`http://localhost:8080/identity`, httpOptions).pipe(
       map(data => {
         const loginData = data as ILoginData;
         const user: User = new User();
-        user.authorization = authorization;
+        user.authorization = this._authorizationChain;
         user.authorities = loginData.authorities;
         user.id = loginData.id;
         user.uri = loginData.uri;
@@ -71,6 +73,7 @@ export class AuthenticationService {
   }
 
   logout(): void {
+    this._authorizationChain = '';
     localStorage.removeItem(this.CURRENT_USER_KEY);
   }
 
@@ -106,15 +109,20 @@ export class AuthenticationService {
   }
 
   public changePassword(username: string, currentPassword: string, newPassword: string) {
-    const authorization = this.generateAuthorization(username, currentPassword);
+    this._authorizationChain = this.generateAuthorization(username, currentPassword);
     const httpOptions = {
       headers: new HttpHeaders({
-        Authorization: authorization
+        Authorization: this._authorizationChain
       })
     };
     return this.http.post<User>(this.changePasswordUrl, {
       password: newPassword,
       currentpassword: currentPassword
     },httpOptions);
+  }
+
+
+  get authorizationChain(): string {
+    return this._authorizationChain;
   }
 }

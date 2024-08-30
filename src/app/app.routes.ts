@@ -1,4 +1,5 @@
 import {Routes} from '@angular/router';
+import {AdminComponent} from "./components/admin/admin.component";
 
 
 export const routes: Routes = [
@@ -122,5 +123,13 @@ export const routes: Routes = [
             (c) => c.RaiseActionsComponent
         ),
     title: 'Raise actions'
+  },
+  {
+    path: 'admin',
+    loadComponent: () =>
+        import('./components/admin/admin.component').then(
+            (c) => c.AdminComponent
+        ),
+    title: 'Admin'
   },
 ];

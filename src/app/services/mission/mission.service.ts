@@ -23,7 +23,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
 
 
   public checkMission(missionId: number, username: string) {
-    const authorization = this.authService.generateAuthorization(username, "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -35,7 +35,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
   };
 
   public checkAllMissions(username: string) {
-    const authorization = this.authService.generateAuthorization(username, "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -47,7 +47,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
   };
 
   getAcceptedMissionsByUser(idUser: number, username: string) {
-    const authorization = this.authService.generateAuthorization("demo", "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -59,7 +59,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
   }
 
   getAccomplishedMissionsByUser(idUser: number, username: string) {
-    const authorization = this.authService.generateAuthorization("demo", "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
@@ -71,7 +71,7 @@ export class MissionService extends AbstractHateoasService<Mission> {
   }
 
   getOtherMissionsForUser(idUser: number, username: string) {
-    const authorization = this.authService.generateAuthorization("demo", "password");
+    const authorization = this.authService.authorizationChain;
     const httpOptions = {
       headers: new HttpHeaders({
         Authorization: authorization
