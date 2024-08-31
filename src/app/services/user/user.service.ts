@@ -16,11 +16,11 @@ export class UserService extends AbstractHateoasService<User> {
     this.baseUrl = `${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}`;
   }
 
-  public addMission(idUser: number, mission: Mission) {
+  public addMissionToUser(idUser: number, mission: Mission) {
     return this.http.post<void>(`${this.baseUrl}users/${idUser}/missionsAccepted`, mission);
   }
 
-  public deleteMission(idUser: number, idMission: number) {
+  public deleteMissionFromUser(idUser: number, idMission: number) {
 
     return this.http.delete<void>(`${this.baseUrl}users/${idUser}/missionsAccepted/${idMission}`);
   }

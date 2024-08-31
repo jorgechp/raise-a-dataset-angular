@@ -51,6 +51,7 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
   @Input() displayedColumns?: string[];
   @Input() rows?: T[];
   @Output() clickOnRowEventHandler: EventEmitter<T> = new EventEmitter();
+  @Output() clickOnRowIndexEventHandler: EventEmitter<number> = new EventEmitter();
   private table: MatTable<T> | undefined;
 
   constructor(private router: Router) {
@@ -85,8 +86,9 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
     }
   }
 
-  handleClickOnRow(row: T) {
+  handleClickOnRow(row: T, index: number) {
     this.clickOnRowEventHandler.emit(row);
+    this.clickOnRowIndexEventHandler.emit(index);
   }
 
   protected applyFilter(event: Event) {

@@ -9,6 +9,8 @@ import {Mission} from "./domain/mission";
 import {AbstractTranslationsComponent} from "./components/abstract/abstract-translations-component";
 import {TranslocoService} from "@jsverse/transloco";
 import {takeWhile} from "rxjs";
+import {Role} from "./domain/role";
+import {RoleService} from "./services/roles/roles.service";
 
 
 @Component({
@@ -26,6 +28,7 @@ export class AppComponent extends AbstractTranslationsComponent {
               private missionListenerService: MissionListenerService,
               private snackBar: MatSnackBar,
               private missionService: MissionService,
+              private roleService: RoleService,
               protected override translocoService: TranslocoService) {
     super(translocoService);
     if (!authenticationService.isCurrentUser()) {
@@ -51,7 +54,16 @@ export class AppComponent extends AbstractTranslationsComponent {
             });
         })
       }
-    )
+    );
+
+    if (this.roleService.roles.size == 0) {
+      this.roleService.getCollection().subscribe((response) => {
+        response.resources.forEach((role: Role) => {
+            this.roleService.addRole(role.name!, role)
+          }
+        );
+      });
+    }
   }
 
   protected loadTranslations(): void {

@@ -81,6 +81,6 @@ export class RaiseActionsComponent {
   }
 
   doRaiseAction(instance: RaiseInstanceDTO) {
-    this.router.navigate(['instance/' + getIdFromURI(instance.uri)], {}).then();
+    this.router.navigate(['instance/' + instance.id], {}).then();
   }
 }

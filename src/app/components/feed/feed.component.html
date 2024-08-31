@@ -124,9 +124,8 @@
     </div>
     </mat-step>
   <mat-step>
-    <ng-template matStepLabel>{{ t('common.done') }}</ng-template>
+    <ng-template *transloco="let t; prefix: 'common'" matStepLabel>{{ t('done') }}</ng-template>
     <p>{{ t('done_message') }}</p>
-
     <div>
       <button (click)="this.handleGoToInstancePage()" mat-button>{{ t('go_to_instance_page_button') }}</button>
         </div>

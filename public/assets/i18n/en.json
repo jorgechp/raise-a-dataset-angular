@@ -3,7 +3,8 @@
     "username": "Username",
     "required": "required",
     "next": "Next",
-    "back": "Back"
+    "back": "Back",
+    "done": "Done"
   },
   "register": {
     "signUp": "Sign up",
@@ -211,5 +212,22 @@
     "your_next_actions": "Your next actions",
     "your_not_contract_actions": "Raise instances that don't have an agreement",
     "raise": "Raise"
+  },
+  "admin": {
+    "save": "Save"
+  },
+  "userAdmin": {
+    "click_to_view_profile": "Click on one user to see his profile",
+    "danger_zone_title": "Danger Zone",
+    "promote_to_admin_toggle": "Promote to admin",
+    "warning": "Warning",
+    "promote_to_admin_2": "You are promoting to admin this user!",
+    "promote_to_admin_3": "will be able to ban you, reduce your privileges or remove your account",
+    "ban_user_toggle": "Ban this user!!",
+    "ban_user_warning": "You are banning this user!",
+    "delete_account": "Delete this account",
+    "saved_settings": "The settings have been saved.",
+    "user_removed": "The user has been removed."
+
   }
 }

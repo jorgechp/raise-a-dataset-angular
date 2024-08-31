@@ -22,6 +22,12 @@ export class User extends GenericResource {
     Object.assign(this as any, values);
   }
 
+  isRole(roleName: string): boolean {
+    return this.authorities.find((role) => {
+      return role.authority === roleName
+    }) !== undefined;
+  }
+
   getRoles(): UserRole[] {
     return this.authorities.map(a => UserRole[a.authority as keyof typeof UserRole]);
 

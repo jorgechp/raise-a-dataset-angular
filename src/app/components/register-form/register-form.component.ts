@@ -103,13 +103,15 @@ export class RegisterFormComponent extends AbstractTranslationsComponent impleme
       const user = this.isUserSettings && this.currentUser ? this.currentUser : new User();
       user.username = this.form.get("username")!.value!;
       user.email = this.form.get("email")!.value!;
-      user.password = this.form.get("password1")!.value!;
+
 
       if (this.isUserSettings) {
+        const currentPassword = this.form.get("currentPassword")!.value!;
         if (this.isChangePassword) {
-          const currentPassword = this.form.get("currentPassword")!.value!;
+          user.password = this.form.get("password1")!.value!;
           user.passwordReset = this.isChangePassword;
-          this.authenticationService.login(user.username!, currentPassword).subscribe(() => {
+        }
+        this.authenticationService.login(user.username!, currentPassword).subscribe(() => {
               this.userService.patchResource(user).subscribe(value => {
                 this.snackBar.open(`${this.userSettingChangesMessage}`, undefined,
                     {
@@ -117,8 +119,8 @@ export class RegisterFormComponent extends AbstractTranslationsComponent impleme
                     });
               });
             }
-          )
-        }
+        )
+
 
       } else {
         this.userService.add(user).subscribe(value => {
@@ -186,6 +188,7 @@ export class RegisterFormComponent extends AbstractTranslationsComponent impleme
     return this.fb.group({
       username: this.usernameFormControl,
       email: this.emailFormControl,
+      currentPassword: this.currentPasswordFormControl
 
     }, {});
   }
