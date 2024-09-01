@@ -19,17 +19,14 @@ import {
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
+import {TranslocoDirective} from "@jsverse/transloco";
 import {MatButton} from "@angular/material/button";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {UserRole} from "../../../domain/user-role";
 import {Role} from "../../../domain/role";
-import {PagedResourceCollection} from "@lagoshny/ngx-hateoas-client";
 import {RoleService} from "../../../services/roles/roles.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {AbstractTranslationsComponent} from "../../abstract/abstract-translations-component";
-import {takeWhile} from "rxjs";
+import {AbstractAdminComponent} from "../abstract-admin/abstract-admin.component";
 
 @Component({
   selector: 'app-admin-users',
@@ -60,13 +57,13 @@ import {takeWhile} from "rxjs";
     MatButton,
     MatCardActions,
     MatSliderModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    AbstractAdminComponent
   ],
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.scss'
 })
-export class AdminUsersComponent extends AbstractTranslationsComponent {
-  protected selectedUser? :User;
+export class AdminUsersComponent {
   columns: IGenericTableColumn[] = [
     {
       nameDef: 'username',
@@ -77,98 +74,50 @@ export class AdminUsersComponent extends AbstractTranslationsComponent {
       i18nKey: 'register.email'
     }
   ];
-  resourcesRows: PagedResourceCollection<User> | undefined;
   private fb = inject(FormBuilder);
   private isBanned: boolean = false;
   private isAdmin: boolean = false;
-  private saveSettingsMessage: string = '';
-  private deletedUserMessage: string = '';
 
   protected form?: FormGroup;
 
-  constructor(private userService: UserService,
-              private rolesService: RoleService,
-              private snackBar: MatSnackBar,
-              private translateService: TranslocoService) {
-    super(translateService);
+  constructor(protected userService: UserService,
+              private rolesService: RoleService) {
+
   }
 
+  prepareObjectToBeSent(item: User, isValidForm: any, onResult: any) {
+    if (!this.form) return;
 
-  rowHandlerEvent(row: User) {
-    this.selectedUser = row;
+    let roles: Role[] = [];
 
-    this.isAdmin = this.selectedUser.isRole(UserRole.ROLE_ADMIN.valueOf());
-    this.isBanned = this.selectedUser.isRole(UserRole.ROLE_BANNED.valueOf());
+    if (this.form.value.isAdmin) {
+      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_ADMIN.valueOf()));
+    }
+
+    if (this.form.value.isBanned) {
+      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_BAN.valueOf()));
+    } else {
+      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_USER.valueOf()));
+    }
+
+    item.bindRelation('roles', roles).subscribe();
+
+    item.username = this.form.value.username;
+    item.email = this.form.value.email;
+    isValidForm(this.form.valid);
+    onResult(item);
+  }
+
+  prepareControls($event: User) {
+    this.isAdmin = $event.isRole(UserRole.ROLE_ADMIN.valueOf());
+    this.isBanned = $event.isRole(UserRole.ROLE_BAN.valueOf());
 
     this.form = this.fb.group({
-      username: [row.username, Validators.required],
-      email: [row.email, Validators.required],
+      username: [$event.username, Validators.required],
+      email: [$event.email, Validators.required],
       isAdmin: [this.isAdmin, Validators.required],
       isBanned: [this.isBanned, Validators.required],
     })
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-    this.getDatasetPage(false);
-  }
-
-  onSubmit(): void {
-    if (this.form && this.form.valid && this.selectedUser) {
-      const user = this.selectedUser;
-      user.username = this.form.value.username;
-      user.email = this.form.value.email;
-
-      let roles: Role[] = [];
-
-      if (this.form.value.isAdmin) {
-        roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_ADMIN.valueOf()));
-      }
-
-      if (this.form.value.isBanned) {
-        roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_BANNED.valueOf()));
-      } else {
-        roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_USER.valueOf()));
-      }
-
-      user.bindRelation('roles', roles).subscribe();
-      this.userService.patchResource(user).subscribe(
-        (response) => {
-          this.snackBar.open(`${this.saveSettingsMessage}`, undefined,
-            {
-              duration: 4000
-            });
-        }
-      );
-    }
-  }
-
-  handleDeleteAccount() {
-    if (this.selectedUser) {
-      this.userService.deleteResource(this.selectedUser).subscribe(
-        (response) => {
-          this.selectedUser = undefined;
-          this.getDatasetPage(false);
-          this.snackBar.open(`${this.deletedUserMessage}`, undefined,
-            {
-              duration: 4000
-            });
-        }
-      );
-    }
-  }
-
-  protected override loadTranslations() {
-    this.translocoService.selectTranslate('userAdmin.saved_settings').pipe(takeWhile(() => this.isAlive))
-      .subscribe(value => this.saveSettingsMessage = value);
-    this.translocoService.selectTranslate('userAdmin.user_removed').pipe(takeWhile(() => this.isAlive))
-      .subscribe(value => this.deletedUserMessage = value);
-  }
-
-  private getDatasetPage(isRescued= false){
-    this.userService.getPage({
-    }).subscribe((data) => {
-      this.resourcesRows = data;
-    })
-  }
 }

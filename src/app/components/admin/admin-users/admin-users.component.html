@@ -1,83 +1,59 @@
-<div *transloco="let t; prefix: 'userAdmin'">
-    <div>
-      <p>{{ t('click_to_view_profile') }}</p>
-    </div>
-    <app-generic-table (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
-                       *ngIf="this.resourcesRows?.resources"
-                       [columns]="this.columns"
-                       [rows]="this.resourcesRows?.resources"
-    ></app-generic-table>
-    <div>
-        <div *ngIf="this.form && this.selectedUser">
-            <mat-card class="dashboard-card">
-                <mat-card-header>
-                    <mat-card-title>
-                      {{ this.form.controls['username'].value }}
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="dashboard-card-content">
-                    <form (ngSubmit)="onSubmit()" [formGroup]="this.form" novalidate>
-                        <div class="row">
-                            <div class="col">
-                                <mat-form-field class="full-width">
-                                    <input formControlName="username" matInput placeholder="{{ t('username') }}">
-                                  @if (!(form) || form.controls && this.form.controls['username'].hasError('required')) {
-                                    <mat-error>{{ t('usernameRequired') }} <strong>{{ t('required') }}</strong></mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field class="full-width">
-                                    <input formControlName="email" matInput placeholder="{{ t('email') }}">
-                                  @if (!(form) || form.controls && this.form.controls['email'].hasError('required')) {
-                                    <mat-error>{{ t('emailRequired') }} <strong>{{ t('required') }}</strong></mat-error>
-                                    } @else if (form.controls && this.form.controls['email'].hasError('email')) {
-                                    <mat-error>{{ t('wrong') }} <strong>{{ t('eMailFormat') }}</strong></mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                      <div class="row">
-                        <div class="col">
-                          <h5>{{ t('danger_zone_title') }}</h5>
-                          <p>
-                            <mat-slide-toggle formControlName="isBanned">{{ t('ban_user_toggle') }}</mat-slide-toggle>
-                          </p>
-                          <p>
-                            <mat-error *ngIf="this.form.get('isBanned')?.value">
-                              <strong>{{ t('warning') }}</strong>: {{ t('ban_user_warning') }}
-                            </mat-error>
-                          </p>
-                          <p *ngIf="!this.form.get('isBanned')?.value">
-                            <mat-slide-toggle formControlName="isAdmin">{{ t('promote_to_admin_toggle') }}
-                            </mat-slide-toggle>
-                          </p>
-                          <p>
-                            <mat-error *ngIf="this.form.get('isAdmin')?.value && !this.form.get('isBanned')?.value">
-                              <strong>{{ t('warning') }}</strong>: {{ t('promote_to_admin_2') }} {{ this.form.get('username')?.value }} {{ t('promote_to_admin_3') }}
-                              .
-                            </mat-error>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col justify-content-end">
-                          <button (click)="this.handleDeleteAccount()" class="btn-danger"
-                                  mat-flat-button>{{ t('delete_account') }}
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                </mat-card-content>
-                <mat-card-actions>
-                  <div class="row">
-                    <div class="col justify-content-end">
-                      <button (click)="onSubmit()" *transloco="let t; prefix: 'admin'" mat-button>{{ t('save') }}
-                      </button>
-                    </div>
-                  </div>
-                </mat-card-actions>
-            </mat-card>
+<ng-container *transloco="let t; prefix: 'userAdmin'">
+  <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
+                      (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
+                      *ngIf="this.userService"
+                      [columns]="this.columns"
+                      [service]="this.userService"
+                      deletedUserMessage="sdasdsa"
+                      saveSettingsMessage="sad"
+                      title="fdfg"
+  >
+    <mat-card-content>
+      <form *ngIf="this.form" [formGroup]="this.form" novalidate>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="username" matInput placeholder="{{ t('username') }}">
+              @if (!(form) || form.controls && this.form.controls['username'].hasError('required')) {
+                <mat-error>{{ t('usernameRequired') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="email" matInput placeholder="{{ t('email') }}">
+              @if (!(form) || form.controls && this.form.controls['email'].hasError('required')) {
+                <mat-error>{{ t('emailRequired') }} <strong>{{ t('required') }}</strong></mat-error>
+              } @else if (form.controls && this.form.controls['email'].hasError('email')) {
+                <mat-error>{{ t('wrong') }} <strong>{{ t('eMailFormat') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
         </div>
-    </div>
-</div>
+        <div class="row">
+          <div class="col">
+            <h5>{{ t('danger_zone_title') }}</h5>
+            <p>
+              <mat-slide-toggle formControlName="isBanned">{{ t('ban_user_toggle') }}</mat-slide-toggle>
+            </p>
+            <p>
+              <mat-error *ngIf="this.form.get('isBanned')?.value">
+                <strong>{{ t('warning') }}</strong>: {{ t('ban_user_warning') }}
+              </mat-error>
+            </p>
+            <p *ngIf="!this.form.get('isBanned')?.value">
+              <mat-slide-toggle formControlName="isAdmin">{{ t('promote_to_admin_toggle') }}
+              </mat-slide-toggle>
+            </p>
+            <p>
+              <mat-error *ngIf="this.form.get('isAdmin')?.value && !this.form.get('isBanned')?.value">
+                <strong>{{ t('warning') }}</strong>: {{ t('promote_to_admin_2') }} {{ this.form.get('username')?.value }} {{ t('promote_to_admin_3') }}
+                .
+              </mat-error>
+            </p>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </app-abstract-admin>
+</ng-container>

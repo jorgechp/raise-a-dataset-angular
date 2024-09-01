@@ -1,5 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Component, OnInit} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
 import {MatGridListModule} from '@angular/material/grid-list';

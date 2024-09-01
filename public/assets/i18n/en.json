@@ -228,6 +228,12 @@
     "delete_account": "Delete this account",
     "saved_settings": "The settings have been saved.",
     "user_removed": "The user has been removed."
-
+  },
+  "repositoryAdmin": {
+    "click_to_view_profile": "Click here to view the repository",
+    "name": "Name",
+    "address": "Address URL",
+    "description": "Description",
+    "delete_repository": "Delete repository"
   }
 }

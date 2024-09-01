@@ -1,0 +1,36 @@
+<div *transloco="let t; prefix: 'repositoryAdmin'">
+  <div>
+    <p>{{ t(this.title) }}</p>
+  </div>
+  <app-generic-table #table (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
+                     *ngIf="this.resourcesRows?.resources"
+                     [columns]="this.columns"
+                     [rows]="this.resourcesRows?.resources"
+  ></app-generic-table>
+  <div>
+    <div *ngIf="this.selectedItem">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+        </mat-card-header>
+        <mat-card-content>
+          <ng-content></ng-content>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="row">
+            <div class="col justify-content-end">
+              <button (click)="this.handleDeleteAccount()" class="btn-danger"
+                      mat-flat-button>{{ t('delete_repository') }}
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button (click)="this.onSave()" *transloco="let t; prefix: 'admin'" mat-button>{{ t('save') }}
+              </button>
+            </div>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
