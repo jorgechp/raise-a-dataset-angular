@@ -29,10 +29,10 @@ import {NgIf} from "@angular/common";
     MatCard,
     MatCardHeader
   ],
-  templateUrl: './abstract-admin.component.html',
-  styleUrl: './abstract-admin.component.scss'
+  templateUrl: './generic-admin.component.html',
+  styleUrl: './generic-admin.component.scss'
 })
-export class AbstractAdminComponent<T extends Resource> extends AbstractTranslationsComponent {
+export class GenericAdminComponent<T extends Resource> extends AbstractTranslationsComponent {
   @ViewChild("table") tableComponent: GenericTableComponent<T> | undefined;
 
   @Input() title: string;

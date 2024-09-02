@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {IGenericTableColumn} from "../../generic-table/generic-table.component";
-import {AbstractAdminComponent} from "../abstract-admin/abstract-admin.component";
+import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
 import {DatasetService} from "../../../services/dataset/dataset.service";
 import {NgIf} from "@angular/common";
 import {Dataset} from "../../../domain/dataset";
@@ -14,7 +14,7 @@ import {TranslocoDirective} from "@jsverse/transloco";
   selector: 'app-admin-datasets',
   standalone: true,
   imports: [
-    AbstractAdminComponent,
+    GenericAdminComponent,
     NgIf,
     FormsModule,
     MatCardContent,

@@ -26,7 +26,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {UserRole} from "../../../domain/user-role";
 import {Role} from "../../../domain/role";
 import {RoleService} from "../../../services/roles/roles.service";
-import {AbstractAdminComponent} from "../abstract-admin/abstract-admin.component";
+import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
 
 @Component({
   selector: 'app-admin-users',
@@ -58,7 +58,7 @@ import {AbstractAdminComponent} from "../abstract-admin/abstract-admin.component
     MatCardActions,
     MatSliderModule,
     MatSlideToggleModule,
-    AbstractAdminComponent
+    GenericAdminComponent
   ],
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.scss'

@@ -11,7 +11,7 @@ import {TranslocoDirective} from "@jsverse/transloco";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Repository} from "../../../domain/repository";
 import {RepositoryService} from "../../../services/repository/repository.service";
-import {AbstractAdminComponent} from "../abstract-admin/abstract-admin.component";
+import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
 
 @Component({
   selector: 'app-admin-repositories',
@@ -32,7 +32,7 @@ import {AbstractAdminComponent} from "../abstract-admin/abstract-admin.component
     ReactiveFormsModule,
     TranslocoDirective,
     MatLabel,
-    AbstractAdminComponent
+    GenericAdminComponent
   ],
   templateUrl: './admin-repositories.component.html',
   styleUrl: './admin-repositories.component.scss'
