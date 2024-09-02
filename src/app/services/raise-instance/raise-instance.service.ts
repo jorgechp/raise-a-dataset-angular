@@ -4,7 +4,7 @@ import {AbstractMissionService} from "../abstract/abstract-mission-service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {ApiConfiguration} from "../../config/api-configuration";
-import { RaiseInstanceDTO} from "../../domain/raise-instance-dto";
+import {RaiseInstanceDTO} from "../../domain/raise-instance-dto";
 
 export interface RaiseInstanceResponse {
   _embedded: {
@@ -18,6 +18,7 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
   private readonly outdatedRaiseInstanceEndPoint = `raiseInstances/search/findAllByIsAgreeToRaiseIsTrueAndNextFeedActionBeforeCurrentDate`;
   private readonly nextRaiseInstanceEndPoint = `raiseInstances/search/findAllByIsAgreeToRaiseIsTrueAndNextFeedActionAfterCurrentDate`;
   private readonly noContractRaiseInstanceEndPoint = `raiseInstances/search/findAllByIsAgreeToRaiseAndUserId`;
+  private readonly allRaiseInstanceEndPoint = `raiseInstances/search/findAllRaiseInstancesDTO`;
 
   constructor(private http: HttpClient, private authService: AuthenticationService) {
     super(RaiseInstance);
@@ -33,9 +34,7 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
           .set('userId', userId)
     }
     return this.http.get<RaiseInstanceDTO[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}${this.outdatedRaiseInstanceEndPoint}`, httpOptions);
-
   }
-
 
   getNextRaiseInstancesByUser(userId: number, username: string ) {
     const authorization = this.authService.authorizationChain;
@@ -60,5 +59,16 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
           .set('userId', userId)
     }
     return this.http.get<RaiseInstanceDTO[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}${this.noContractRaiseInstanceEndPoint}`, httpOptions);
+  }
+
+  getAllRaiseInstances() {
+    const authorization = this.authService.authorizationChain;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: authorization
+      }),
+      params: new HttpParams()
+    }
+    return this.http.get<RaiseInstanceDTO[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}${this.allRaiseInstanceEndPoint}`, httpOptions);
   }
 }

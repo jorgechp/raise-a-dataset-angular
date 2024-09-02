@@ -228,19 +228,30 @@
     "ban_user_toggle": "Ban this user!!",
     "ban_user_warning": "You are banning this user!",
     "delete_account": "Delete this account",
-    "saved_settings": "The settings have been saved.",
-    "user_removed": "The user has been removed."
+    "saved": "The settings have been saved.",
+    "deleted": "The user has been removed."
   },
   "repositoryAdmin": {
     "description": "Click on one repository to access to their details",
     "click_to_view_profile": "Click here to view the repository",
     "name": "Name",
     "address": "Address URL",
-    "delete_repository": "Delete repository"
+    "delete_repository": "Delete repository",
+    "deleted": "The repository has been removed",
+    "saved": "The repository has been saved"
   },"datasetAdmin": {
   "description": "Click on one dataset to access to their details",
     "click_to_view_profile": "Click here to view the repository",
     "name": "Name",
-    "delete_repository": "Delete repository"
+  "delete_repository": "Delete repository",
+  "deleted": "The dataset has been removed",
+  "saved": "The dataset has been saved"
+},
+  "instancesAdmin": {
+    "description": "Click on one instance to access to their details",
+    "repositoryName": "Repository",
+    "datasetName": "Dataset",
+    "deleted": "The Instance has been removed.",
+    "saved": "The instances has been saved."
   }
 }

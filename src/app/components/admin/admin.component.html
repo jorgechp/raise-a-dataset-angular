@@ -8,7 +8,9 @@
   <mat-tab #repositories label="Repositories">
     <app-admin-repositories *ngIf="repositories.isActive"></app-admin-repositories>
   </mat-tab>
-  <mat-tab #instances label="Instances">Content 3</mat-tab>
+  <mat-tab #instances label="Instances">
+    <app-admin-instances *ngIf="instances.isActive"></app-admin-instances>
+  </mat-tab>
   <mat-tab #compliances label="Compliances">Content 3</mat-tab>
   <mat-tab #missions label="Missions">Content 3</mat-tab>
   <mat-tab #fair label="FAIR Principles">Content 3</mat-tab>

@@ -3,9 +3,9 @@
     <p>{{ t(this.title) }}</p>
   </div>
   <app-generic-table #table (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
-                     *ngIf="this.resourcesRows?.resources"
+                     *ngIf="this.resourcesRows?.resources || this.customRows"
                      [columns]="this.columns"
-                     [rows]="this.resourcesRows?.resources"
+                     [rows]="this.customRows!==undefined?this.customRows:this.resourcesRows?.resources"
   ></app-generic-table>
   <div>
     <div *ngIf="this.selectedItem">
@@ -23,7 +23,7 @@
               </button>
             </div>
           </div>
-          <div class="row">
+          <div *ngIf="!this.hideSaveButtons" class="row">
             <div class="col">
               <button (click)="this.onSave()" *transloco="let t; prefix: 'admin'" mat-button>{{ t('save') }}
               </button>
