@@ -1,5 +1,10 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {HateoasResourceOperation, PagedResourceCollection, Resource,} from "@lagoshny/ngx-hateoas-client";
+import {
+  HateoasResourceOperation,
+  PagedResourceCollection,
+  Resource,
+  ResourceCollection,
+} from "@lagoshny/ngx-hateoas-client";
 import {GenericTableComponent, IGenericTableColumn} from "../../generic-table/generic-table.component";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -41,14 +46,17 @@ export class GenericAdminComponent<T extends Resource> extends AbstractTranslati
   @Input() controls: FormControl[];
   @Input() saveSettingsMessage: string;
   @Input() deletedUserMessage: string;
+  @Input() isPagedRepository: boolean;
 
 
   @Output() prepareObjectToBeSent = new EventEmitter<{ item: T, isValidForm: Function, onResult: Function }>()
   @Output() prepareFormControls = new EventEmitter<{ row: T }>()
 
-  protected resourcesRows: PagedResourceCollection<Resource> | undefined;
-  protected selectedItem?: T;
   private isValidForm: boolean = false;
+  protected resourcesRows: PagedResourceCollection<Resource> | ResourceCollection<Resource> | undefined;
+  protected selectedItem?: T;
+  protected deleteUserMessageText?: string;
+  protected saveUserMessageText?: string;
 
   constructor(private snackBar: MatSnackBar,
               private translateService: TranslocoService) {
@@ -58,6 +66,7 @@ export class GenericAdminComponent<T extends Resource> extends AbstractTranslati
     this.controls = [];
     this.saveSettingsMessage = '';
     this.deletedUserMessage = '';
+    this.isPagedRepository = true;
   }
 
   override ngOnInit(): void {
@@ -113,15 +122,20 @@ export class GenericAdminComponent<T extends Resource> extends AbstractTranslati
   }
 
   protected override loadTranslations() {
-    this.translocoService.selectTranslate('userAdmin.saved_settings').pipe(takeWhile(() => this.isAlive))
-      .subscribe(value => this.saveSettingsMessage = value);
-    this.translocoService.selectTranslate('userAdmin.user_removed').pipe(takeWhile(() => this.isAlive))
-      .subscribe(value => this.deletedUserMessage = value);
+    this.translocoService.selectTranslate(this.deletedUserMessage).pipe(takeWhile(() => this.isAlive))
+      .subscribe(value => this.deleteUserMessageText = value);
+    this.translocoService.selectTranslate(this.saveSettingsMessage).pipe(takeWhile(() => this.isAlive))
+      .subscribe(value => this.saveUserMessageText = value);
   }
 
   private getPage(isRescued = false) {
     if (this.service) {
-      this.service.getPage({useCache: false}).subscribe((data) => {
+      const serviceCaller = this.isPagedRepository
+          ? this.service.getPage.bind(this.service) : this.service.getCollection.bind(this.service);
+
+      if(!serviceCaller) return;
+
+      serviceCaller.call({useCache: false}).subscribe((data) => {
         if (!this.resourcesRows) {
           this.resourcesRows = data;
         } else {

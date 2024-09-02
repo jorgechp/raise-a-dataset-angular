@@ -1,12 +1,12 @@
-<ng-container *transloco="let t; prefix: 'repositoryAdmin'">
+<ng-container *transloco="let t; prefix: 'datasetAdmin'">
   <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
                       (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
                       *ngIf="this.datasetService"
                       [columns]="this.columns"
                       [service]="this.datasetService"
-                      deletedUserMessage="sdasdsa"
-                      saveSettingsMessage="sad"
-                      title="fdfg"
+                      deletedUserMessage="datasetAdmin.deleted"
+                      saveSettingsMessage="datasetAdmin.saved"
+                      title="datasetAdmin.description"
   >
     <mat-card-content>
       <form *ngIf="this.form" [formGroup]="this.form" novalidate>

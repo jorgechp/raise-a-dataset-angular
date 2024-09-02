@@ -4,9 +4,9 @@
                       *ngIf="this.userService"
                       [columns]="this.columns"
                       [service]="this.userService"
-                      deletedUserMessage="sdasdsa"
-                      saveSettingsMessage="sad"
-                      title="fdfg"
+                      deletedUserMessage="userAdmin.deleted"
+                      saveSettingsMessage="userAdmin.saved"
+                      title="userAdmin.description"
   >
     <mat-card-content>
       <form *ngIf="this.form" [formGroup]="this.form" novalidate>

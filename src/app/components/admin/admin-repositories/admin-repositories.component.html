@@ -4,9 +4,10 @@
                       *ngIf="this.repositoryService"
                       [columns]="this.columns"
                       [service]="this.repositoryService"
-                      deletedUserMessage="sdasdsa"
-                      saveSettingsMessage="sad"
-                      title="fdfg"
+                      deletedUserMessage="repositoryAdmin.deleted"
+                      saveSettingsMessage="repositoryAdmin.saved"
+                      title="repositoryAdmin.description"
+                      [isPagedRepository]="false"
   >
     <mat-card-content>
       <form *ngIf="this.form" [formGroup]="form!" novalidate>

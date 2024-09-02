@@ -33,11 +33,11 @@ export class AdminDatasetsComponent {
   protected columns: IGenericTableColumn[] = [
     {
       nameDef: 'name',
-      i18nKey: 'repositoryAdmin.name'
+      i18nKey: 'datasetAdmin.name'
     },
     {
       nameDef: 'description',
-      i18nKey: 'repositoryAdmin.description'
+      i18nKey: 'datasetAdmin.description'
     }
   ];
   private fb = inject(FormBuilder);

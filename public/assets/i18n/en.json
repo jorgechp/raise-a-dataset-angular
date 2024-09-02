@@ -214,9 +214,11 @@
     "raise": "Raise"
   },
   "admin": {
-    "save": "Save"
+    "save": "Save",
+    "delete": "Delete"
   },
   "userAdmin": {
+    "description": "Click on one user to access to their details",
     "click_to_view_profile": "Click on one user to see his profile",
     "danger_zone_title": "Danger Zone",
     "promote_to_admin_toggle": "Promote to admin",
@@ -230,9 +232,16 @@
     "user_removed": "The user has been removed."
   },
   "repositoryAdmin": {
+    "description": "Click on one repository to access to their details",
     "click_to_view_profile": "Click here to view the repository",
     "name": "Name",
     "address": "Address URL",
+    "description": "Description",
+    "delete_repository": "Delete repository"
+  },"datasetAdmin": {
+  "description": "Click on one dataset to access to their details",
+    "click_to_view_profile": "Click here to view the repository",
+    "name": "Name",
     "description": "Description",
     "delete_repository": "Delete repository"
   }

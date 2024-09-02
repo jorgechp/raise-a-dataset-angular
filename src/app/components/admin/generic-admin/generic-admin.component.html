@@ -1,4 +1,4 @@
-<div *transloco="let t; prefix: 'repositoryAdmin'">
+<div *transloco="let t;">
   <div>
     <p>{{ t(this.title) }}</p>
   </div>
@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col justify-content-end">
               <button (click)="this.handleDeleteAccount()" class="btn-danger"
-                      mat-flat-button>{{ t('delete_repository') }}
+                      mat-flat-button *transloco="let t; prefix: 'admin'">{{ t('delete') }}
               </button>
             </div>
           </div>
