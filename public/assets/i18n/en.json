@@ -236,13 +236,11 @@
     "click_to_view_profile": "Click here to view the repository",
     "name": "Name",
     "address": "Address URL",
-    "description": "Description",
     "delete_repository": "Delete repository"
   },"datasetAdmin": {
   "description": "Click on one dataset to access to their details",
     "click_to_view_profile": "Click here to view the repository",
     "name": "Name",
-    "description": "Description",
     "delete_repository": "Delete repository"
   }
 }

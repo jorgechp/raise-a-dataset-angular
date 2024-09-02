@@ -1,15 +1,15 @@
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" animationDuration="900ms">
-    <mat-tab label="Users">
-        <app-admin-users></app-admin-users>
+  <mat-tab #users label="Users">
+    <app-admin-users *ngIf="users.isActive"></app-admin-users>
     </mat-tab>
-  <mat-tab label="Datasets">
-    <app-admin-datasets></app-admin-datasets>
+  <mat-tab #datasets label="Datasets">
+    <app-admin-datasets *ngIf="datasets.isActive"></app-admin-datasets>
   </mat-tab>
-  <mat-tab label="Repositories">
-    <app-admin-repositories></app-admin-repositories>
+  <mat-tab #repositories label="Repositories">
+    <app-admin-repositories *ngIf="repositories.isActive"></app-admin-repositories>
   </mat-tab>
-    <mat-tab label="Instances">Content 3</mat-tab>
-    <mat-tab label="Compliances">Content 3</mat-tab>
-    <mat-tab label="Missions">Content 3</mat-tab>
-    <mat-tab label="FAIR Principles">Content 3</mat-tab>
+  <mat-tab #instances label="Instances">Content 3</mat-tab>
+  <mat-tab #compliances label="Compliances">Content 3</mat-tab>
+  <mat-tab #missions label="Missions">Content 3</mat-tab>
+  <mat-tab #fair label="FAIR Principles">Content 3</mat-tab>
 </mat-tab-group>
