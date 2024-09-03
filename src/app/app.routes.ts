@@ -1,12 +1,13 @@
 import {Routes} from '@angular/router';
-import {AdminComponent} from "./components/admin/admin.component";
+import {canActivateUser} from "./guard/user.guard";
+import {canActivateAdmin} from "./guard/admin.guard";
 
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'dashboard',
+    redirectTo: 'dashboard'
   },
   {
     path: 'dashboard',
@@ -30,7 +31,8 @@ export const routes: Routes = [
       import('./components/pick-dataset/pick-dataset.component').then(
         (c) => c.PickDatasetComponent
       ),
-    title: 'Table'
+    title: 'Table',
+    canActivate: [canActivateUser]
   },
   {
     path: 'raise',
@@ -38,35 +40,40 @@ export const routes: Routes = [
       import('./components/raise-dataset/raise-dataset.component').then(
         (c) => c.RaiseDatasetComponent
       ),
-    title: 'Raise'
+    title: 'Raise',
+    canActivate: [canActivateUser]
   }, {
     path: 'datasets',
     loadComponent: () =>
       import('./components/pick-dataset/pick-dataset.component').then(
         (c) => c.PickDatasetComponent
       ),
-    title: 'Datasets'
+    title: 'Datasets',
+    canActivate: [canActivateUser]
   }, {
     path: 'dataset/:id',
     loadComponent: () =>
       import('./components/dataset-info/dataset-info.component').then(
         (c) => c.DatasetInfoComponent
       ),
-    title: 'Dataset Info'
+    title: 'Dataset Info',
+    canActivate: [canActivateUser]
   }, {
     path: 'instance/:id',
     loadComponent: () =>
       import('./components/raise-instance/raise-instance.component').then(
         (c) => c.RaiseInstanceComponent
       ),
-    title: 'Raise Instance'
+    title: 'Raise Instance',
+    canActivate: [canActivateUser]
   }, {
     path: 'repository/:id',
     loadComponent: () =>
         import('./components/repository-info/repository-info.component').then(
             (c) => c.RepositoryInfoComponent
         ),
-    title: 'Repository Info'
+    title: 'Repository Info',
+    canActivate: [canActivateUser]
   }, {
     path: 'principles',
     loadComponent: () =>
@@ -80,49 +87,56 @@ export const routes: Routes = [
         import('./components/feed/feed.component').then(
             (c) => c.FeedComponent
         ),
-    title: 'Feed dataset'
+    title: 'Feed dataset',
+    canActivate: [canActivateUser]
   }, {
     path: 'compliances',
     loadComponent: () =>
       import('./components/compliance/compliances.component').then(
         (c) => c.CompliancesComponent
       ),
-    title: 'Compliances'
+    title: 'Compliances',
+    canActivate: [canActivateUser]
   }, {
     path: 'validate',
     loadComponent: () =>
       import('./components/validate/validate.component').then(
         (c) => c.ValidateComponent
       ),
-    title: 'Validate'
+    title: 'Validate',
+    canActivate: [canActivateUser]
   }, {
     path: 'rescue',
     loadComponent: () =>
       import('./components/rescue-table/rescue-table.component').then(
         (c) => c.RescueTableComponent
       ),
-    title: 'Rescue'
+    title: 'Rescue',
+    canActivate: [canActivateUser]
   }, {
     path: 'settings',
     loadComponent: () =>
         import('./components/register-form/register-form.component').then(
             (c) => c.RegisterFormComponent
         ),
-    title: 'User settings'
+    title: 'User settings',
+    canActivate: [canActivateUser]
   }, {
     path: 'missions',
     loadComponent: () =>
         import('./components/user-missions-dialog/user-missions-dialog.component').then(
             (c) => c.UserMissionsDialogComponent
         ),
-    title: 'User missions'
+    title: 'User missions',
+    canActivate: [canActivateUser]
   }, {
     path: 'raiseActions',
     loadComponent: () =>
         import('./components/raise-actions/raise-actions.component').then(
             (c) => c.RaiseActionsComponent
         ),
-    title: 'Raise actions'
+    title: 'Raise actions',
+    canActivate: [canActivateUser]
   },
   {
     path: 'admin',
@@ -130,6 +144,7 @@ export const routes: Routes = [
         import('./components/admin/admin.component').then(
             (c) => c.AdminComponent
         ),
-    title: 'Admin'
+    title: 'Admin',
+    canActivate: [canActivateAdmin]
   },
 ];

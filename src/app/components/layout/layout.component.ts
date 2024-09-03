@@ -14,7 +14,6 @@ import {UserSectionComponent} from "../user-section/user-section.component";
 import {ISidenavMenuItem, SIDENAV_MENU} from "./sidenav/sidenavMenu";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {RepositorySelectionComponent} from "../repository-selection/repository-selection.component";
-import {MissionService} from "../../services/mission/mission.service";
 import {UserMissionsComponent} from "../user-missions/user-missions.component";
 
 @Component({
@@ -47,8 +46,7 @@ export class LayoutComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private authenticationService: AuthenticationService,
-              private missionService: MissionService) {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
