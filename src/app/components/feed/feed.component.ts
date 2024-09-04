@@ -15,14 +15,13 @@ import {minArrayLengthValidator} from "../utils/validators/array-length-validato
 import {MatDialog} from "@angular/material/dialog";
 import {Compliance} from "../../domain/compliance";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
-import { Router} from "@angular/router";
-import {
-  ComplianceService
-} from "../../services/compliance/compliance.service";
+import {Router} from "@angular/router";
+import {ComplianceService} from "../../services/compliance/compliance.service";
 import {forkJoin} from "rxjs";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {getIdFromURI} from "../utils/funcions";
 import {TranslocoDirective} from "@jsverse/transloco";
+import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
 
 @Component({
   selector: 'app-feed',
@@ -63,6 +62,7 @@ export class FeedComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private fairPrincipleService: FairPrincipleService,
               private complianceService: ComplianceService,
+              private raiseInstanceService: RaiseInstanceService,
               private authenticationService: AuthenticationService,
               private router: Router) {
     this.selectedPrinciples = this.firstFormGroup.get('selectedCards')?.value as unknown as number[]
@@ -145,9 +145,10 @@ export class FeedComponent implements OnInit {
     });
 
     forkJoin(promises).subscribe(
-        () => {
-          this.stepper?.next();
-        }
+      () => {
+        this.raiseInstanceService.updateIndicatorValue(-1);
+        this.stepper?.next();
+      }
     );
   }
 

@@ -1,10 +1,14 @@
 <div *transloco="let t; prefix: 'userSection'" class="user-section">
   <button (click)="this.doUserRaise()"
-          class="user-missions__button cursor-pointer background-transparent">
+          [matBadge]="this.badgeRaise"
+          class="user-missions__button cursor-pointer background-transparent"
+          matBadgePosition="after">
     <mat-icon svgIcon="volunteer_activism"></mat-icon>
   </button>
   <button (click)="this.doUserMissions()"
-          class="user-missions__button cursor-pointer background-transparent">
+          [matBadge]="this.badgeMissions"
+          class="user-missions__button cursor-pointer background-transparent"
+          matBadgePosition="after">
     <mat-icon svgIcon="social_leaderboard"></mat-icon>
   </button>
 </div>

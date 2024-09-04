@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {RaiseInstance} from "../../domain/raise-instance";
-import {AbstractMissionService} from "../abstract/abstract-mission-service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {ApiConfiguration} from "../../config/api-configuration";
-import { RaiseInstanceDTO} from "../../domain/raise-instance-dto";
+import {RaiseInstanceDTO} from "../../domain/raise-instance-dto";
+import {AbstractIndicatorService} from "../abstract/abstract-indicator.service";
+import {map} from "rxjs/operators";
 
 export interface RaiseInstanceResponse {
   _embedded: {
@@ -14,7 +15,7 @@ export interface RaiseInstanceResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> {
+export class RaiseInstanceService extends AbstractIndicatorService<RaiseInstance> {
   private readonly outdatedRaiseInstanceEndPoint = `raiseInstances/search/findAllByIsAgreeToRaiseIsTrueAndNextFeedActionBeforeCurrentDate`;
   private readonly nextRaiseInstanceEndPoint = `raiseInstances/search/findAllByIsAgreeToRaiseIsTrueAndNextFeedActionAfterCurrentDate`;
   private readonly noContractRaiseInstanceEndPoint = `raiseInstances/search/findAllByIsAgreeToRaiseAndUserId`;
@@ -46,7 +47,12 @@ export class RaiseInstanceService extends AbstractMissionService<RaiseInstance> 
       params: new HttpParams()
           .set('userId', userId)
     }
-    return this.http.get<RaiseInstanceDTO[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}${this.nextRaiseInstanceEndPoint}`, httpOptions);
+    return this.http.get<RaiseInstanceDTO[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}${this.nextRaiseInstanceEndPoint}`, httpOptions).pipe(
+      map(response => {
+        this.updateIndicatorValue(response.length);
+        return response;
+      })
+    );
   }
 
   getNoContractedRaiseInstancesByUser(userId: number, username: string) {

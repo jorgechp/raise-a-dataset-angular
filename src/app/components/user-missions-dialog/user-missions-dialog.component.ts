@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle,} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -15,7 +14,6 @@ import {UserService} from '../../services/user/user.service';
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {User} from '../../domain/user';
 import {getIdFromURI} from "../utils/funcions";
-
 
 
 @Component({
@@ -46,20 +44,13 @@ export class UserMissionsDialogComponent implements OnInit{
   private user?: User;
 
   protected acceptedMissions?: Array<Mission>;
-  protected suggestedMissions?: Array<Mission>;
   protected allMissions?: Array<Mission>;
   protected accomplishedMissions?: Array<Mission>;
 
 
-
-  constructor(private router: Router,
-              private userService: UserService,
+  constructor(private userService: UserService,
               private authenticationService: AuthenticationService,
               private missionsService: MissionService) {
-  }
-
-  onCancelClick() {
-    this.router.navigate(['/settings']).then();
   }
 
   ngOnInit(): void {
@@ -107,6 +98,7 @@ export class UserMissionsDialogComponent implements OnInit{
       this.user.deleteRelation('missionsAccepted', missionToUnselect).subscribe(() => {
         this.acceptedMissions?.splice(i,1);
         this.allMissions?.unshift(missionToUnselect);
+        this.missionsService.increaseIndicatorValue(-1);
       });
     }
   }

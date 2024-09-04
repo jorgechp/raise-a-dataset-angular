@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {AbstractHateoasService} from "../abstract/abstract-hateoas.service";
 import {Mission} from "../../domain/mission";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthenticationService} from "../authentication/authentication.service";
 import {ApiConfiguration} from "../../config/api-configuration";
+import {map} from "rxjs/operators";
+import {AbstractIndicatorService} from "../abstract/abstract-indicator.service";
 
 export interface MissionsResponse {
   _embedded: {
@@ -14,7 +15,7 @@ export interface MissionsResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class MissionService extends AbstractHateoasService<Mission> {
+export class MissionService extends AbstractIndicatorService<Mission> {
 
   constructor(private http: HttpClient,
               private authService: AuthenticationService) {
@@ -55,7 +56,13 @@ export class MissionService extends AbstractHateoasService<Mission> {
       params: new HttpParams()
           .set('idUser', idUser)
     }
-    return this.http.get<MissionsResponse>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/acceptedByUser/${idUser}`, httpOptions);
+    return this.http.get<MissionsResponse>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}missions/acceptedByUser/${idUser}`, httpOptions)
+      .pipe(
+        map(response => {
+          this.updateIndicatorValue(response._embedded.missions.length);
+          return response;
+        })
+      );
   }
 
   getAccomplishedMissionsByUser(idUser: number, username: string) {

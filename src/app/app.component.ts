@@ -11,6 +11,8 @@ import {TranslocoService} from "@jsverse/transloco";
 import {takeWhile} from "rxjs";
 import {Role} from "./domain/role";
 import {RoleService} from "./services/roles/roles.service";
+import {getIdFromURI} from "./components/utils/funcions";
+import {RaiseInstanceService} from "./services/raise-instance/raise-instance.service";
 
 
 @Component({
@@ -26,6 +28,7 @@ export class AppComponent extends AbstractTranslationsComponent {
 
   constructor(private authenticationService: AuthenticationService,
               private missionListenerService: MissionListenerService,
+              private raiseInstanceService: RaiseInstanceService,
               private snackBar: MatSnackBar,
               private missionService: MissionService,
               private roleService: RoleService,
@@ -47,6 +50,7 @@ export class AppComponent extends AbstractTranslationsComponent {
             },
           })
             .subscribe((mission: Mission) => {
+              this.missionService.increaseIndicatorValue(-1);
               this.snackBar.open(this.missionCompletedMessage + ": " + mission.name, undefined,
                 {
                   duration: 4000
@@ -55,6 +59,16 @@ export class AppComponent extends AbstractTranslationsComponent {
         })
       }
     );
+
+    if (this.authenticationService.isCurrentUser()) {
+      const currentUser = this.authenticationService.getCurrentUser();
+      this.missionService.getAcceptedMissionsByUser(
+        Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!))
+        , currentUser.username!).subscribe();
+      this.raiseInstanceService.getNextRaiseInstancesByUser(Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!))
+        , currentUser.username!).subscribe();
+    }
+
 
     if (this.roleService.roles.size == 0) {
       this.roleService.getCollection().subscribe((response) => {
