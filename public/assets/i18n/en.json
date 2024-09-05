@@ -241,6 +241,7 @@
     "saved": "The repository has been saved"
   },"datasetAdmin": {
   "description": "Click on one dataset to access to their details",
+  "descriptionColumn": "Description",
     "click_to_view_profile": "Click here to view the repository",
     "name": "Name",
   "delete_repository": "Delete repository",
@@ -262,5 +263,25 @@
     "fairPrincipleName": "FAIR Principle Name",
     "deleted": "The Instance has been removed.",
     "saved": "The instances has been saved."
+  },
+  "missionAdmin": {
+    "description": "Click on one FAIR principle to access to their details",
+    "username": "Username",
+    "descriptionColumn": "Description",
+    "points": "Points",
+    "level": "Level",
+    "deleted": "The FAIR principle has been removed.",
+    "saved": "The FAIR principle has been saved."
+  },
+  "fairPrinciplesAdmin": {
+    "description": "Click on one FAIR principle to access to their details",
+    "name": "Nombre",
+    "descriptionColumn": "Description",
+    "url": "URL",
+    "namePrefix": "Prefix",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "deleted": "The FAIR principle has been removed.",
+    "saved": "The FAIR principle has been saved."
   }
 }

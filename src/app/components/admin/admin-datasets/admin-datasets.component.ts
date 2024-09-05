@@ -37,7 +37,7 @@ export class AdminDatasetsComponent {
     },
     {
       nameDef: 'description',
-      i18nKey: 'datasetAdmin.description'
+      i18nKey: 'datasetAdmin.descriptionColumn'
     }
   ];
   private fb = inject(FormBuilder);

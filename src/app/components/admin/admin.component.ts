@@ -7,12 +7,14 @@ import {NgIf} from "@angular/common";
 import {RaiseInstanceComponent} from "../raise-instance/raise-instance.component";
 import {AdminInstancesComponent} from "./admin-instances/admin-instances.component";
 import {AdminComplianceComponent} from "./admin-compliance/admin-compliance.component";
-import {AdminMissionComponent} from "./admin-mission/admin-mission.component";
+import {AdminMissionsComponent} from "./admin-missions/admin-missions.component";
+import {FairPrinciplesComponent} from "../fair-principles/fair-principles.component";
+import {AdminFairPrinciplesComponent} from "./admin-fair-principles/admin-fair-principles.component";
 
 @Component({
   selector: 'app-admin-tab',
   standalone: true,
-    imports: [MatTabsModule, AdminUsersComponent, AdminRepositoriesComponent, AdminDatasetsComponent, NgIf, RaiseInstanceComponent, AdminInstancesComponent, AdminComplianceComponent, AdminMissionComponent],
+  imports: [MatTabsModule, AdminUsersComponent, AdminRepositoriesComponent, AdminDatasetsComponent, NgIf, RaiseInstanceComponent, AdminInstancesComponent, AdminComplianceComponent, AdminMissionsComponent, FairPrinciplesComponent, AdminFairPrinciplesComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

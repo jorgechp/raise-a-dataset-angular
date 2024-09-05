@@ -22,11 +22,11 @@ import {MatButton} from "@angular/material/button";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
-import {Mission} from "../../../domain/mission";
-import {MissionService} from "../../../services/mission/mission.service";
+import {FairPrinciple} from "../../../domain/fair-principle";
+import {FairPrincipleService} from "../../../services/fair-principle/fair-principle.service";
 
 @Component({
-  selector: 'app-admin-missions',
+  selector: 'app-admin-fair-principles',
   standalone: true,
   imports: [
     GenericTableComponent,
@@ -57,51 +57,63 @@ import {MissionService} from "../../../services/mission/mission.service";
     MatSlideToggleModule,
     GenericAdminComponent
   ],
-  templateUrl: './admin-missions.component.html',
-  styleUrl: './admin-missions.component.scss'
+  templateUrl: './admin-fair-principles.component.html',
+  styleUrl: './admin-fair-principles.component.scss'
 })
-export class AdminMissionsComponent {
+export class AdminFairPrinciplesComponent {
   columns: IGenericTableColumn[] = [
     {
       nameDef: 'name',
-      i18nKey: 'missionAdmin.username'
+      i18nKey: 'fairPrinciplesAdmin.name'
     },
     {
       nameDef: 'description',
-      i18nKey: 'missionAdmin.descriptionColumn'
+      i18nKey: 'fairPrinciplesAdmin.descriptionColumn'
     },
     {
-      nameDef: 'points',
-      i18nKey: 'missionAdmin.points'
+      nameDef: 'url',
+      i18nKey: 'fairPrinciplesAdmin.url'
     },
     {
-      nameDef: 'level',
-      i18nKey: 'missionAdmin.level'
+      nameDef: 'namePrefix',
+      i18nKey: 'fairPrinciplesAdmin.namePrefix'
+    },
+    {
+      nameDef: 'difficulty',
+      i18nKey: 'fairPrinciplesAdmin.difficulty'
+    },
+    {
+      nameDef: 'category',
+      i18nKey: 'fairPrinciplesAdmin.category'
     }
   ];
-  private fb = inject(FormBuilder);
   protected form?: FormGroup;
+  private fb = inject(FormBuilder);
 
-  constructor(protected missionService: MissionService) {
+  constructor(protected fairPrincipleService: FairPrincipleService) {
 
   }
 
-  prepareObjectToBeSent(item: Mission, isValidForm: any, onResult: any) {
+  prepareObjectToBeSent(item: FairPrinciple, isValidForm: any, onResult: any) {
     if (!this.form) return;
     item.name = this.form.value.name;
     item.description = this.form.value.description;
-    item.points = this.form.value.points;
-    item.level = this.form.value.level;
+    item.url = this.form.value.url;
+    item.namePrefix = this.form.value.namePrefix;
+    item.difficulty = this.form.value.difficulty;
+    item.category = this.form.value.category;
     isValidForm(this.form.valid);
     onResult(item);
   }
 
-  prepareControls($event: Mission) {
+  prepareControls($event: FairPrinciple) {
     this.form = this.fb.group({
       name: [$event.name, Validators.required],
       description: [$event.description, Validators.required],
-      points: [$event.points, Validators.required],
-      level: [$event.level, Validators.required]
+      url: [$event.url, Validators.required],
+      namePrefix: [$event.namePrefix, Validators.required],
+      difficulty: [$event.difficulty, Validators.required],
+      category: [$event.category, Validators.required]
     })
   }
 

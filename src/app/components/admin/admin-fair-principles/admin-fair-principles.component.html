@@ -1,0 +1,76 @@
+<ng-container *transloco="let t; prefix: 'fairPrincipleAdmin'">
+  <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
+                      (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
+                      *ngIf="this.fairPrincipleService"
+                      [columns]="this.columns"
+                      [service]="this.fairPrincipleService"
+                      deletedUserMessage="fairPrincipleAdmin.deleted"
+                      saveSettingsMessage="fairPrincipleAdmin.saved"
+                      title="fairPrincipleAdmin.description"
+  >
+    <mat-card-content>
+      <form *ngIf="this.form" [formGroup]="this.form" novalidate>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="namePrefix" matInput placeholder="{{ t('namePrefix') }}">
+              @if (!(form) || form.controls && this.form.controls['namePrefix'].hasError('namePrefix')) {
+                <mat-error>{{ t('namePrefix') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="name" matInput placeholder="{{ t('name') }}">
+              @if (!(form) || form.controls && this.form.controls['name'].hasError('name')) {
+                <mat-error>{{ t('name') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="description" matInput placeholder="{{ t('description') }}">
+              @if (!(form) || form.controls && this.form.controls['description'].hasError('description')) {
+                <mat-error>{{ t('description') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="url" matInput placeholder="{{ t('url') }}">
+              @if (!(form) || form.controls && this.form.controls['url'].hasError('url')) {
+                <mat-error>{{ t('url') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="difficulty" matInput placeholder="{{ t('difficulty') }}">
+              @if (!(form) || form.controls && this.form.controls['difficulty'].hasError('difficulty')) {
+                <mat-error>{{ t('difficulty') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input formControlName="category" matInput placeholder="{{ t('category') }}">
+              @if (!(form) || form.controls && this.form.controls['category'].hasError('category')) {
+                <mat-error>{{ t('category') }} <strong>{{ t('required') }}</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </app-abstract-admin>
+</ng-container>
