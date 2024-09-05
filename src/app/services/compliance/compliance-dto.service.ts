@@ -17,7 +17,6 @@ export class ComplianceDtoService {
   }
 
   retrieveAllCompliancesDTO(): Observable<IComplianceDTO[]> {
-
     return this.http.get<IComplianceDTO[]>(this.configUrl);
   }
 }

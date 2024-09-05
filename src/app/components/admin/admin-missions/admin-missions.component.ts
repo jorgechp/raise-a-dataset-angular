@@ -1,8 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {GenericTableComponent, IGenericTableColumn} from "../../generic-table/generic-table.component";
 import {NgIf} from "@angular/common";
-import {User} from "../../../domain/user";
-import {UserService} from "../../../services/user/user.service";
 import {MatDialogTitle} from "@angular/material/dialog";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {
@@ -23,13 +21,12 @@ import {TranslocoDirective} from "@jsverse/transloco";
 import {MatButton} from "@angular/material/button";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {UserRole} from "../../../domain/user-role";
-import {Role} from "../../../domain/role";
-import {RoleService} from "../../../services/roles/roles.service";
 import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
+import {Mission} from "../../../domain/mission";
+import {MissionService} from "../../../services/mission/mission.service";
 
 @Component({
-  selector: 'app-admin-users',
+  selector: 'app-admin-missions',
   standalone: true,
   imports: [
     GenericTableComponent,
@@ -60,63 +57,51 @@ import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
     MatSlideToggleModule,
     GenericAdminComponent
   ],
-  templateUrl: './admin-users.component.html',
-  styleUrl: './admin-users.component.scss'
+  templateUrl: './admin-missions.component.html',
+  styleUrl: './admin-missions.component.scss'
 })
-export class AdminUsersComponent {
+export class AdminMissionsComponent {
   columns: IGenericTableColumn[] = [
     {
-      nameDef: 'username',
-      i18nKey: 'register.username'
+      nameDef: 'name',
+      i18nKey: 'missionAdmin.username'
     },
     {
-      nameDef: 'email',
-      i18nKey: 'register.email'
+      nameDef: 'description',
+      i18nKey: 'missionAdmin.descriptionColumn'
+    },
+    {
+      nameDef: 'points',
+      i18nKey: 'missionAdmin.points'
+    },
+    {
+      nameDef: 'level',
+      i18nKey: 'missionAdmin.level'
     }
   ];
   private fb = inject(FormBuilder);
-  private isBanned: boolean = false;
-  private isAdmin: boolean = false;
-
   protected form?: FormGroup;
 
-  constructor(protected userService: UserService,
-              private rolesService: RoleService) {
+  constructor(protected missionService: MissionService) {
 
   }
 
-  prepareObjectToBeSent(item: User, isValidForm: any, onResult: any) {
+  prepareObjectToBeSent(item: Mission, isValidForm: any, onResult: any) {
     if (!this.form) return;
-
-    let roles: Role[] = [];
-
-    if (this.form.value.isAdmin) {
-      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_ADMIN.valueOf()));
-    }
-
-    if (this.form.value.isBanned) {
-      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_BAN.valueOf()));
-    } else {
-      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_USER.valueOf()));
-    }
-
-    item.bindRelation('roles', roles).subscribe();
-
-    item.username = this.form.value.username;
-    item.email = this.form.value.email;
+    item.name = this.form.value.name;
+    item.description = this.form.value.description;
+    item.points = this.form.value.points;
+    item.level = this.form.value.level;
     isValidForm(this.form.valid);
     onResult(item);
   }
 
-  prepareControls($event: User) {
-    this.isAdmin = $event.isRole(UserRole.ROLE_ADMIN.valueOf());
-    this.isBanned = $event.isRole(UserRole.ROLE_BAN.valueOf());
-
+  prepareControls($event: Mission) {
     this.form = this.fb.group({
-      username: [$event.username, Validators.required],
-      email: [$event.email, Validators.required],
-      isAdmin: [this.isAdmin, Validators.required],
-      isBanned: [this.isBanned, Validators.required],
+      name: [$event.name, Validators.required],
+      description: [$event.description, Validators.required],
+      points: [$event.points, Validators.required],
+      level: [$event.level, Validators.required]
     })
   }
 

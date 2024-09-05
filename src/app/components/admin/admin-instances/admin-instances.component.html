@@ -1,0 +1,17 @@
+<ng-container *transloco="let t; prefix: 'instancesAdmin'">
+  <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
+                      (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
+                      *ngIf="this.raiseInstanceService"
+                      [columns]="this.columns"
+                      [customEndpointToCall]="this.endPointToCall"
+                      [hideSaveButtons]="true"
+                      [service]="this.raiseInstanceService"
+                      deletedUserMessage="instancesAdmin.deleted"
+                      saveSettingsMessage="instancesAdmin.saved"
+                      title="instancesAdmin.description"
+  >
+    <mat-card-content>
+    </mat-card-content>
+  </app-abstract-admin>
+</ng-container>
+

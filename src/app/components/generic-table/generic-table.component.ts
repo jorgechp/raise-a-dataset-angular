@@ -63,6 +63,11 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
     if (!this.displayedColumns) {
       this.displayedColumns = [];
     }
+    this.updateRows(this.rows!);
+  }
+
+  public updateRows(rows: Array<T>) {
+    this.rows = rows;
     this.dataSource.data = [...(this.rows as T[])];
   }
 

@@ -214,9 +214,11 @@
     "raise": "Raise"
   },
   "admin": {
-    "save": "Save"
+    "save": "Save",
+    "delete": "Delete"
   },
   "userAdmin": {
+    "description": "Click on one user to access to their details",
     "click_to_view_profile": "Click on one user to see his profile",
     "danger_zone_title": "Danger Zone",
     "promote_to_admin_toggle": "Promote to admin",
@@ -226,8 +228,60 @@
     "ban_user_toggle": "Ban this user!!",
     "ban_user_warning": "You are banning this user!",
     "delete_account": "Delete this account",
-    "saved_settings": "The settings have been saved.",
-    "user_removed": "The user has been removed."
-
+    "saved": "The settings have been saved.",
+    "deleted": "The user has been removed."
+  },
+  "repositoryAdmin": {
+    "description": "Click on one repository to access to their details",
+    "click_to_view_profile": "Click here to view the repository",
+    "name": "Name",
+    "address": "Address URL",
+    "delete_repository": "Delete repository",
+    "deleted": "The repository has been removed",
+    "saved": "The repository has been saved"
+  },"datasetAdmin": {
+  "description": "Click on one dataset to access to their details",
+  "descriptionColumn": "Description",
+    "click_to_view_profile": "Click here to view the repository",
+    "name": "Name",
+  "delete_repository": "Delete repository",
+  "deleted": "The dataset has been removed",
+  "saved": "The dataset has been saved"
+},
+  "instancesAdmin": {
+    "description": "Click on one instance to access to their details",
+    "repositoryName": "Repository",
+    "datasetName": "Dataset",
+    "deleted": "The Instance has been removed.",
+    "saved": "The instances has been saved."
+  },
+  "complianceAdmin": {
+    "description": "Click on one compliance to access to their details",
+    "datasetName": "Dataset",
+    "repositoryName": "Repository",
+    "fairPrincipleId": "FAIR Principle ID",
+    "fairPrincipleName": "FAIR Principle Name",
+    "deleted": "The Instance has been removed.",
+    "saved": "The instances has been saved."
+  },
+  "missionAdmin": {
+    "description": "Click on one FAIR principle to access to their details",
+    "username": "Username",
+    "descriptionColumn": "Description",
+    "points": "Points",
+    "level": "Level",
+    "deleted": "The FAIR principle has been removed.",
+    "saved": "The FAIR principle has been saved."
+  },
+  "fairPrinciplesAdmin": {
+    "description": "Click on one FAIR principle to access to their details",
+    "name": "Nombre",
+    "descriptionColumn": "Description",
+    "url": "URL",
+    "namePrefix": "Prefix",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "deleted": "The FAIR principle has been removed.",
+    "saved": "The FAIR principle has been saved."
   }
 }

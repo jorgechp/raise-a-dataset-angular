@@ -14,6 +14,8 @@ export class User extends GenericResource {
   authorization = '';
   private acceptedMissions = [];
   private acomplishedMissions = [];
+  private datasetsMaintained = [];
+  private datasetsRescued = [];
 
 
   constructor(values: object = {}) {

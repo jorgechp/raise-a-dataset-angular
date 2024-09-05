@@ -1,8 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {GenericTableComponent, IGenericTableColumn} from "../../generic-table/generic-table.component";
 import {NgIf} from "@angular/common";
-import {User} from "../../../domain/user";
-import {UserService} from "../../../services/user/user.service";
 import {MatDialogTitle} from "@angular/material/dialog";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {
@@ -23,13 +21,12 @@ import {TranslocoDirective} from "@jsverse/transloco";
 import {MatButton} from "@angular/material/button";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {UserRole} from "../../../domain/user-role";
-import {Role} from "../../../domain/role";
-import {RoleService} from "../../../services/roles/roles.service";
 import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
+import {FairPrinciple} from "../../../domain/fair-principle";
+import {FairPrincipleService} from "../../../services/fair-principle/fair-principle.service";
 
 @Component({
-  selector: 'app-admin-users',
+  selector: 'app-admin-fair-principles',
   standalone: true,
   imports: [
     GenericTableComponent,
@@ -60,63 +57,63 @@ import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
     MatSlideToggleModule,
     GenericAdminComponent
   ],
-  templateUrl: './admin-users.component.html',
-  styleUrl: './admin-users.component.scss'
+  templateUrl: './admin-fair-principles.component.html',
+  styleUrl: './admin-fair-principles.component.scss'
 })
-export class AdminUsersComponent {
+export class AdminFairPrinciplesComponent {
   columns: IGenericTableColumn[] = [
     {
-      nameDef: 'username',
-      i18nKey: 'register.username'
+      nameDef: 'name',
+      i18nKey: 'fairPrinciplesAdmin.name'
     },
     {
-      nameDef: 'email',
-      i18nKey: 'register.email'
+      nameDef: 'description',
+      i18nKey: 'fairPrinciplesAdmin.descriptionColumn'
+    },
+    {
+      nameDef: 'url',
+      i18nKey: 'fairPrinciplesAdmin.url'
+    },
+    {
+      nameDef: 'namePrefix',
+      i18nKey: 'fairPrinciplesAdmin.namePrefix'
+    },
+    {
+      nameDef: 'difficulty',
+      i18nKey: 'fairPrinciplesAdmin.difficulty'
+    },
+    {
+      nameDef: 'category',
+      i18nKey: 'fairPrinciplesAdmin.category'
     }
   ];
-  private fb = inject(FormBuilder);
-  private isBanned: boolean = false;
-  private isAdmin: boolean = false;
-
   protected form?: FormGroup;
+  private fb = inject(FormBuilder);
 
-  constructor(protected userService: UserService,
-              private rolesService: RoleService) {
+  constructor(protected fairPrincipleService: FairPrincipleService) {
 
   }
 
-  prepareObjectToBeSent(item: User, isValidForm: any, onResult: any) {
+  prepareObjectToBeSent(item: FairPrinciple, isValidForm: any, onResult: any) {
     if (!this.form) return;
-
-    let roles: Role[] = [];
-
-    if (this.form.value.isAdmin) {
-      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_ADMIN.valueOf()));
-    }
-
-    if (this.form.value.isBanned) {
-      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_BAN.valueOf()));
-    } else {
-      roles.push(<Role>this.rolesService.roles.get(UserRole.ROLE_USER.valueOf()));
-    }
-
-    item.bindRelation('roles', roles).subscribe();
-
-    item.username = this.form.value.username;
-    item.email = this.form.value.email;
+    item.name = this.form.value.name;
+    item.description = this.form.value.description;
+    item.url = this.form.value.url;
+    item.namePrefix = this.form.value.namePrefix;
+    item.difficulty = this.form.value.difficulty;
+    item.category = this.form.value.category;
     isValidForm(this.form.valid);
     onResult(item);
   }
 
-  prepareControls($event: User) {
-    this.isAdmin = $event.isRole(UserRole.ROLE_ADMIN.valueOf());
-    this.isBanned = $event.isRole(UserRole.ROLE_BAN.valueOf());
-
+  prepareControls($event: FairPrinciple) {
     this.form = this.fb.group({
-      username: [$event.username, Validators.required],
-      email: [$event.email, Validators.required],
-      isAdmin: [this.isAdmin, Validators.required],
-      isBanned: [this.isBanned, Validators.required],
+      name: [$event.name, Validators.required],
+      description: [$event.description, Validators.required],
+      url: [$event.url, Validators.required],
+      namePrefix: [$event.namePrefix, Validators.required],
+      difficulty: [$event.difficulty, Validators.required],
+      category: [$event.category, Validators.required]
     })
   }
 
