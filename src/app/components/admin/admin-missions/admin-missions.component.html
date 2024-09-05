@@ -1,0 +1,56 @@
+<ng-container *transloco="let t; prefix: 'missionAdmin'">
+    <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
+                        (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
+                        *ngIf="this.missionService"
+                        [columns]="this.columns"
+                        [service]="this.missionService"
+                        deletedUserMessage="missionAdmin.deleted"
+                        saveSettingsMessage="missionAdmin.saved"
+                        title="missionAdmin.description"
+    >
+        <mat-card-content>
+            <form *ngIf="this.form" [formGroup]="this.form" novalidate>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input formControlName="name" matInput placeholder="{{ t('name') }}">
+                            @if (!(form) || form.controls && this.form.controls['name'].hasError('name')) {
+                            <mat-error>{{ t('nameRequired') }} <strong>{{ t('required') }}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input formControlName="description" matInput placeholder="{{ t('description') }}">
+                            @if (!(form) || form.controls && this.form.controls['description'].hasError('description')) {
+                            <mat-error>{{ t('description') }} <strong>{{ t('required') }}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input formControlName="points"  matInput placeholder="{{ t('points') }}">
+                            @if (!(form) || form.controls && this.form.controls['points'].hasError('points')) {
+                            <mat-error>{{ t('points') }} <strong>{{ t('required') }}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <input formControlName="level"  matInput placeholder="{{ t('level') }}">
+                            @if (!(form) || form.controls && this.form.controls['level'].hasError('level')) {
+                            <mat-error>{{ t('level') }} <strong>{{ t('required') }}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </app-abstract-admin>
+</ng-container>

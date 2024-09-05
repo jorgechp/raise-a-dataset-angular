@@ -253,5 +253,14 @@
     "datasetName": "Dataset",
     "deleted": "The Instance has been removed.",
     "saved": "The instances has been saved."
+  },
+  "complianceAdmin": {
+    "description": "Click on one compliance to access to their details",
+    "datasetName": "Dataset",
+    "repositoryName": "Repository",
+    "fairPrincipleId": "FAIR Principle ID",
+    "fairPrincipleName": "FAIR Principle Name",
+    "deleted": "The Instance has been removed.",
+    "saved": "The instances has been saved."
   }
 }

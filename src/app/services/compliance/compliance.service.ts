@@ -8,4 +8,4 @@ import {AbstractMissionService} from "../abstract/abstract-mission-service";
 export class ComplianceService extends AbstractMissionService<Compliance> {
 
   constructor() { super(Compliance) }
-}
+  }

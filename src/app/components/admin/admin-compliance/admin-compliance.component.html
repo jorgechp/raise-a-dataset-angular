@@ -1,0 +1,17 @@
+<ng-container *transloco="let t; prefix: 'complianceAdmin'">
+    <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
+                        (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
+                        *ngIf="this.complianceService"
+                        [columns]="this.columns"
+                        [customEndpointToCall]="this.endPointToCall"
+                        [hideSaveButtons]="true"
+                        [service]="this.complianceService"
+                        deletedUserMessage="complianceAdmin.deleted"
+                        saveSettingsMessage="complianceAdmin.saved"
+                        title="complianceAdmin.description"
+    >
+        <mat-card-content>
+        </mat-card-content>
+    </app-abstract-admin>
+</ng-container>
+

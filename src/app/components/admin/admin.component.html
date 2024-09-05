@@ -11,7 +11,11 @@
   <mat-tab #instances label="Instances">
     <app-admin-instances *ngIf="instances.isActive"></app-admin-instances>
   </mat-tab>
-  <mat-tab #compliances label="Compliances">Content 3</mat-tab>
-  <mat-tab #missions label="Missions">Content 3</mat-tab>
+  <mat-tab #compliance label="Compliances">
+    <app-admin-compliance *ngIf="compliance.isActive"></app-admin-compliance>
+  </mat-tab>
+  <mat-tab #missions label="Missions">
+    <app-admin-mission *ngIf="missions.isActive"></app-admin-mission>
+  </mat-tab>
   <mat-tab #fair label="FAIR Principles">Content 3</mat-tab>
 </mat-tab-group>

@@ -1,0 +1,40 @@
+<ng-container *transloco="let t; prefix: 'datasetAdmin'">
+    <app-abstract-admin (prepareFormControls)="this.prepareControls($event.row)"
+                        (prepareObjectToBeSent)="this.prepareObjectToBeSent($event.item,  $event.isValidForm, $event.onResult)"
+                        *ngIf="this.missionService"
+                        [columns]="this.columns"
+                        [service]="this.missionService"
+                        deletedUserMessage="datasetAdmin.deleted"
+                        saveSettingsMessage="datasetAdmin.saved"
+                        title="datasetAdmin.description"
+    >
+        <mat-card-content>
+            <form *ngIf="this.form" [formGroup]="this.form" novalidate>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ t('name') }}</mat-label>
+                            <input formControlName="name" matInput placeholder="{{ t('name') }}">
+                            @if (this.form.controls['name'].hasError('required')) {
+                            <mat-error>{{ t('name') }} <strong *transloco="let t; prefix: 'common'">
+                            {{ t('required') }}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="full-width">
+                            <textarea formControlName="description" matInput placeholder="{{ t('description') }}"></textarea>
+                            @if (this.form.controls['description'].hasError('required')) {
+                            <mat-error>{{ t('description') }} <strong *transloco="let t; prefix: 'common'">
+                            {{ t('required') }}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </app-abstract-admin>
+</ng-container>
+
