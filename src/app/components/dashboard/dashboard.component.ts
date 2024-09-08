@@ -16,6 +16,9 @@ import {Repository} from "../../domain/repository";
 import {Dataset} from "../../domain/dataset";
 import {getIdFromURI} from "../utils/funcions";
 import {Router} from "@angular/router";
+import {ComplianceService} from "../../services/compliance/compliance.service";
+import {IComplianceValidationDTO} from "../../domain/ComplianceValidationDTO";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 
 interface IMyRaiseInstance {
@@ -24,6 +27,7 @@ interface IMyRaiseInstance {
   status?: any
     uri?: string
 }
+
 
 @Component({
   selector: 'app-dashboard',
@@ -37,21 +41,40 @@ interface IMyRaiseInstance {
     MatIconModule,
     MatButtonModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    TranslocoDirective
   ]
 })
 export class DashboardComponent implements OnInit {
   protected myRaiseInstanceDataSource: MatTableDataSource<IMyRaiseInstance>
     = new MatTableDataSource<IMyRaiseInstance>([]);
-  protected displayedColumns: Iterable<string> = ['dataset', 'repository', 'status'];
+  protected myValidationsDataSource: MatTableDataSource<IComplianceValidationDTO>
+    = new MatTableDataSource<IComplianceValidationDTO>([]);
+  protected displayedInstanceColumns: Iterable<string> = ['dataset', 'repository', 'status'];
+  protected displayedValidationColumns: Iterable<string> = ['datasetName', 'repositoryName', 'fairPrinciplePrefix', 'fairPrincipleName', 'upVotes', 'downVotes'];
   private repositoryData: IMyRaiseInstance[] = []
 
   constructor(private raiseInstanceService: RaiseInstanceService,
               private authenticationService: AuthenticationService,
+              private complianceService: ComplianceService,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    this.getRaiseInstanceData()
+    this.getValidationData();
+  }
+
+  handleClickOnInstanceRow(row: IMyRaiseInstance) {
+    const id = getIdFromURI(row.uri!);
+    this.router.navigate(['/instance', id]).then();
+  }
+
+  handleClickOnValidationRow(row: IComplianceValidationDTO) {
+
+  }
+
+  private getRaiseInstanceData() {
     this.raiseInstanceService.searchCollection(
       'findAllByUserUsername', {
         params: {
@@ -76,13 +99,13 @@ export class DashboardComponent implements OnInit {
                     dataset: dataset.name,
                     repository: repository.name,
                     status: undefined,
-                      uri: instance.uri
+                    uri: instance.uri
                   } as IMyRaiseInstance);
                 }
               )
             )
           ), finalize(() => {
-            this.addToDataSource(this.repositoryData);
+            this.addInstanceToDataSource(this.repositoryData);
           })
         );
       })
@@ -90,13 +113,20 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  private addToDataSource(data: IMyRaiseInstance[]) {
+  private getValidationData() {
+    const userId = Number(getIdFromURI(this.authenticationService.getCurrentUser().uri!));
+    const userName = this.authenticationService.getCurrentUser().username;
+    this.complianceService.retrieveAllComplianceValidationStatus(userId, userName!).subscribe(
+      (response) => {
+        this.addValidationToDataSource(response);
+      });
+  }
+
+  private addInstanceToDataSource(data: IMyRaiseInstance[]) {
     this.myRaiseInstanceDataSource.data = [...data];
   }
 
-
-    handleClickOnRow(row : IMyRaiseInstance) {
-        const id = getIdFromURI(row.uri!);
-        this.router.navigate(['/instance' , id]).then();
-    }
+  private addValidationToDataSource(data: IComplianceValidationDTO[]) {
+    this.myValidationsDataSource.data = [...data];
+  }
 }

@@ -6,6 +6,22 @@
     "back": "Back",
     "done": "Done"
   },
+  "dashboard": {
+    "dashboard_title": "My dashboard",
+    "my_instances": "My Instances",
+    "instances_card_title": "My instances",
+    "dataset_column_header": "Dataset",
+    "repository_column_header": "Repository",
+    "status_column_header": "Status",
+    "validations_card_title": "My validations",
+    "dataset_name_column_header": "Dataset Name",
+    "repository_name_column_header": "Repository Name",
+    "prefix_column_header": "Prefix",
+    "fair_principle_column_header": "FAIR Principle",
+    "upvotes_column_header": "Upvotes",
+    "downvotes_column_header": "DownVotes",
+    "private_messages_card_title": "My private messages"
+  },
   "register": {
     "signUp": "Sign up",
     "settings": "User settings",

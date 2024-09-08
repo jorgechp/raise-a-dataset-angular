@@ -1,34 +1,34 @@
-<div>
+<div *transloco="let t; prefix: 'dashboard'">
   <div class="grid-container">
-    <h1 class="mat-h1">My dashboard</h1>
+    <h1 class="mat-h1"> {{ t('dashboard_title') }}</h1>
     <mat-grid-list cols="2" rowHeight="350px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              My instances
+              {{ t('my_instances') }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
             <table [dataSource]="this.myRaiseInstanceDataSource" mat-table>
               <ng-container matColumnDef="dataset">
-                <th *matHeaderCellDef mat-header-cell> Dataset</th>
+                <th *matHeaderCellDef mat-header-cell> {{ t('dataset_column_header') }}</th>
                 <td *matCellDef="let element" mat-cell> {{ element.dataset }}</td>
               </ng-container>
 
               <ng-container matColumnDef="repository">
-                <th *matHeaderCellDef mat-header-cell> Repository</th>
+                <th *matHeaderCellDef mat-header-cell> {{ t('repository_column_header') }}</th>
                 <td *matCellDef="let element" mat-cell> {{ element.repository }}</td>
               </ng-container>
 
               <ng-container matColumnDef="status">
-                <th *matHeaderCellDef mat-header-cell> Status</th>
+                <th *matHeaderCellDef mat-header-cell> {{ t('status_column_header') }}</th>
                 <td *matCellDef="let element" mat-cell> {{ element.status }}</td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-              <tr (click)="handleClickOnRow(row)" class="cursor-pointer"
-                  *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+              <tr *matHeaderRowDef="displayedInstanceColumns" mat-header-row></tr>
+              <tr (click)="handleClickOnInstanceRow(row)" *matRowDef="let row; columns: displayedInstanceColumns;"
+                  class="cursor-pointer" mat-row></tr>
             </table>
           </mat-card-content>
         </mat-card>
@@ -37,7 +37,54 @@
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
+              {{ t('validations_card_title') }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="dashboard-card-content">
+            <table [dataSource]="this.myValidationsDataSource" mat-table>
+              <ng-container matColumnDef="datasetName">
+                <th *matHeaderCellDef mat-header-cell> {{ t('dataset_name_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.datasetName }}</td>
+              </ng-container>
 
+              <ng-container matColumnDef="repositoryName">
+                <th *matHeaderCellDef mat-header-cell> {{ t('repository_name_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.repositoryName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fairPrinciplePrefix">
+                <th *matHeaderCellDef mat-header-cell> {{ t('prefix_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.fairPrinciplePrefix }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fairPrincipleName">
+                <th *matHeaderCellDef mat-header-cell> {{ t('fair_principle_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.fairPrincipleName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="upVotes">
+                <th *matHeaderCellDef mat-header-cell> {{ t('upvotes_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.upVotes }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="downVotes">
+                <th *matHeaderCellDef mat-header-cell> {{ t('downvotes_column_header') }}</th>
+                <td *matCellDef="let element" mat-cell> {{ element.downVotes }}</td>
+              </ng-container>
+
+
+              <tr *matHeaderRowDef="displayedValidationColumns" mat-header-row></tr>
+              <tr (click)="handleClickOnValidationRow(row)" *matRowDef="let row; columns: displayedValidationColumns;"
+                  class="cursor-pointer" mat-row></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              {{ t('private_messages_card_title') }}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
