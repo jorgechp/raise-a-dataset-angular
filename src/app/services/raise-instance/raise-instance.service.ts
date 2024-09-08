@@ -6,7 +6,6 @@ import {ApiConfiguration} from "../../config/api-configuration";
 import {RaiseInstanceDTO} from "../../domain/raise-instance-dto";
 import {AbstractIndicatorService} from "../abstract/abstract-indicator.service";
 import {map} from "rxjs/operators";
-import {RaiseInstanceDTO} from "../../domain/raise-instance-dto";
 
 export interface RaiseInstanceResponse {
   _embedded: {
