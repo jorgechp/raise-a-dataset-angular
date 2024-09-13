@@ -1,1 +1,41 @@
-<p>fair-principles works!</p>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Findable">
+        <h2>Principio Findable (Encontrable)</h2>
+        <p>Los datos y metadatos deben ser fáciles de encontrar tanto para humanos como para máquinas.</p>
+        <ul>
+            <li><strong>F1:</strong> (Meta)datos son asignados un identificador global único y persistente.</li>
+            <li><strong>F2:</strong> Los datos son descritos con metadatos ricos.</li>
+            <li><strong>F3:</strong> Los metadatos incluyen claramente el identificador de los datos que describen.</li>
+            <li><strong>F4:</strong> (Meta)datos están registrados o indexados en un recurso de búsqueda.</li>
+        </ul>
+    </mat-tab>
+    <mat-tab label="Accessible">
+        <h2>Principio Accessible (Accesible)</h2>
+        <p>Los datos y metadatos deben ser accesibles a través de protocolos bien definidos y abiertos.</p>
+        <ul>
+            <li><strong>A1:</strong> (Meta)datos son recuperables por su identificador utilizando un protocolo de comunicación estandarizado.</li>
+            <li><strong>A1.1:</strong> El protocolo es abierto, libre e implementable universalmente.</li>
+            <li><strong>A1.2:</strong> El protocolo permite un procedimiento de autenticación y autorización, cuando sea necesario.</li>
+            <li><strong>A2:</strong> Los metadatos son accesibles incluso cuando los datos ya no están disponibles.</li>
+        </ul>
+    </mat-tab>
+    <mat-tab label="Interoperable">
+        <h2>Principio Interoperable</h2>
+        <p>Los datos deben ser integrables con otros datos y deben interoperar con aplicaciones o flujos de trabajo para análisis, almacenamiento y procesamiento.</p>
+        <ul>
+            <li><strong>I1:</strong> (Meta)datos usan un lenguaje formal, accesible, compartido y aplicable para la representación del conocimiento.</li>
+            <li><strong>I2:</strong> (Meta)datos usan vocabularios que siguen los principios FAIR.</li>
+            <li><strong>I3:</strong> (Meta)datos incluyen referencias calificadas a otros (meta)datos.</li>
+        </ul>
+    </mat-tab>
+    <mat-tab label="Reusable">
+        <h2>Principio Reusable (Reusable)</h2>
+        <p>Los datos deben ser reutilizables y estar preparados para futuros usos.</p>
+        <ul>
+            <li><strong>R1:</strong> (Meta)datos están descritos con una pluralidad de atributos precisos y relevantes.</li>
+            <li><strong>R1.1:</strong> (Meta)datos se publican con una licencia de uso de datos clara y accesible.</li>
+            <li><strong>R1.2:</strong> (Meta)datos están asociados con detalles de procedencia.</li>
+            <li><strong>R1.3:</strong> (Meta)datos cumplen con estándares relevantes de la comunidad.</li>
+        </ul>
+    </mat-tab>
+</mat-tab-group>
