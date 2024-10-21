@@ -1,3 +1,17 @@
 <div *transloco="let t; prefix: 'raiseDataset'">
-  <header>{{ t('intro_header') }}</header>
+
+  <div style="text-align: justify">
+    <p>
+      {{ t('intro_header') }}
+    </p>
+    <p>
+      {{ t('intro_paragraph_1') }}
+      {{ t('intro_paragraph_2_the') }} <a
+      [routerLink]="['/principles']">{{ t('intro_paragraph_2_fair_principles') }}</a> {{ t('intro_paragraph_2') }}.
+    </p>
+    <p>
+      {{ t('intro_paragraph_3') }} </p>
+    <p>
+      {{ t('intro_paragraph_4') }} </p>
+  </div>
 </div>

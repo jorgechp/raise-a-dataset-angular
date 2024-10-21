@@ -25,3 +25,17 @@
 .col:last-child {
   margin-right: 0;
 }
+
+.button_div {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 25px;
+}
+
+.button_div button {
+  margin: 15px;
+}
+
+.stepper {
+  background-color: red;
+}

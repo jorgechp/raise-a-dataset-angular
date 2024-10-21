@@ -20,8 +20,7 @@ import {Repository} from "../../domain/repository";
 import {RaiseInstance} from "../../domain/raise-instance";
 import {RaiseInstanceService} from "../../services/raise-instance/raise-instance.service";
 import {TranslocoDirective} from "@jsverse/transloco";
-import {Router} from "@angular/router";
-import {RiskDataset} from "../../domain/risk-dataset";
+import {Router, RouterLink} from "@angular/router";
 import {AbstractDataset} from "../../domain/abstract-dataset";
 import {RiskDatasetService} from "../../services/risk-dataset/risk-dataset.service";
 import {getIdFromURI} from "../utils/funcions";
@@ -53,13 +52,15 @@ enum RAISE_MODE {
     RaiseDatasetIntroComponent,
     RaiseDatasetForm1Component,
     RaiseDatasetForm2Component,
-    TranslocoDirective
+    TranslocoDirective,
+    RouterLink
   ]
 })
 export class RaiseDatasetComponent implements OnInit {
   private fb = inject(FormBuilder);
   protected mode: RAISE_MODE = RAISE_MODE.RAISE;
   protected dataset: AbstractDataset | undefined;
+  protected datasetInstanceId: number | string | undefined;
 
   public datasetForm = this.fb.group({
     name: ['', Validators.required],
@@ -129,7 +130,8 @@ export class RaiseDatasetComponent implements OnInit {
 
         this.datasetService.add(datasetToRegister).subscribe(
           (newDataset: Dataset) => {
-            this.addNewRaiseInstance(newDataset, selectedRepository).subscribe(() => {
+            this.addNewRaiseInstance(newDataset, selectedRepository).subscribe((raiseInstance: RaiseInstance) => {
+              this.datasetInstanceId = Number(getIdFromURI(raiseInstance.uri!));
               this.stepper?.next();
             })
           }

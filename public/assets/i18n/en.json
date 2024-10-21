@@ -78,13 +78,19 @@
     "repositoryCreated": "The repository has been created. It should be approved before appearing for other users"
   },
   "raiseDataset": {
-    "intro_header": "Raise a dataset!",
     "introduction": "Introduction",
+    "intro_header": "Are you ready to take care of a dataset? Then, you've come to the right place!!",
+    "intro_paragraph_1": "Publishing a dataset online also involves taking responsibility for a series of tasks. Datasets need to be cared for and protected if you want them to last and be truly useful to the community.",
+    "intro_paragraph_2_the": "The",
+    "intro_paragraph_2_fair_principles": "FAIR principles",
+    "intro_paragraph_2": "help us understand how to publish a dataset so that it is findable, accessible, interoperable, and reusable. Additionally, they will help us preserve it and prevent its destruction.",
+    "intro_paragraph_3": "This assistant will help you register your dataset and take its first steps towards excellence.",
+    "intro_paragraph_4": "So...  Are you ready?",
     "dataset": "Dataset",
     "repository": "Repository",
     "create_button": "Create dataset",
     "result": "Result",
-    "congratulations_message": "Congratulations!",
+    "congratulations_message": "Congratulations! You've registered a new dataset. Now, it's time to raise it",
     "dashboard_button": "Go to dataset Dashboard",
     "dataset_information": "Dataset information",
     "dataset_name": "Dataset name",
@@ -107,7 +113,8 @@
     "doi": "DOI",
     "format": "For example",
     "doi_required_error": "DOI is",
-    "doi_pattern_error": "This doesn't seem to be a DOI format"
+    "doi_pattern_error": "This doesn't seem to be a DOI format",
+    "dataset_instance_information": "Go to the dataset instance information"
   },
   "pickDataset": {
     "search_placeholder": "Search by name, description, author...",
