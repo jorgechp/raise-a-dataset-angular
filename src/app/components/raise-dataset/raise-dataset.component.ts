@@ -87,7 +87,7 @@ export class RaiseDatasetComponent implements OnInit {
               private router: Router) {
 
     const state = this.router.getCurrentNavigation()?.extras.state;
-    if (state && state['isRescue'] && state['dataset']){
+    if (state && (state['isRescue'] || state['dataset'])) {
       this.mode = state['isRescue'] ? RAISE_MODE.RESCUE : RAISE_MODE.ADD_REPOSITORY;
       this.dataset = state['dataset'];
     }
