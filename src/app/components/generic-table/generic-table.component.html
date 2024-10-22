@@ -1,8 +1,9 @@
 <ng-container *ngIf="this.dataSource && this.dataSource.data">
   <div *transloco="let t;" class="mat-elevation-z2">
-    <mat-form-field>
+    <mat-form-field class="search_input">
       <mat-label>{{ t('generic-table.search_placeholder') }}</mat-label>
-      <input (keyup)="this.applyFilter($event)" matInput placeholder="{{ t('generic-table.search_placeholder') }}">
+      <input (keyup)="this.applyFilter($event)"
+             matInput placeholder="{{ t('generic-table.search_placeholder') }}">
     </mat-form-field>
 
     <table #table *ngIf="this.displayedColumns" aria-label="datasets" class="full-width-table" mat-table matSort>
