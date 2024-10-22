@@ -75,13 +75,6 @@ export const routes: Routes = [
     title: 'Repository Info',
     canActivate: [canActivateUser]
   }, {
-    path: 'principles',
-    loadComponent: () =>
-        import('./components/fair-principles/fair-principles.component').then(
-            (c) => c.FairPrinciplesComponent
-        ),
-    title: 'FAIR principles'
-  }, {
     path: 'feed',
     loadComponent: () =>
         import('./components/feed/feed.component').then(
@@ -146,5 +139,12 @@ export const routes: Routes = [
         ),
     title: 'Admin',
     canActivate: [canActivateAdmin]
-  },
+  }, {
+    path: 'principles',
+    loadComponent: () =>
+      import('./components/fair-principles/fair-principles.component').then(
+        (c) => c.FairPrinciplesComponent
+      ),
+    title: 'FAIR principles'
+  }
 ];

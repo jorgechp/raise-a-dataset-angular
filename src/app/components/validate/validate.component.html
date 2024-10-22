@@ -26,7 +26,8 @@
                     </p>
                     <div>
                         <ol>
-                          <li>{{ t('step_1_text') }} <a [href]="this.raiseInstance?.uniqueIdentifier"
+                          <li>{{ t('step_1_text') }} <a
+                            [href]="'https://doi.org/' + this.raiseInstance?.uniqueIdentifier"
                                                         [title]="this.raiseInstance?.uniqueIdentifier"
                                                              target="_blank">
                             {{ this.raiseInstance?.uniqueIdentifier }}
@@ -44,12 +45,12 @@
         <mat-card-actions class="validation-card-actions">
           <div>
                     <button
-                            mat-button
+                      mat-flat-button
                             (click)="this.handleGoToValidation()"
                             type="button">{{ t('enough_information_button_text') }}
                     </button>
                     <button
-                            mat-button
+                      mat-flat-button
                             matStepperNext
                             type="button">{{ t('need_more_info_button_text') }}
                     </button>
@@ -88,12 +89,12 @@
         </mat-card-content>
       <mat-card-actions class="validation-card-actions">
             <button
-                    mat-button
+              mat-flat-button
                     matStepperNext
                     type="button">{{ t('enough_information') }}
             </button>
             <button
-                    mat-button
+              mat-flat-button
                     matStepperPrevious
                     type="button">{{ t('go_back_button_text') }}
             </button>
@@ -111,14 +112,14 @@
               {{ t('validation_question_3') }} <span class="entity-name">{{ this.fairPrincipleIndicator?.namePrefix }}
               : {{ this.fairPrincipleIndicator?.name }}</span> ?
             </p>
-            <div>
+          <div class="validation-card-actions">
                 <button
-                        mat-button
+                  mat-flat-button
                         (click)="this.isNegativeComment = false"
                         type="button">{{ t('yes_button_text') }}
                 </button>
                 <button
-                        mat-button
+                  mat-flat-button
                         (click)="this.isNegativeComment = true"
                         type="button">{{ t('no_button_text') }}
                 </button>
@@ -138,11 +139,11 @@
                 placeholder="{{ t('leave_comment_placeholder') }}"></textarea>
             </mat-form-field>
             </div>
-            <mat-card-actions>
+          <mat-card-actions class="validation-card-actions">
                 <button
                         *ngIf="this.isNegativeComment !== undefined"
                         (click)="this.handleDoVerification()"
-                        mat-button
+                        mat-flat-button
                         matStepperNext
                         type="button">{{ t('validate_button_text') }}
                 </button>
@@ -159,7 +160,7 @@
       <mat-card-actions class="validation-card-actions">
             <button
                     (click)="this.handleGoToCompliances()"
-                    mat-button
+                    mat-flat-button
                     matStepperNext
                     type="button">{{ t('validate_more_button_text') }}
             </button>

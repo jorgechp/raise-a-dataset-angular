@@ -60,3 +60,13 @@ body {
   background-color: red !important;
   color: white !important;
 }
+
+.validation-card-actions {
+  position: relative;
+  bottom: 0;
+  margin-bottom: 25px;
+}
+
+.validation-card-actions button {
+  margin: 15px;
+}

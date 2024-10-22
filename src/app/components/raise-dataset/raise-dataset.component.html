@@ -3,7 +3,7 @@
     <mat-stepper #stepper linear="true">
       <mat-step label="{{ t('introduction') }}" state="number">
         <app-raise-dataset-intro></app-raise-dataset-intro>
-        <div *transloco="let t; prefix: 'common'" class="button_div">
+        <div *transloco="let t; prefix: 'common'" class="validation-card-actions">
           <button mat-flat-button matStepperNext type="button">{{ t('next') }}</button>
         </div>
       </mat-step>
@@ -11,14 +11,14 @@
                 state="edit">
         <app-raise-dataset-form-1 [isRescue]="this.mode==RAISE_MODE.RESCUE"
                                   [parentGroup]="datasetForm"></app-raise-dataset-form-1>
-        <div *transloco="let t; prefix: 'common'" class="button_div">
+        <div *transloco="let t; prefix: 'common'" class="validation-card-actions">
           <button mat-flat-button matStepperPrevious type="button">{{ t('back') }}</button>
           <button mat-flat-button matStepperNext type="button">{{ t('next') }}</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="repositoryForm" label="{{ t('repository') }}">
         <app-raise-dataset-form-2 [parentGroup]="repositoryForm"></app-raise-dataset-form-2>
-        <div class="button_div">
+        <div class="validation-card-actions">
           <button *transloco="let t; prefix: 'common'" mat-flat-button matStepperPrevious
                   type="button">{{ t('back') }}
           </button>
@@ -36,7 +36,7 @@
             <a [routerLink]="['/instance',this.datasetInstanceId]">{{ t('dataset_instance_information') }}</a>
           </p>
         </div>
-        <div class="button_div">
+        <div class="validation-card-actions">
           <button (click)="this.onSubmit()" mat-flat-button type="button">{{ t('dashboard_button') }}</button>
         </div>
       </mat-step>
