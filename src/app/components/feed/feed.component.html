@@ -10,8 +10,9 @@
           {{ t('findability_description') }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoFindable; let i = index" cols="3" rowHeight="350px">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-list cols="4" rowHeight="220px">
+        <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoFindable; let i = index" [colspan]="1" [rowspan]="1"
+                       class="grid-tile">
           <app-feed-select-principles
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
@@ -30,8 +31,9 @@
         <mat-panel-title> {{ t('accessibility_title') }}</mat-panel-title>
         <mat-panel-description> {{ t('accessibility_description') }}</mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoAccessible; let i = index" cols="3" rowHeight="350px">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-list cols="3" rowHeight="220px">
+        <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoAccessible; let i = index" [colspan]="1"
+                       [rowspan]="1">
           <app-feed-select-principles
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
@@ -52,9 +54,10 @@
           {{ t('interoperability_description') }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoInteroperable; let i = index" cols="3"
-                     rowHeight="350px">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-list cols="3"
+                     rowHeight="220px">
+        <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoAccessible; let i = index" [colspan]="1"
+                       [rowspan]="1">
           <app-feed-select-principles
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
@@ -75,8 +78,8 @@
           {{ t('reusability_description') }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-grid-list *ngFor="let fairPrinciple of this.cardsInfoReusable; let i = index" cols="3" rowHeight="350px">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-list cols="3" rowHeight="220px">
+        <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoReusable; let i = index" [colspan]="1" [rowspan]="1">
           <app-feed-select-principles
             (click)="this.handleChangedSelection(fairPrinciple)"
             [description]="this.fairPrincipleList[fairPrinciple].description"
@@ -89,7 +92,7 @@
     </mat-expansion-panel>
     <div *transloco="let t; prefix: 'common'">
       <button *ngIf="this.firstFormGroup.valid"
-              mat-button
+              mat-flat-button
               matStepperNext
               type="button">{{ t('next') }}
       </button>
@@ -100,8 +103,8 @@
     <div>
       {{ t('confirm_selected_indicators_description') }}
     </div>
-    <mat-grid-list *ngFor="let fairPrinciple of this.selectedPrinciples; let i = index" cols="3" rowHeight="350px">
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <mat-grid-list cols="3" rowHeight="220px">
+      <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoReusable; let i = index" [colspan]="1" [rowspan]="1">
         <app-feed-select-principles
           (click)="this.handleChangedSelectionAfterConfirm(fairPrinciple)"
           [description]="this.fairPrincipleList[fairPrinciple].description"
@@ -113,13 +116,13 @@
     </mat-grid-list>
     <div *transloco="let t; prefix: 'common'">
       <button
-        mat-button
+        mat-flat-button
         matStepperPrevious
         type="button">{{ t('back') }}
       </button>
       <button (click)="this.handleApplyPrinciples()"
               *ngIf="this.firstFormGroup.valid"
-              mat-button type="button">{{ t('next') }}
+              mat-flat-button type="button">{{ t('next') }}
       </button>
     </div>
     </mat-step>
@@ -127,7 +130,7 @@
     <ng-template *transloco="let t; prefix: 'common'" matStepLabel>{{ t('done') }}</ng-template>
     <p>{{ t('done_message') }}</p>
     <div>
-      <button (click)="this.handleGoToInstancePage()" mat-button>{{ t('go_to_instance_page_button') }}</button>
+      <button (click)="this.handleGoToInstancePage()" mat-flat-button>{{ t('go_to_instance_page_button') }}</button>
         </div>
     </mat-step>
 </mat-stepper>
