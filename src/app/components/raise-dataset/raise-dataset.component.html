@@ -32,12 +32,12 @@
           <p>
             {{ t('congratulations_message') }}
           </p>
-          <p *ngIf="this.datasetInstanceId">
-            <a [routerLink]="['/instance',this.datasetInstanceId]">{{ t('dataset_instance_information') }}</a>
-          </p>
-        </div>
-        <div class="validation-card-actions">
-          <button (click)="this.onSubmit()" mat-flat-button type="button">{{ t('dashboard_button') }}</button>
+          <div *ngIf="this.datasetInstanceId" class="validation-card-actions">
+            <button (click)="this.goToInstancePage()" mat-flat-button
+                    type="button">{{ t('dataset_instance_information') }}
+            </button>
+            <button (click)="this.goToDashBoard()" mat-flat-button type="button">{{ t('dashboard_button') }}</button>
+          </div>
         </div>
       </mat-step>
     </mat-stepper>

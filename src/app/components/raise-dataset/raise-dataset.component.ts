@@ -22,7 +22,6 @@ import {RaiseInstanceService} from "../../services/raise-instance/raise-instance
 import {TranslocoDirective} from "@jsverse/transloco";
 import {Router, RouterLink} from "@angular/router";
 import {AbstractDataset} from "../../domain/abstract-dataset";
-import {RiskDatasetService} from "../../services/risk-dataset/risk-dataset.service";
 import {getIdFromURI} from "../utils/funcions";
 
 enum RAISE_MODE {
@@ -83,7 +82,6 @@ export class RaiseDatasetComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               private datasetService: DatasetService,
               private raiseInstanceService: RaiseInstanceService,
-              private riskDatasetService: RiskDatasetService,
               private router: Router) {
 
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -150,6 +148,16 @@ export class RaiseDatasetComponent implements OnInit {
     raiseInstance.date = new Date().toISOString();
     raiseInstance.user = this.authenticationService.getCurrentUser().uri!;
     return this.raiseInstanceService.add(raiseInstance);
+  }
+
+
+  goToDashBoard() {
+    this.router.navigate(['/dashboard']).then();
+  }
+
+
+  goToInstancePage() {
+    this.router.navigate(['/instance', this.datasetInstanceId]).then();
   }
 
   protected readonly RAISE_MODE = RAISE_MODE;
