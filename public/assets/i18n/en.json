@@ -81,7 +81,11 @@
     "status_title": "Status",
     "needs_title": "Needs",
     "apply_indicators_button": "Apply indicators",
-    "achieved_principles_title": "Achieved principles"
+    "achieved_principles_title": "Achieved principles",
+    "findability": "FINDABILITY",
+    "accesibility": "ACCESIBILITY",
+    "interoperability": "INTEROPERABILITY",
+    "reusability": "REUSABILITY"
   },
   "raiseDataset": {
     "introduction": "Introduction",

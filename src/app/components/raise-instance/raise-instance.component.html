@@ -16,7 +16,18 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-
+          <div *ngIf="this.dataSourceAchieved.data" class="status_div">
+            <ul>
+              <li>{{ t('findability') }}</li>
+              <li class="status_div_number">{{ this.dataSourceAchieved.data[0]!.children!.length }}</li>
+              <li>{{ t('accesibility') }}</li>
+              <li class="status_div_number">{{ this.dataSourceAchieved.data[1]!.children!.length }}</li>
+              <li>{{ t('interoperability') }}</li>
+              <li class="status_div_number">{{ this.dataSourceAchieved.data[2]!.children!.length }}</li>
+              <li>{{ t('reusability') }}</li>
+              <li class="status_div_number">{{ this.dataSourceAchieved.data[3]!.children!.length }}</li>
+            </ul>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

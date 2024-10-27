@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {map} from 'rxjs/operators';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgIf} from '@angular/common';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
@@ -60,7 +60,8 @@ interface PrincipleNode {
     MatTreeModule,
     MatTable,
     RouterLink,
-    TranslocoDirective
+    TranslocoDirective,
+    NgIf
   ]
 })
 export class RaiseInstanceComponent implements OnInit {

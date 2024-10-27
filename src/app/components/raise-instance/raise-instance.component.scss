@@ -17,7 +17,6 @@
 }
 
 .dashboard-card-content {
-  text-align: center;
   overflow-y: scroll;
 }
 
@@ -32,18 +31,27 @@
   list-style-type: none;
 }
 
-/*
- * This padding sets alignment of the nested nodes.
- */
 .example-tree .mat-nested-tree-node div[role=group] {
   padding-left: 40px;
 }
 
-/*
- * Padding for leaf nodes.
- * Leaf nodes need to have padding so as to align with other non-leaf nodes
- * under the same parent.
- */
 .example-tree div[role=group] > .mat-tree-node {
   padding-left: 40px;
+}
+
+.status_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22px;
+}
+
+.status_div_number {
+  font-weight: bold;
+  padding-left: 60px;
+}
+
+.status_div ul li {
+  list-style-type: none;
+  margin: 5px;
 }
