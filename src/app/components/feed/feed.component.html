@@ -56,7 +56,7 @@
       </mat-expansion-panel-header>
       <mat-grid-list cols="3"
                      rowHeight="220px">
-        <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoAccessible; let i = index" [colspan]="1"
+          <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoInteroperable; let i = index" [colspan]="1"
                        [rowspan]="1">
           <app-feed-select-principles
             (click)="this.handleChangedSelection(fairPrinciple)"
@@ -104,7 +104,7 @@
       {{ t('confirm_selected_indicators_description') }}
     </div>
     <mat-grid-list cols="3" rowHeight="220px">
-      <mat-grid-tile *ngFor="let fairPrinciple of this.cardsInfoReusable; let i = index" [colspan]="1" [rowspan]="1">
+        <mat-grid-tile *ngFor="let fairPrinciple of this.selectedPrinciples; let i = index" [colspan]="1" [rowspan]="1">
         <app-feed-select-principles
           (click)="this.handleChangedSelectionAfterConfirm(fairPrinciple)"
           [description]="this.fairPrincipleList[fairPrinciple].description"
