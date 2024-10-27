@@ -74,7 +74,7 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.fairPrincipleService.searchCollection(
-      'findUnverifiedPrinciplesByRaiseInstanceId', {
+      'findPendingPrinciplesByRaiseInstanceId', {
         params: {
           raiseInstanceId: Number(getIdFromURI(this.raiseInstance?.uri!))
         },

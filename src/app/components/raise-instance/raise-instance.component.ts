@@ -26,31 +26,15 @@ import {
 import {MatTreeModule, MatTreeNestedDataSource} from "@angular/material/tree";
 import {NestedTreeControl} from "@angular/cdk/tree";
 import {getIdFromURI} from "../utils/funcions";
+import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
+import {FairPrinciple} from "../../domain/fair-principle";
+import {FairCategoriesEnum} from "../../domain/fair-categories-enum";
 
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-interface FoodNode {
+interface PrincipleNode {
   name: string;
-  children?: FoodNode[];
+  children?: PrincipleNode[];
 }
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Findable',
-    children: [{name: 'F1'}, {name: 'F2'}, {name: 'F3'}],
-  },
-  {
-    name: 'Accesible',
-    children: [
-      {
-        name: 'A4'
-      }
-    ],
-  },
-];
 
 @Component({
   selector: 'app-raise-instance',
@@ -78,21 +62,23 @@ const TREE_DATA: FoodNode[] = [
   ]
 })
 export class RaiseInstanceComponent implements OnInit {
-  dataSource
-    = new MatTreeNestedDataSource<FoodNode>();
+  dataSourceAchieved
+    = new MatTreeNestedDataSource<PrincipleNode>();
+  dataSourceNeeded
+    = new MatTreeNestedDataSource<PrincipleNode>();
   protected raiseInstanceModel?: RaiseInstance;
   protected dataset?: Dataset;
   protected repository?: Repository;
   protected treeControl
-    = new NestedTreeControl<FoodNode>(node => node.children);
+    = new NestedTreeControl<PrincipleNode>(node => node.children);
 
   protected getIdFromURI = getIdFromURI;
   private idActivatedRoute?: number;
 
   constructor(private raiseInstanceService: RaiseInstanceService,
+              private fairPrincipleService: FairPrincipleService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
-    this.dataSource.data = TREE_DATA;
     this.activatedRoute.paramMap.subscribe(params => {
         if (params.has('id')) {
           this.idActivatedRoute = Number(params.get('id'));
@@ -101,7 +87,7 @@ export class RaiseInstanceComponent implements OnInit {
     );
   }
 
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: PrincipleNode) => !!node.children && node.children.length > 0;
 
   ngOnInit(): void {
     if (this.idActivatedRoute) {
@@ -119,8 +105,70 @@ export class RaiseInstanceComponent implements OnInit {
             })
           ).subscribe()
         }
-      )
+      );
+      this.getFairPrincipleQueryCollection(false, this.dataSourceAchieved);
+      this.getFairPrincipleQueryCollection(true, this.dataSourceNeeded);
     }
+  }
+
+  private getFairPrincipleQueryCollection(isRetrievePending: boolean, dataSource: MatTreeNestedDataSource<PrincipleNode>) {
+    const queryInstance = isRetrievePending ? 'findPendingPrinciplesByRaiseInstanceId' : 'findCompletedPrinciplesByRaiseInstanceId';
+    const listPrincipleNodes: PrincipleNode[] = [];
+    this.fairPrincipleService.searchCollection(
+      queryInstance, {
+        params: {
+          raiseInstanceId: this.idActivatedRoute!
+        },
+        sort: {
+          dataset: 'ASC'
+        },
+        useCache: false
+      }
+    ).subscribe((response) => {
+      const findablePrinciples: PrincipleNode = {
+        name: 'Findable',
+        children: [],
+      };
+
+      const accesiblePrinciples: PrincipleNode = {
+        name: 'Accesible',
+        children: [],
+      };
+
+      const interoperablePrinciples: PrincipleNode = {
+        name: 'Interoperable',
+        children: [],
+      }
+
+      const reusablePrinciples: PrincipleNode = {
+        name: 'Reusable',
+        children: [],
+      };
+
+      response.resources.forEach((fairPrinciple: FairPrinciple) => {
+        const principleValue = {name: fairPrinciple.name!};
+        switch (Number(FairCategoriesEnum[fairPrinciple.category!])) {
+          case FairCategoriesEnum.FINDABILITY:
+            findablePrinciples.children?.push(principleValue);
+            break;
+          case FairCategoriesEnum.ACCESSIBILITY:
+            accesiblePrinciples.children?.push(principleValue);
+            break;
+          case FairCategoriesEnum.INTEROPERABILITY:
+            interoperablePrinciples.children?.push(principleValue);
+            break;
+          case FairCategoriesEnum.REUSABILITY:
+            reusablePrinciples.children?.push(principleValue);
+            break;
+        }
+      });
+
+      listPrincipleNodes.push(findablePrinciples);
+      listPrincipleNodes.push(accesiblePrinciples);
+      listPrincipleNodes.push(interoperablePrinciples);
+      listPrincipleNodes.push(reusablePrinciples);
+      dataSource.data = listPrincipleNodes;
+    })
   }
 
   handleApplyIndicators() {
