@@ -29,6 +29,7 @@ import {getIdFromURI} from "../utils/funcions";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
 import {FairPrinciple} from "../../domain/fair-principle";
 import {FairCategoriesEnum} from "../../domain/fair-categories-enum";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 
 interface PrincipleNode {
@@ -58,7 +59,8 @@ interface PrincipleNode {
     MatRowDef,
     MatTreeModule,
     MatTable,
-    RouterLink
+    RouterLink,
+    TranslocoDirective
   ]
 })
 export class RaiseInstanceComponent implements OnInit {

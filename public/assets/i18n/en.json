@@ -77,6 +77,12 @@
     "selectCurrentRepositoryButton": "Click here to select an existent repository",
     "repositoryCreated": "The repository has been created. It should be approved before appearing for other users"
   },
+  "raiseInstance": {
+    "status_title": "Status",
+    "needs_title": "Needs",
+    "apply_indicators_button": "Apply indicators",
+    "achieved_principles_title": "Achieved principles"
+  },
   "raiseDataset": {
     "introduction": "Introduction",
     "intro_header": "Are you ready to take care of a dataset? Then, you've come to the right place!!",

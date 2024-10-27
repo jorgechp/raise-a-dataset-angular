@@ -1,4 +1,4 @@
-<div class="grid-container">
+<div *transloco="let t; prefix: 'raiseInstance'" class="grid-container">
   <h1 class="mat-h1">
     <a [routerLink]="['/dataset', getIdFromURI(this.dataset?.uri!)]">
       {{ this.dataset?.name }}
@@ -12,7 +12,7 @@
       <mat-card class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
-            Status
+            {{ t('status_title') }}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
@@ -24,7 +24,7 @@
       <mat-card class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
-            Needs
+            {{ t('needs_title') }}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
@@ -54,7 +54,8 @@
         </mat-card-content>
         <mat-card-actions>
           <button (click)="this.handleApplyIndicators()" color="primary" mat-raised-button
-                  type="button">Apply indicators
+                  type="button">
+            {{ t('apply_indicators_button') }}
           </button>
         </mat-card-actions>
       </mat-card>
@@ -63,7 +64,7 @@
       <mat-card class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
-            Achieved principles
+            {{ t('achieved_principles_title') }}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
