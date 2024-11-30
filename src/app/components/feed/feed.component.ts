@@ -5,7 +5,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
-import {FairPrinciple} from "../../domain/fair-principle";
+import {FairPrincipleIndicator} from "../../domain/fair-principle-indicator";
 import {FeedSelectPrinciplesComponent} from "./feed-select-principles/feed-select-principles.component";
 import {CommonModule} from "@angular/common";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
@@ -51,7 +51,7 @@ export class FeedComponent implements OnInit {
   protected selectedPrinciples: number[] = [];
 
   readonly dialog = inject(MatDialog);
-  protected fairPrincipleList: FairPrinciple[] = [];
+  protected fairPrincipleList: FairPrincipleIndicator[] = [];
   protected cardsInfoFindable: number[] = [];
   protected cardsInfoAccessible: number[] = [];
   protected cardsInfoInteroperable: number[] = [];
@@ -86,7 +86,7 @@ export class FeedComponent implements OnInit {
     ).subscribe((response) => {
       this.fairPrincipleList = response.resources;
 
-      this.fairPrincipleList.forEach((principle: FairPrinciple, index: number) => {
+      this.fairPrincipleList.forEach((principle: FairPrincipleIndicator, index: number) => {
         const category = FairCategoriesEnum[principle.category as unknown as keyof typeof FairCategoriesEnum];
         switch (category) {
           case FairCategoriesEnum.FINDABILITY:

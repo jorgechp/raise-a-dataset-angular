@@ -17,7 +17,7 @@ import {Dataset} from "../../domain/dataset";
 import {getIdFromURI} from "../utils/funcions";
 import {Router} from "@angular/router";
 import {ComplianceService} from "../../services/compliance/compliance.service";
-import {IComplianceValidationDTO} from "../../domain/ComplianceValidationDTO";
+import {IComplianceValidationDTO} from "../../domain/compliance-validation-DTO";
 import {TranslocoDirective} from "@jsverse/transloco";
 
 

@@ -6,7 +6,7 @@ import {ApiConfiguration} from "../../config/api-configuration";
 import {map} from "rxjs/operators";
 import {AuthenticationService} from "../authentication/authentication.service";
 
-import {IComplianceValidationDTO} from "../../domain/ComplianceValidationDTO";
+import {IComplianceValidationDTO} from "../../domain/compliance-validation-DTO";
 
 
 @Injectable({

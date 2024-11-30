@@ -27,7 +27,7 @@ import {MatTreeModule, MatTreeNestedDataSource} from "@angular/material/tree";
 import {NestedTreeControl} from "@angular/cdk/tree";
 import {getIdFromURI} from "../utils/funcions";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
-import {FairPrinciple} from "../../domain/fair-principle";
+import {FairPrincipleIndicator} from "../../domain/fair-principle-indicator";
 import {FairCategoriesEnum} from "../../domain/fair-categories-enum";
 import {TranslocoDirective} from "@jsverse/transloco";
 
@@ -148,7 +148,7 @@ export class RaiseInstanceComponent implements OnInit {
         children: [],
       };
 
-      response.resources.forEach((fairPrinciple: FairPrinciple) => {
+      response.resources.forEach((fairPrinciple: FairPrincipleIndicator) => {
         const principleValue = {name: fairPrinciple.name!};
         switch (Number(FairCategoriesEnum[fairPrinciple.category!])) {
           case FairCategoriesEnum.FINDABILITY:

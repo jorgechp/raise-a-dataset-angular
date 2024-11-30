@@ -22,7 +22,7 @@ import {MatButton} from "@angular/material/button";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {GenericAdminComponent} from "../generic-admin/generic-admin.component";
-import {FairPrinciple} from "../../../domain/fair-principle";
+import {FairPrincipleIndicator} from "../../../domain/fair-principle-indicator";
 import {FairPrincipleService} from "../../../services/fair-principle/fair-principle.service";
 
 @Component({
@@ -94,7 +94,7 @@ export class AdminFairPrinciplesComponent {
 
   }
 
-  prepareObjectToBeSent(item: FairPrinciple, isValidForm: any, onResult: any) {
+  prepareObjectToBeSent(item: FairPrincipleIndicator, isValidForm: any, onResult: any) {
     if (!this.form) return;
     item.name = this.form.value.name;
     item.description = this.form.value.description;
@@ -106,7 +106,7 @@ export class AdminFairPrinciplesComponent {
     onResult(item);
   }
 
-  prepareControls($event: FairPrinciple) {
+  prepareControls($event: FairPrincipleIndicator) {
     this.form = this.fb.group({
       name: [$event.name, Validators.required],
       description: [$event.description, Validators.required],

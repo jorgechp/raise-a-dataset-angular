@@ -11,7 +11,7 @@ import {MatStepper, MatStepperModule} from "@angular/material/stepper";
 import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 import {FairPrincipleService} from "../../services/fair-principle/fair-principle.service";
-import {FairPrinciple} from "../../domain/fair-principle";
+import {FairPrincipleIndicator} from "../../domain/fair-principle-indicator";
 import {DatasetService} from "../../services/dataset/dataset.service";
 import {Dataset} from "../../domain/dataset";
 import {RepositoryService} from "../../services/repository/repository.service";
@@ -48,7 +48,7 @@ export class ValidateComponent implements OnInit{
 
   @ViewChild('stepper') private stepper: MatStepper | undefined;
   protected complianceDTO?: IComplianceDTO;
-  protected fairPrincipleIndicator?: FairPrinciple;
+  protected fairPrincipleIndicator?: FairPrincipleIndicator;
   protected raiseInstance?: RaiseInstance;
   protected repository?: Repository;
   protected dataset?: Dataset;

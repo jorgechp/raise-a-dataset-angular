@@ -2,8 +2,8 @@ import {GenericResource} from "./generic-resource";
 import {FairCategoriesEnum} from "./fair-categories-enum";
 import {HateoasResource} from "@lagoshny/ngx-hateoas-client";
 
-@HateoasResource('fAIRPrinciples')
-export class FairPrinciple extends GenericResource {
+@HateoasResource('fAIRPrincipleIndicators')
+export class FairPrincipleIndicator extends GenericResource {
     namePrefix?: string
     name?: string
     description?: string

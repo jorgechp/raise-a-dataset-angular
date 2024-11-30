@@ -130,6 +130,10 @@ export class RaiseDatasetComponent implements OnInit {
           (newDataset: Dataset) => {
             this.addNewRaiseInstance(newDataset, selectedRepository).subscribe((raiseInstance: RaiseInstance) => {
               this.datasetInstanceId = Number(getIdFromURI(raiseInstance.uri!));
+              this.raiseInstanceService.verifyRaiseInstance(this.datasetInstanceId, raiseInstance.uniqueIdentifier!).subscribe(
+                (response) => {
+                }
+              );
               this.stepper?.next();
             })
           }
