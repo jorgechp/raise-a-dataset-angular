@@ -121,6 +121,7 @@
     "creation_date_required_error": "Creation date is",
     "repository_details": "Repository details",
     "doi": "DOI",
+    "uniqueIdentifier": "Unique Identifier",
     "format": "For example",
     "doi_required_error": "DOI is",
     "doi_pattern_error": "This doesn't seem to be a DOI format",

@@ -19,13 +19,13 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>{{ t('doi') }}</mat-label>
-            <input formControlName="doi" matInput placeholder="DOI">
+            <mat-label>{{ t('uniqueIdentifier') }}</mat-label>
+            <input formControlName="uniqueIdentifier" matInput placeholder="DOI">
             <mat-hint>{{ t('format') }}: <strong>10.1080/02626667.2018.1560449</strong></mat-hint>
-            @if (this.parentGroup!.controls['doi'].hasError('required')) {
+            @if (this.parentGroup!.controls['uniqueIdentifier'].hasError('required')) {
               <mat-error>{{ t('doi_required_error') }}<strong *transloco="let t; prefix: 'common'">
                 {{ t('required') }}</strong></mat-error>
-            } @else if (this.parentGroup!.controls['doi'].hasError('pattern')) {
+            } @else if (this.parentGroup!.controls['uniqueIdentifier'].hasError('pattern')) {
               <mat-error>{{ t('doi_pattern_error') }}</mat-error>
             }
           </mat-form-field>

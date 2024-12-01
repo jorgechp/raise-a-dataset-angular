@@ -30,6 +30,8 @@ enum RAISE_MODE {
   RESCUE
 }
 
+const DOI_URL_VALUE = 'https://doi.org/';
+
 @Component({
   selector: 'app-raise-dataset',
   templateUrl: './raise-dataset.component.html',
@@ -148,7 +150,7 @@ export class RaiseDatasetComponent implements OnInit {
     const raiseInstance: RaiseInstance = new RaiseInstance();
     raiseInstance.dataset = dataset.uri;
     raiseInstance.repository = repository.uri;
-    raiseInstance.uniqueIdentifier = this.repositoryForm.get('doi')!.value!;
+    raiseInstance.uniqueIdentifier = DOI_URL_VALUE + this.repositoryForm.get('uniqueIdentifier')!.value!;
     raiseInstance.date = new Date().toISOString();
     raiseInstance.user = this.authenticationService.getCurrentUser().uri!;
     return this.raiseInstanceService.add(raiseInstance);
