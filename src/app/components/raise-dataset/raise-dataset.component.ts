@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -77,9 +77,7 @@ export class RaiseDatasetComponent implements OnInit {
 
   });
   @ViewChild('stepper') private stepper: MatStepper | undefined;
-  private readonly dateFormatString = computed(() => {
-    return 'DD/MM/YYYY';
-  });
+
 
   constructor(private authenticationService: AuthenticationService,
               private datasetService: DatasetService,
@@ -133,7 +131,7 @@ export class RaiseDatasetComponent implements OnInit {
             this.addNewRaiseInstance(newDataset, selectedRepository).subscribe((raiseInstance: RaiseInstance) => {
               this.datasetInstanceId = Number(getIdFromURI(raiseInstance.uri!));
               this.raiseInstanceService.verifyRaiseInstance(this.datasetInstanceId, raiseInstance.uniqueIdentifier!).subscribe(
-                (response) => {
+                () => {
                 }
               );
               this.stepper?.next();
