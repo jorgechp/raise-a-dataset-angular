@@ -43,8 +43,8 @@ export class RaiseDatasetForm2Component {
   selectedRepository: Repository | undefined;
 
   handleSelectValue($event: Repository) {
-    const currentDoiValue = this.parentGroup?.get('uniqueIdentifier')!.value;
-    this.parentGroup?.setValue({'repository': $event, 'uniqueIdentifier': currentDoiValue});
+    const currentUniqueIdentifierValue = this.parentGroup?.get('uniqueIdentifier')!.value;
+    this.parentGroup?.setValue({'repository': $event, 'uniqueIdentifier': currentUniqueIdentifierValue});
     this.selectedRepository = $event;
   }
 }

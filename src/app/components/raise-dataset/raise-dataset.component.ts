@@ -73,7 +73,7 @@ export class RaiseDatasetComponent implements OnInit {
 
   public repositoryForm = this.fb.group({
     repository: [null, Validators.required],
-    doi: [null, Validators.compose([Validators.required, Validators.pattern(DOIRexp)])],
+    uniqueIdentifier: [null, Validators.compose([Validators.required, Validators.pattern(DOIRexp)])],
 
   });
   @ViewChild('stepper') private stepper: MatStepper | undefined;
