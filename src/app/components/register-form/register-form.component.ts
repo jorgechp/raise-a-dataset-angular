@@ -20,6 +20,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {takeWhile} from "rxjs";
 import {AbstractTranslationsComponent} from "../abstract/abstract-translations-component";
+import {MatDialog} from "@angular/material/dialog";
+import {OrcidModalComponent} from "./orcid-modal/orcid-modal.component";
 
 export enum PASSWORD_ERROR_TYPE {
   UPPERCASE, LOWERCASE, DIGIT, SPECIAL_CHARACTER
@@ -74,11 +76,24 @@ export class RegisterFormComponent extends AbstractTranslationsComponent impleme
               private authenticationService: AuthenticationService,
               private snackBar: MatSnackBar,
               private router: Router,
+              private dialog: MatDialog,
               protected override translocoService: TranslocoService) {
     super(translocoService);
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isUserSettings = event.urlAfterRedirects === '/settings';
+      }
+    });
+  }
+
+  openOrcidModal() {
+    const dialogRef = this.dialog.open(OrcidModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Manejar la información del usuario obtenida de ORCID
+        // Por ejemplo, llenar los campos de correo electrónico e ID de ORCID
       }
     });
   }

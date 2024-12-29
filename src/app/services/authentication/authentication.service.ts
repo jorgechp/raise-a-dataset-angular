@@ -86,7 +86,11 @@ export class AuthenticationService {
   }
 
   isCurrentUser(): boolean {
-    return localStorage.getItem(this.CURRENT_USER_KEY) !== null;
+    if (localStorage.getItem(this.CURRENT_USER_KEY) !== null) {
+      const currentUser = this.getCurrentUser();
+      return currentUser != null && currentUser.authorization != null && currentUser.authorization.length > 0;
+    }
+    return false;
   }
 
   getCurrentUser(): User {

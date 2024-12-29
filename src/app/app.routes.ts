@@ -1,13 +1,23 @@
 import {Routes} from '@angular/router';
 import {canActivateUser} from "./guard/user.guard";
 import {canActivateAdmin} from "./guard/admin.guard";
+import {canActivateGuest} from "./guard/guest.guard";
 
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'dashboard'
+    redirectTo: 'welcome'
+  },
+  {
+    path: 'welcome',
+    loadComponent: () =>
+      import('./components/welcome/welcome.component').then(
+        (c) => c.WelcomeComponent
+      ),
+    title: 'Welcome',
+    canActivate: [canActivateGuest]
   },
   {
     path: 'dashboard',
@@ -15,7 +25,8 @@ export const routes: Routes = [
       import('./components/dashboard/dashboard.component').then(
         (c) => c.DashboardComponent
       ),
-    title: 'Dashboard'
+    title: 'Dashboard',
+    canActivate: [canActivateUser]
   },
   {
     path: 'signup',
