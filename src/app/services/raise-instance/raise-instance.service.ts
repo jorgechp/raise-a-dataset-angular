@@ -7,6 +7,7 @@ import {RaiseInstanceDTO} from "../../domain/raise-instance-dto";
 import {AbstractIndicatorService} from "../abstract/abstract-indicator.service";
 import {map} from "rxjs/operators";
 import {VerificationRequestDTO} from "../../domain/verification-request-dto";
+import {HttpMethod} from "@lagoshny/ngx-hateoas-client";
 
 export interface RaiseInstanceResponse {
   _embedded: {
@@ -78,6 +79,11 @@ export class RaiseInstanceService extends AbstractIndicatorService<RaiseInstance
       params: new HttpParams()
     }
     return this.http.get<RaiseInstanceDTO[]>(`${ApiConfiguration.protocol}://${ApiConfiguration.host}:${ApiConfiguration.port}${ApiConfiguration.apiRoot}${this.allRaiseInstanceEndPoint}`, httpOptions);
+  }
+
+  countRaiseInstancesByUser(userId: number) {
+    const params = {username: userId.toString()};
+    return this.customQuery<number>(HttpMethod.GET, '/search/countAllByUserUsername', undefined, {params});
   }
 
   verifyRaiseInstance(instanceId: number, uri: string, indicatorId?: number) {

@@ -54,7 +54,7 @@ export class LayoutComponent implements OnInit {
       const userRoles = user.getRoles();
       this.rootRoutes = SIDENAV_MENU;
       this.rootRoutes = this.rootRoutes.filter(route => {
-        return userRoles.includes(route.role);
+        return route.roles.some(role => userRoles.includes(role));
       });
     });
   }

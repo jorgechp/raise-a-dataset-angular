@@ -2,6 +2,7 @@ import {Routes} from '@angular/router';
 import {canActivateUser} from "./guard/user.guard";
 import {canActivateAdmin} from "./guard/admin.guard";
 import {canActivateGuest} from "./guard/guest.guard";
+import {datasetCountByUserResolver} from "./resolvers/dataset-count-by-user.resolver";
 
 
 export const routes: Routes = [
@@ -16,8 +17,10 @@ export const routes: Routes = [
       import('./components/welcome/welcome.component').then(
         (c) => c.WelcomeComponent
       ),
+    resolve: {
+      datasetCountByUser: datasetCountByUserResolver
+    },
     title: 'Welcome',
-    canActivate: [canActivateGuest]
   },
   {
     path: 'dashboard',
@@ -34,13 +37,14 @@ export const routes: Routes = [
       import('./components/register-form/register-form.component').then(
         (c) => c.RegisterFormComponent
       ),
+    canActivate: [canActivateGuest],
     title: 'Sign up'
   },
   {
     path: 'table',
     loadComponent: () =>
-      import('./components/pick-dataset/pick-dataset.component').then(
-        (c) => c.PickDatasetComponent
+      import('./components/search-dataset/search-dataset.component').then(
+        (c) => c.SearchDatasetComponent
       ),
     title: 'Table',
     canActivate: [canActivateUser]
@@ -56,8 +60,8 @@ export const routes: Routes = [
   }, {
     path: 'datasets',
     loadComponent: () =>
-      import('./components/pick-dataset/pick-dataset.component').then(
-        (c) => c.PickDatasetComponent
+      import('./components/search-dataset/search-dataset.component').then(
+        (c) => c.SearchDatasetComponent
       ),
     title: 'Datasets',
     canActivate: [canActivateUser]

@@ -1,0 +1,25 @@
+<div *transloco="let t;" class="welcome-container">
+  <h1>{{ t('welcome_user.title') }}</h1>
+  <div class="search-container">
+    <mat-form-field appearance="fill" class="search-input">
+      <mat-label>{{ t('welcome_user.search_label') }}</mat-label>
+      <input (keyup.enter)="onSearch()" [(ngModel)]="searchQuery" appAutofocus matInput type="text"/>
+    </mat-form-field>
+    <button (click)="onSearch()" class="search-button" color="primary"
+            mat-raised-button>{{ t('welcome_user.search_button') }}
+    </button>
+  </div>
+  <h2>{{ t('welcome_user.dashboard_title') }}</h2>
+  <p>{{ t('welcome_user.dataset_count', {count: datasetCount}) }}</p>
+  <p><a [routerLink]="['/dashboard']">{{ t('welcome_user.go_to_dashboard') }}</a></p>
+  <h2>{{ t('welcome_user.contribute_title') }}</h2>
+  <p>{{ t('welcome_user.contribute_description') }}</p>
+  <p><a [routerLink]="['/verify']">{{ t('welcome_user.verify_link') }}</a></p>
+  <p><a [routerLink]="['/rescue']">{{ t('welcome_user.rescue_link') }}</a></p>
+  <p><a [routerLink]="['/add']">{{ t('welcome_user.raise_link') }}</a></p>
+  <h2>{{ t('welcome_user.ranking_title') }}</h2>
+  <p>{{ t('welcome_user.points', {points: 444}) }}</p>
+  <p>{{ t('welcome_user.ranking_points') }}</p>
+  <p>{{ t('welcome_user.ranking_datasets') }}</p>
+  <p>{{ t('welcome_user.ranking_validations') }}</p>
+</div>

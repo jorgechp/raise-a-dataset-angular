@@ -32,6 +32,7 @@ export enum PASSWORD_ERROR_TYPE {
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss',
   standalone: true,
+
   imports: [
     CommonModule,
     MatInputModule,

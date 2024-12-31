@@ -65,6 +65,7 @@ export class UserSectionComponent extends AbstractTranslationsComponent implemen
       {
         duration: 4000
       });
+    this.router.navigate(['/']).then();
   }
 
   displayChangeLanguageModal() {

@@ -18,6 +18,7 @@ import {MatCommonModule} from "@angular/material/core";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {NgForOf, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
+import {FormsModule} from "@angular/forms";
 
 export interface IGenericTableColumn {
   nameDef: string;
@@ -36,7 +37,8 @@ export interface IGenericTableColumn {
     MatInputModule,
     TranslocoDirective,
     NgForOf,
-    NgIf
+    NgIf,
+    FormsModule
   ],
   templateUrl: './generic-table.component.html',
   styleUrl: './generic-table.component.scss'
@@ -53,6 +55,7 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
   @Output() clickOnRowEventHandler: EventEmitter<T> = new EventEmitter();
   @Output() clickOnRowIndexEventHandler: EventEmitter<number> = new EventEmitter();
   private table: MatTable<T> | undefined;
+  protected searchValueInputTerm: string = '';
 
   constructor(private router: Router) {
     this.dataSource = new MatTableDataSource<T>([]);
@@ -96,11 +99,16 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
     this.clickOnRowIndexEventHandler.emit(index);
   }
 
+  public applyFilterValue(filterValue: string) {
+    this.dataSource.filter = filterValue;
+    this.searchValueInputTerm = filterValue;
+  }
+
   protected applyFilter(event: Event) {
     if (!this.dataSource) {
       return;
     }
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.applyFilterValue(filterValue.trim().toLowerCase());
   }
 }

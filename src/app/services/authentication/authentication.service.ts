@@ -110,6 +110,7 @@ export class AuthenticationService {
     guestUser.isAnonymous = true;
     guestUser.setRoles([UserRole.ROLE_GUEST]);
     this.storeCurrentUser(guestUser);
+    this.loadCurrentUser();
   }
 
   public changePassword(username: string, currentPassword: string, newPassword: string) {

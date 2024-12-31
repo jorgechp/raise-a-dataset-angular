@@ -4,46 +4,52 @@ export interface ISidenavMenuItem {
   isActive: boolean;
   routeLink: string;
   title: string;
-  role: UserRole;
+  roles: Array<UserRole>;
 }
 
 export const SIDENAV_MENU: ISidenavMenuItem[] = [
   {
+    title: 'Start',
+    isActive: true,
+    roles: [UserRole.ROLE_GUEST, UserRole.ROLE_USER, UserRole.ROLE_ADMIN],
+    routeLink: 'welcome'
+  },
+  {
     title: 'Sign up',
     isActive: true,
-    role: UserRole.ROLE_GUEST,
+    roles: [UserRole.ROLE_GUEST],
     routeLink: 'signup'
   },
   {
     title: 'Raise',
     isActive: true,
-    role: UserRole.ROLE_USER,
+    roles: [UserRole.ROLE_USER],
     routeLink: 'raise'
   },
   {
     title: 'Datasets',
     isActive: true,
-    role: UserRole.ROLE_USER,
+    roles: [UserRole.ROLE_USER],
     routeLink: 'datasets'
   }, {
     title: 'Validate',
     isActive: true,
-    role: UserRole.ROLE_USER,
+    roles: [UserRole.ROLE_USER],
     routeLink: 'compliances'
   }, {
     title: 'Rescue',
     isActive: true,
-    role: UserRole.ROLE_USER,
+    roles: [UserRole.ROLE_USER],
     routeLink: 'rescue'
   }, {
     title: 'Admin',
     isActive: true,
-    role: UserRole.ROLE_ADMIN,
+    roles: [UserRole.ROLE_ADMIN],
     routeLink: 'admin'
   }, {
     title: 'FAIRpedia',
     isActive: true,
-    role: UserRole.ROLE_USER,
+    roles: [UserRole.ROLE_USER],
     routeLink: 'principles'
   }
 ]

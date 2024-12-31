@@ -1,0 +1,16 @@
+.search-container {
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.search-input {
+  flex: 1;
+}
+
+.search-button {
+  height: 56px; /* Same height as the mat-form-field */
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #e0e0e0; /* Gray color to match the input */
+}

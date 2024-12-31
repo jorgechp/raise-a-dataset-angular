@@ -1,0 +1,8 @@
+<ng-container *ngIf="this.rows">
+  <app-generic-table #table
+                     (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
+                     [columns]="this.columns"
+                     [rows]="this.rows"
+  ></app-generic-table>
+</ng-container>
+

@@ -3,6 +3,7 @@
     <mat-form-field class="search_input">
       <mat-label>{{ t('generic-table.search_placeholder') }}</mat-label>
       <input (keyup)="this.applyFilter($event)"
+             [(ngModel)]="this.searchValueInputTerm"
              matInput placeholder="{{ t('generic-table.search_placeholder') }}">
     </mat-form-field>
 
