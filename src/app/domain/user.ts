@@ -12,6 +12,8 @@ export class User extends GenericResource {
   public passwordReset: boolean | undefined;
   authorities: Authority[] = [];
   authorization = '';
+  private orcid: string | undefined;
+  private score: number | undefined;
   private acceptedMissions = [];
   private acomplishedMissions = [];
   private datasetsMaintained = [];

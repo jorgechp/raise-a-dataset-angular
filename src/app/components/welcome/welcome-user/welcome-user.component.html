@@ -18,7 +18,7 @@
   <p><a [routerLink]="['/rescue']">{{ t('welcome_user.rescue_link') }}</a></p>
   <p><a [routerLink]="['/add']">{{ t('welcome_user.raise_link') }}</a></p>
   <h2>{{ t('welcome_user.ranking_title') }}</h2>
-  <p>{{ t('welcome_user.points', {points: 444}) }}</p>
+  <p [innerHTML]="t('welcome_user.points', {points: userScore, position: userRankingPosition})"></p>
   <p>{{ t('welcome_user.ranking_points') }}</p>
   <p>{{ t('welcome_user.ranking_datasets') }}</p>
   <p>{{ t('welcome_user.ranking_validations') }}</p>

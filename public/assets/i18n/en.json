@@ -331,7 +331,7 @@
     "rescue_link": "Rescue an abandoned dataset",
     "raise_link": "Raise a new dataset",
     "ranking_title": "Ranking",
-    "points": "You have {{points}} points, do you want to check some statistics?",
+    "points": "You have <strong>{{points}} points</strong> and are ranked <strong>#{{position}}</strong>, do you want to check some statistics?",
     "ranking_points": "Ranking of users by number of points",
     "ranking_datasets": "Ranking of users by number of Datasets raised",
     "ranking_validations": "Ranking of users by number of Validations"
