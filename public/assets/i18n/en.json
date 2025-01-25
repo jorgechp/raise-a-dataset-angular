@@ -320,7 +320,7 @@
   },
   "welcome_user": {
     "title": "Welcome back! What do you want to do?",
-    "search_label": "Enter your search query",
+    "search_label": "Search for datasets",
     "search_button": "Search",
     "dashboard_title": "Dashboard",
     "dataset_count": "You are managing {{count}} datasets.",
@@ -335,5 +335,14 @@
     "ranking_points": "Ranking of users by number of points",
     "ranking_datasets": "Ranking of users by number of Datasets raised",
     "ranking_validations": "Ranking of users by number of Validations"
+  },
+  "ranking": {
+    "username": "Username",
+    "totalScore": "Total Score",
+    "compliances": "Compliances",
+    "datasets": "Datasets",
+    "rescued": "Rescued",
+    "validations": "Validations",
+    "registrationDate": "Registration Date"
   }
 }
