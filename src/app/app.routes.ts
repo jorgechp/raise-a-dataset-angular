@@ -169,6 +169,14 @@ export const routes: Routes = [
           ),
         title: 'Admin',
         canActivate: [canActivateAdmin]
+      }, {
+        path: 'ranking',
+        loadComponent: () =>
+          import('./components/ranking/ranking.component').then(
+            (c) => c.RankingComponent
+          ),
+        title: 'Ranking',
+        canActivate: [canActivateUser]
       },
       {
         path: 'principles',

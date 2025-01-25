@@ -13,7 +13,7 @@ import {
 import {MatFormField, MatInputModule} from "@angular/material/input";
 import {MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {MatSort, MatSortModule} from "@angular/material/sort";
+import {MatSort, MatSortModule, SortDirection} from "@angular/material/sort";
 import {MatCommonModule} from "@angular/material/core";
 import {TranslocoDirective} from "@jsverse/transloco";
 import {NgForOf, NgIf} from "@angular/common";
@@ -52,9 +52,11 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
   @Input() columns?: IGenericTableColumn[];
   @Input() displayedColumns?: string[];
   @Input() rows?: T[];
+  @Input() matSortActive?: string;
   @Output() clickOnRowEventHandler: EventEmitter<T> = new EventEmitter();
   @Output() clickOnRowIndexEventHandler: EventEmitter<number> = new EventEmitter();
   private table: MatTable<T> | undefined;
+  private _matSortDirection: SortDirection = 'asc';
   protected searchValueInputTerm: string = '';
 
   constructor(private router: Router) {
@@ -67,6 +69,15 @@ export class GenericTableComponent<T> implements OnInit, AfterViewInit, AfterCon
       this.displayedColumns = [];
     }
     this.updateRows(this.rows!);
+  }
+
+  get matSortDirection(): SortDirection {
+    return this._matSortDirection;
+  }
+
+  @Input()
+  set matSortDirection(value: SortDirection | undefined) {
+    this._matSortDirection = value || 'asc';
   }
 
   public updateRows(rows: Array<T>) {
