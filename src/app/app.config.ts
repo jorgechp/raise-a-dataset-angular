@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideHateoas(),
     provideTransloco({
       config: {
-        availableLangs: [{id: 'en', label: 'English'}, {id: 'es', label: 'Spanish'}],
+        availableLangs: [{id: 'en', label: 'English'}, {id: 'es', label: 'Spanish'}, {id: 'ca', label: 'Catalan'}],
         defaultLang: 'en',
         fallbackLang: 'en',
         // Remove this option if your application doesn't support changing language in runtime.
