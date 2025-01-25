@@ -7,7 +7,12 @@
              matInput placeholder="{{ t('generic-table.search_placeholder') }}">
     </mat-form-field>
 
-    <table #table *ngIf="this.displayedColumns" aria-label="datasets" class="full-width-table" mat-table matSort>
+    <table #table *ngIf="this.displayedColumns"
+           [matSortActive]="this.matSortActive || ''"
+           [matSortDirection]="this.matSortDirection"
+           aria-label="datasets"
+           class="full-width-table"
+           mat-table matSort>
 
       <ng-container *ngFor="let column of this.columns">
         <ng-container [matColumnDef]="column.nameDef">

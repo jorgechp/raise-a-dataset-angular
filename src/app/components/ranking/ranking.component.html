@@ -1,1 +1,7 @@
-<p>ranking works!</p>
+<app-generic-table (clickOnRowEventHandler)="this.rowHandlerEvent($event)"
+                   *ngIf="this.rows"
+                   [columns]="this.columns"
+                   [matSortActive]="this.defaultSortColumn"
+                   [matSortDirection]="'desc'"
+                   [rows]="this.rows"
+></app-generic-table>

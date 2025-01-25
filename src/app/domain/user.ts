@@ -18,6 +18,8 @@ export class User extends GenericResource {
   private acomplishedMissions = [];
   private datasetsMaintained = [];
   private datasetsRescued = [];
+  public registrationDate: Date | undefined;
+  public bot: boolean | undefined;
 
 
   constructor(values: object = {}) {
